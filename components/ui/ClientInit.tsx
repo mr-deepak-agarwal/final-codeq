@@ -152,7 +152,7 @@ function postLoaderInit(THREE: any, gsap: any, ScrollTrigger: any) {
     scene.add(pts);
 
     // Q wireframe
-    function makeQ(r: number, pos: number[], rotZ: number, opacity1: number, opacity2: number) {
+    const makeQ = (r: number, qpos: number[], rotZ: number, opacity1: number, opacity2: number) => {
       const g = new THREE.Group();
       const cp: any[] = [];
       for (let ci = 0; ci <= 120; ci++) {
@@ -164,23 +164,22 @@ function postLoaderInit(THREE: any, gsap: any, ScrollTrigger: any) {
       const tail = [new THREE.Vector3(r*.46,-r*.69,0), new THREE.Vector3(r*.77,-r*.92,0), new THREE.Vector3(r*1.23,-r*1.23,0)];
       const tailTube = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(tail), 40, r*0.024, 8, false);
       g.add(new THREE.Mesh(tailTube, new THREE.MeshBasicMaterial({ color:0x52C97A, wireframe:true, transparent:true, opacity:opacity2 })));
-      g.position.set(pos[0], pos[1], pos[2]);
+      g.position.set(qpos[0], qpos[1], qpos[2]);
       g.rotation.z = rotZ;
       return g;
-    }
+    };
 
     if (window.innerWidth > 768) {
       scene.add(makeQ(13, [14,-2,-5],  0.08, 0.13, 0.18));
       scene.add(makeQ(7,  [-14,6,-12],-0.15, 0.09, 0.10));
     }
 
-    let animFrame: number;
-    function animate() {
-      animFrame = requestAnimationFrame(animate);
+    const animate = () => {
+      requestAnimationFrame(animate);
       pts.rotation.y += 0.0003;
       pts.rotation.x += 0.0001;
       renderer.render(scene, cam);
-    }
+    };
     animate();
 
     window.addEventListener('resize', () => {
