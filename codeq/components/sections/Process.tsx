@@ -24,7 +24,7 @@ const steps = [
     num: '02',
     step: 'Step 02',
     title: 'Proposal',
-    body: "Fixed price. Clear deliverables. No hourly billing surprises. You know exactly what you're getting before anything starts.",
+    body: 'Fixed price. Clear deliverables. No hourly billing surprises. You know exactly what you\'re getting before anything starts.',
     details: [
       { icon: <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>, title: 'TRANSPARENT PRICING', text: 'One price, no hidden fees or scope creep' },
       { icon: <><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></>, title: 'CLEAR MILESTONES', text: 'Phased delivery with specific dates' },
@@ -81,42 +81,6 @@ const steps = [
 export default function Process() {
   return (
     <section id="process" aria-labelledby="process-heading">
-
-      {/* Fixed left: step navigation */}
-      <div className="process-nav" aria-hidden="true">
-        {steps.map((s, i) => (
-          <div className="process-nav-item" key={s.num} data-step={i + 1}>
-            <div className="nav-circle">{s.num}</div>
-            <div className="nav-tooltip">{s.title}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Fixed right: circular progress ring */}
-      <div className="process-progress-container" aria-hidden="true">
-        <div className="process-progress-ring">
-          <svg width="120" height="120">
-            <circle cx="60" cy="60" r="50" stroke="rgba(240,237,228,.1)" strokeWidth="3" fill="none"/>
-            <circle
-              className="progress-circle"
-              cx="60" cy="60" r="50"
-              stroke="url(#progressGradient)"
-              strokeWidth="3" fill="none" strokeLinecap="round"
-            />
-            <defs>
-              <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%"   style={{ stopColor: '#2E7D4F' }}/>
-                <stop offset="100%" style={{ stopColor: '#52C97A' }}/>
-              </linearGradient>
-            </defs>
-          </svg>
-          <div className="progress-text">
-            <span id="progressPercent">0%</span>
-            <span className="progress-label">COMPLETE</span>
-          </div>
-        </div>
-      </div>
-
       <div className="proc-bg" aria-hidden="true">04</div>
 
       <div className="proc-head">
@@ -137,19 +101,14 @@ export default function Process() {
             data-step={i + 1}
             style={i > 0 ? { transitionDelay: `${i * 0.1}s` } : {}}
           >
-            {/* Flow line connector */}
             {i < steps.length - 1 && <div className="ps-flow-line" aria-hidden="true"></div>}
-
             <div className="ps-num" data-num={s.num} aria-hidden="true">{s.num}</div>
-
             <div>
               <span className="ps-step">{s.step}</span>
               <h3 className="ps-title">{s.title}</h3>
               <p className="ps-body">{s.body}</p>
             </div>
-
             <div className="ps-vis">{s.vis}</div>
-
             <div className="ps-detail-cards">
               {s.details.map((d) => (
                 <div className="ps-detail-card" key={d.title}>

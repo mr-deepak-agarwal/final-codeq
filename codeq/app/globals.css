@@ -334,7 +334,7 @@ nav#nav.up {
 /* ─────────────────────────────────────────────
    STORY TYPEWRITER
 ───────────────────────────────────────────── */
-#story { height: 200vh; position: relative; }
+#story { height: 150vh; position: relative; }
 .story-pin {
   position: sticky; top: 0; height: 100vh; overflow: hidden;
   display: flex; align-items: center; justify-content: center; background: var(--dark);
@@ -646,16 +646,6 @@ nav#nav.up {
 .ps.revealed .ps-flow-line { opacity: .2; }
 .ps:last-child .ps-flow-line { display: none; }
 
-/* Process side nav */
-.process-nav { position: fixed; left: 52px; top: 50%; transform: translateY(-50%); z-index: 100; display: flex; flex-direction: column; gap: 20px; opacity: 0; transition: opacity .6s; pointer-events: none; }
-.process-nav.visible { opacity: 1; pointer-events: auto; }
-.process-nav-item { position: relative; cursor: pointer; transition: transform .3s; }
-.process-nav-item:hover { transform: scale(1.1); }
-.nav-circle { width: 44px; height: 44px; border-radius: 50%; border: 2px solid rgba(240,237,228,.15); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: rgba(240,237,228,.25); background: rgba(7,7,10,.6); backdrop-filter: blur(10px); transition: all .4s cubic-bezier(.16,1,.3,1); }
-.process-nav-item.active .nav-circle { border-color: var(--ga); background: var(--ga); color: var(--cream); box-shadow: 0 0 20px rgba(46,125,79,.4); }
-.nav-tooltip { position: absolute; left: 60px; top: 50%; transform: translateY(-50%); background: rgba(7,7,10,.95); padding: 8px 14px; border-radius: 6px; font-size: 10px; font-weight: 600; letter-spacing: .08em; color: var(--cream); white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s; border: 1px solid rgba(240,237,228,.1); }
-.process-nav-item:hover .nav-tooltip { opacity: 1; transform: translateY(-50%) translateX(10px); }
-
 .process-progress-container { position: fixed; right: 52px; top: 50%; transform: translateY(-50%); z-index: 100; opacity: 0; transition: opacity .6s; pointer-events: none; }
 .process-progress-container.visible { opacity: 1; }
 .process-progress-ring { width: 120px; height: 120px; position: relative; }
@@ -664,7 +654,7 @@ nav#nav.up {
 .progress-label  { font-size: 8px; color: rgba(240,237,228,.3); display: block; margin-top: 4px; }
 
 @media (max-width: 1024px) {
-  .process-progress-container, .process-nav { display: none; }
+  .process-progress-container { display: none; }
   .ps-detail-cards { grid-column: 1 / -1; }
   .ps { grid-template-columns: 100px 1fr; gap: 32px; }
   .ps-vis { display: none; }
@@ -905,40 +895,4 @@ footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; hei
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-}
-
-/* ─────────────────────────────────────────────
-   PROCESS — FIXED OVERLAYS (Progress Ring + Step Nav)
-───────────────────────────────────────────── */
-.process-nav {
-  position: fixed; left: 52px; top: 50%; transform: translateY(-50%);
-  z-index: 100; display: flex; flex-direction: column; gap: 20px;
-  opacity: 0; transition: opacity .6s; pointer-events: none;
-}
-.process-nav.visible { opacity: 1; pointer-events: all; }
-.process-nav-item { position: relative; cursor: pointer; transition: transform .3s; }
-.process-nav-item:hover { transform: scale(1.1); }
-.nav-circle {
-  width: 44px; height: 44px; border-radius: 50%;
-  border: 2px solid rgba(240,237,228,.15);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 600; color: rgba(240,237,228,.25);
-  background: rgba(7,7,10,.6); backdrop-filter: blur(10px);
-  transition: all .4s cubic-bezier(.16,1,.3,1);
-}
-.process-nav-item.active .nav-circle {
-  border-color: var(--ga); background: var(--ga); color: var(--cream);
-  box-shadow: 0 0 20px rgba(46,125,79,.4);
-}
-.nav-tooltip {
-  position: absolute; left: 60px; top: 50%; transform: translateY(-50%);
-  background: rgba(7,7,10,.95); padding: 8px 14px; border-radius: 6px;
-  font-size: 10px; font-weight: 600; letter-spacing: .08em; color: var(--cream);
-  white-space: nowrap; opacity: 0; pointer-events: none;
-  transition: opacity .3s, transform .3s; border: 1px solid rgba(240,237,228,.1);
-}
-.process-nav-item:hover .nav-tooltip { opacity: 1; transform: translateY(-50%) translateX(10px); }
-
-@media (max-width: 1024px) {
-  .process-nav { display: none; }
 }
