@@ -282,18 +282,20 @@ const initStory = () => {
 
 /* ─── SERVICES PEEL (raw scroll — matches HTML exactly) ──── */
 const initServicesPeel = () => {
-  const wrap = document.getElementById('svcWrap');
+  const wrap = document.getElementById('svcWrap') as HTMLElement | null;
   const c1   = document.getElementById('svc1') as HTMLElement | null;
   const c2   = document.getElementById('svc2') as HTMLElement | null;
   const c3   = document.getElementById('svc3') as HTMLElement | null;
   const hint = document.getElementById('svcHint') as HTMLElement | null;
   if (!wrap || !c1 || !c2 || !c3) return;
 
+  const safeWrap = wrap;
+
   function ease(t: number) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
 
   function updatePeel() {
-    const wRect     = wrap.getBoundingClientRect();
-    const scrollable = wrap.offsetHeight - window.innerHeight;
+    const wRect      = safeWrap.getBoundingClientRect();
+    const scrollable = safeWrap.offsetHeight - window.innerHeight;
     const scrolled   = -wRect.top;
     const prog       = Math.max(0, Math.min(1, scrolled / scrollable));
 
