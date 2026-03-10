@@ -334,7 +334,7 @@ nav#nav.up {
 /* ─────────────────────────────────────────────
    STORY TYPEWRITER
 ───────────────────────────────────────────── */
-#story { height: 200vh; position: relative; }
+#story { height: 300vh; position: relative; }
 .story-pin {
   position: sticky; top: 0; height: 100vh; overflow: hidden;
   display: flex; align-items: center; justify-content: center; background: var(--dark);
@@ -406,9 +406,9 @@ nav#nav.up {
   transform-origin: center bottom; overflow: hidden;
   box-shadow: 0 40px 120px rgba(0,0,0,.4);
 }
-.svc-card:nth-child(1) { background: linear-gradient(135deg,#061a0d 0%,#0d3318 40%,#1e6e38 80%,#071510 100%); z-index: 3; }
+.svc-card:nth-child(1) { background: linear-gradient(135deg,#061a0d 0%,#0d3318 40%,#1e6e38 80%,#071510 100%); z-index: 1; }
 .svc-card:nth-child(2) { background: linear-gradient(135deg,#100828 0%,#2d1060 45%,#5c2aac 80%,#160830 100%); z-index: 2; }
-.svc-card:nth-child(3) { background: linear-gradient(135deg,#1c0a02 0%,#501800 45%,#a83800 80%,#220c02 100%); z-index: 1; }
+.svc-card:nth-child(3) { background: linear-gradient(135deg,#1c0a02 0%,#501800 45%,#a83800 80%,#220c02 100%); z-index: 3; }
 .svc-card::before {
   content: ''; position: absolute; inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");

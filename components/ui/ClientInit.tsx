@@ -254,8 +254,9 @@ const initHeroWords = (gsap: any) => {
 };
 
 /* ─── STORY WORD REVEAL ───────────────────────────────────── */
-/* FIX: use live getBoundingClientRect so it works bidirectionally
-   and doesn't break due to offsetTop being unreliable inside sticky layouts */
+/* Use window.scrollY - offsetTop (NOT getBoundingClientRect) because
+   #story itself is a normal-flow section; getBoundingClientRect gives
+   wrong results once the browser has scrolled into the sticky child */
 const initStory = () => {
   const storyEl = document.getElementById('story');
   const tws     = document.querySelectorAll('#story .tw');
@@ -264,13 +265,13 @@ const initStory = () => {
   const total = tws.length;
 
   function updateStoryWords() {
-    const rect       = S.getBoundingClientRect();
-    const scrollable = S.offsetHeight - window.innerHeight;
+    const sectionTop = S.offsetTop;                         // stable — section is in normal flow
+    const scrollable = S.offsetHeight - window.innerHeight; // 300vh - 100vh = 200vh of scroll
     if (scrollable <= 0) return;
-    const scrolled   = -rect.top;
+    const scrolled   = window.scrollY - sectionTop;
     const progress   = Math.max(0, Math.min(1, scrolled / scrollable));
     tws.forEach((w: any, i: number) => {
-      // toggle is bidirectional — removes .lit when scrolling back up
+      // toggle removes .lit when scrolling back up (bidirectional)
       w.classList.toggle('lit', progress >= i / (total - 1));
     });
   }
@@ -301,10 +302,11 @@ const initServicesPeel = () => {
     function ease(t: number) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
 
     function updatePeel() {
-      const wRect      = W.getBoundingClientRect();
+      // Use offsetTop (stable) instead of getBoundingClientRect which drifts
+      // once the sticky child is pinned
       const scrollable = W.offsetHeight - window.innerHeight;
       if (scrollable <= 0) return;
-      const scrolled   = -wRect.top;
+      const scrolled   = window.scrollY - W.offsetTop;
       const prog       = Math.max(0, Math.min(1, scrolled / scrollable));
 
       if (hint) hint.style.opacity = prog > 0.02 ? '0' : '1';
