@@ -27,9 +27,9 @@ export default function ClientInit() {
 
 /* ─── LOADER ─────────────────────────────────────────────── */
 const runLoader = (THREE: any, gsap: any, ST: any) => {
-  const ldw = document.getElementById('ldw');
-  const ldb = document.getElementById('ldb') as HTMLElement;
-  const ldn = document.getElementById('ldn');
+  const ldw    = document.getElementById('ldw');
+  const ldb    = document.getElementById('ldb') as HTMLElement | null;
+  const ldn    = document.getElementById('ldn');
   const loader = document.getElementById('loader');
   if (ldw) setTimeout(() => ldw.classList.add('up'), 100);
   let p = 0;
@@ -55,8 +55,8 @@ const runMain = (THREE: any, gsap: any, ST: any) => {
   initHeroTerminal();
   initHeroWords(gsap);
   initStory();
-  initServicesPeel();       // raw-scroll peel — no GSAP
-  initNumbers(gsap, ST);
+  initServicesPeel();
+  initNumbers(ST);
   initRevealObserver(ST);
   initProcess(ST);
   initAbout(gsap);
@@ -69,8 +69,8 @@ const runMain = (THREE: any, gsap: any, ST: any) => {
 /* ─── CURSOR ──────────────────────────────────────────────── */
 const initCursor = () => {
   const isTouch = window.matchMedia('(hover: none)').matches;
-  const cq = document.getElementById('cursor-q') as HTMLElement | null;
-  const lbl = document.getElementById('clabel') as HTMLElement | null;
+  const cq  = document.getElementById('cursor-q') as HTMLElement | null;
+  const lbl = document.getElementById('clabel')   as HTMLElement | null;
   if (isTouch || !cq) return;
   cq.style.display = 'block';
   if (lbl) lbl.style.display = 'block';
@@ -100,7 +100,7 @@ const initCursor = () => {
 
 /* ─── NAV ─────────────────────────────────────────────────── */
 const initNav = () => {
-  const nav = document.getElementById('nav');
+  const nav       = document.getElementById('nav');
   const hamburger = document.getElementById('navHamburger');
   const mobileMenu = document.getElementById('mobileMenu');
   window.addEventListener('scroll', () => { nav?.classList.toggle('up', window.scrollY > 20); }, { passive: true });
@@ -119,12 +119,11 @@ const initHeroThree = (THREE: any) => {
   const r = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   r.setPixelRatio(Math.min(devicePixelRatio, 2));
   r.setSize(window.innerWidth, window.innerHeight);
-  const s = new THREE.Scene();
+  const s   = new THREE.Scene();
   const cam = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 200);
   cam.position.z = 50;
 
-  // Particle field
-  const cnt = window.innerWidth < 768 ? 1000 : 2800;
+  const cnt  = window.innerWidth < 768 ? 1000 : 2800;
   const pArr = new Float32Array(cnt * 3);
   const cArr = new Float32Array(cnt * 3);
   for (let i = 0; i < cnt; i++) {
@@ -133,11 +132,10 @@ const initHeroThree = (THREE: any) => {
   }
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(pArr, 3));
-  geo.setAttribute('color', new THREE.BufferAttribute(cArr, 3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(cArr, 3));
   const pts = new THREE.Points(geo, new THREE.PointsMaterial({ size:.32, vertexColors:true, transparent:true, opacity:.65 }));
   s.add(pts);
 
-  // Wireframe Q builder
   const buildQ = (rad: number, px: number, py: number, pz: number, rz: number, op1: number, op2: number) => {
     const grp = new THREE.Group();
     const cp: any[] = [];
@@ -166,26 +164,20 @@ const initHeroThree = (THREE: any) => {
   let tmx = 0, tmy = 0;
   if (window.innerWidth > 768) {
     qGroup  = buildQ(13,  14, -2,  -5,  0.08, 0.13, 0.18); s.add(qGroup);
-    qGroup2 = buildQ(7, -14,  6, -12, -0.15, 0.09, 0.10); s.add(qGroup2);
+    qGroup2 = buildQ(7,  -14,  6, -12, -0.15, 0.09, 0.10); s.add(qGroup2);
   }
 
   document.addEventListener('mousemove', (e) => {
-    tmx = (e.clientX / window.innerWidth - 0.5);
+    tmx = (e.clientX / window.innerWidth  - 0.5);
     tmy = (e.clientY / window.innerHeight - 0.5);
   });
 
   (function tick() {
     requestAnimationFrame(tick);
     pts.rotation.y += .0003; pts.rotation.x += .0001;
-    if (qGroup) {
-      qGroup.rotation.y  += .004;
-      qGroup.rotation.x  += .002;
-    }
-    if (qGroup2) {
-      qGroup2.rotation.y -= .003;
-      qGroup2.rotation.z += .0025;
-    }
-    cam.position.x += (tmx * 5  - cam.position.x) * .028;
+    if (qGroup)  { qGroup.rotation.y  += .004; qGroup.rotation.x  += .002; }
+    if (qGroup2) { qGroup2.rotation.y -= .003; qGroup2.rotation.z += .0025; }
+    cam.position.x += (tmx * 5   - cam.position.x) * .028;
     cam.position.y += (-tmy * 3.5 - cam.position.y) * .028;
     cam.lookAt(s.position);
     r.render(s, cam);
@@ -197,7 +189,7 @@ const initHeroThree = (THREE: any) => {
   }, { passive: true });
 };
 
-/* ─── HERO TERMINAL (syntax-highlighted) ─────────────────── */
+/* ─── HERO TERMINAL ───────────────────────────────────────── */
 const initHeroTerminal = () => {
   const htb = document.getElementById('htb');
   if (!htb) return;
@@ -205,7 +197,7 @@ const initHeroTerminal = () => {
 
   const termLines: { text: string; cls?: string; parts?: {t:string;c:string}[] }[] = [
     { text: '// codeq.tech · 2025', cls: 'c' },
-    { text: "const studio = {",            parts: [{t:'const ',c:'k'},{t:'studio',c:'s'},{t:' = {',c:'w'}] },
+    { text: "const studio = {",             parts: [{t:'const ',c:'k'},{t:'studio',c:'s'},{t:' = {',c:'w'}] },
     { text: '  quality: "non-negotiable",', parts: [{t:'  quality',c:'k'},{t:': ',c:'w'},{t:'"non-negotiable"',c:'s'},{t:',',c:'w'}] },
     { text: '  stack: ["Next.js","AI"],',   parts: [{t:'  stack',c:'k'},{t:': ',c:'w'},{t:'["Next.js","AI"]',c:'s'},{t:',',c:'w'}] },
     { text: '  onTime: 100 + "percent",',   parts: [{t:'  onTime',c:'k'},{t:': ',c:'w'},{t:'100',c:'s'},{t:' + ',c:'w'},{t:'"percent"',c:'s'},{t:',',c:'w'}] },
@@ -213,10 +205,11 @@ const initHeroTerminal = () => {
     { text: 'export default studio; ✓',     parts: [{t:'export default ',c:'k'},{t:'studio',c:'s'},{t:'; ',c:'w'},{t:'✓',c:'c'}] },
   ];
 
+  const H = htb;
   function typeLine(lineData: typeof termLines[0], doneCb: () => void) {
     const span = document.createElement('span');
     span.style.cssText = 'display:block;min-height:1.7em';
-    htb!.appendChild(span);
+    H.appendChild(span);
     const raw = lineData.text;
     let charIdx = 0;
     const cursor = document.createElement('span');
@@ -250,7 +243,7 @@ const initHeroTerminal = () => {
   setTimeout(nextLine, 1600);
 };
 
-/* ─── HERO WORD ANIMATION ─────────────────────────────────── */
+/* ─── HERO WORDS ──────────────────────────────────────────── */
 const initHeroWords = (gsap: any) => {
   gsap.set('.h1w', { y: 90, opacity: 0 });
   document.querySelectorAll('.h1w').forEach((w, i) => {
@@ -260,117 +253,125 @@ const initHeroWords = (gsap: any) => {
   gsap.from('.hero-right',  { y: 30, opacity: 0, duration: .9, ease: 'power3.out', delay: 1.4 });
 };
 
-/* ─── STORY WORD REVEAL (raw scroll, no GSAP quirks) ─────── */
+/* ─── STORY WORD REVEAL ───────────────────────────────────── */
+/* FIX: use live getBoundingClientRect so it works bidirectionally
+   and doesn't break due to offsetTop being unreliable inside sticky layouts */
 const initStory = () => {
   const storyEl = document.getElementById('story');
-  const tws = document.querySelectorAll('#story .tw');
+  const tws     = document.querySelectorAll('#story .tw');
   if (!storyEl || !tws.length) return;
+  const S     = storyEl;
+  const total = tws.length;
 
   function updateStoryWords() {
-    const sectionTop    = storyEl!.offsetTop;
-    const sectionHeight = storyEl!.offsetHeight;
-    const scrollable    = sectionHeight - window.innerHeight;
-    const scrolled      = window.scrollY - sectionTop;
-    const progress      = Math.max(0, Math.min(1, scrolled / scrollable));
+    const rect       = S.getBoundingClientRect();
+    const scrollable = S.offsetHeight - window.innerHeight;
+    if (scrollable <= 0) return;
+    const scrolled   = -rect.top;
+    const progress   = Math.max(0, Math.min(1, scrolled / scrollable));
     tws.forEach((w: any, i: number) => {
-      w.classList.toggle('lit', progress >= i / (tws.length - 1));
+      // toggle is bidirectional — removes .lit when scrolling back up
+      w.classList.toggle('lit', progress >= i / (total - 1));
     });
   }
   window.addEventListener('scroll', updateStoryWords, { passive: true });
   updateStoryWords();
 };
 
-/* ─── SERVICES PEEL (raw scroll — matches HTML exactly) ──── */
+/* ─── SERVICES PEEL ───────────────────────────────────────── */
+/* FIX: defer one frame so offsetHeight is correct after first paint,
+   and use live getBoundingClientRect throughout */
 const initServicesPeel = () => {
-  const wrapEl = document.getElementById('svcWrap') as HTMLElement | null;
-  const card1  = document.getElementById('svc1')    as HTMLElement | null;
-  const card2  = document.getElementById('svc2')    as HTMLElement | null;
-  const card3  = document.getElementById('svc3')    as HTMLElement | null;
-  const hint   = document.getElementById('svcHint') as HTMLElement | null;
-  if (!wrapEl || !card1 || !card2 || !card3) return;
+  // Defer so layout is settled and offsetHeight is correct
+  requestAnimationFrame(() => {
+    const wrapEl = document.getElementById('svcWrap') as HTMLElement | null;
+    const card1  = document.getElementById('svc1')    as HTMLElement | null;
+    const card2  = document.getElementById('svc2')    as HTMLElement | null;
+    const card3  = document.getElementById('svc3')    as HTMLElement | null;
+    const hintEl = document.getElementById('svcHint') as HTMLElement | null;
+    if (!wrapEl || !card1 || !card2 || !card3) return;
 
-  // Reassign to non-null locals so nested functions stay type-safe
-  const W  = wrapEl;
-  const C1 = card1;
-  const C2 = card2;
-  const C3 = card3;
+    // Alias to non-null consts so nested fns are type-safe
+    const W    = wrapEl;
+    const C1   = card1;
+    const C2   = card2;
+    const C3   = card3;
+    const hint = hintEl;
 
-  function ease(t: number) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+    function ease(t: number) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
 
-  function updatePeel() {
-    const wRect      = W.getBoundingClientRect();
-    const scrollable = W.offsetHeight - window.innerHeight;
-    const scrolled   = -wRect.top;
-    const prog       = Math.max(0, Math.min(1, scrolled / scrollable));
+    function updatePeel() {
+      const wRect      = W.getBoundingClientRect();
+      const scrollable = W.offsetHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+      const scrolled   = -wRect.top;
+      const prog       = Math.max(0, Math.min(1, scrolled / scrollable));
 
-    // phase 1: 0→0.35   card1 (web) peels off
-    // phase 2: 0.35→0.7 card2 (AI) peels off
-    // phase 3: 0.7→1.0  card3 (systems) peels off
-    const p1 = Math.max(0, Math.min(1, prog / 0.35));
-    const p2 = Math.max(0, Math.min(1, (prog - 0.35) / 0.35));
-    const p3 = Math.max(0, Math.min(1, (prog - 0.7) / 0.3));
+      if (hint) hint.style.opacity = prog > 0.02 ? '0' : '1';
 
-    if (hint) hint.style.opacity = prog > 0.02 ? '0' : '1';
+      // Three phases:
+      // 0 → 0.35  : card1 peels (web, top)
+      // 0.35 → 0.7: card2 peels (AI, mid)
+      // 0.7 → 1.0 : card3 peels (systems, bottom)
+      const p1 = Math.max(0, Math.min(1, prog / 0.35));
+      const p2 = Math.max(0, Math.min(1, (prog - 0.35) / 0.35));
+      const p3 = Math.max(0, Math.min(1, (prog - 0.7)  / 0.3));
+      const e1 = ease(p1), e2 = ease(p2), e3 = ease(p3);
 
-    const e1 = ease(p1), e2 = ease(p2), e3 = ease(p3);
+      // CARD 1 — top of visual stack (z-index 3 in CSS nth-child(3))
+      const op1 = 1 - e1 * 0.85;
+      C1.style.transform  = `perspective(1800px) rotateX(${e1 * -62}deg) translateY(${e1 * -48}px)`;
+      C1.style.opacity    = String(op1);
+      C1.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op1})`;
+      C1.style.zIndex     = '3';
+      C1.style.visibility = e1 >= 0.99 ? 'hidden' : 'visible';
 
-    // CARD 1 (svc1 = web — top of stack, z-index 3)
-    const op1 = 1 - e1 * 0.85;
-    C1.style.transform  = `perspective(1800px) rotateX(${e1 * -62}deg) translateY(${e1 * -48}px)`;
-    C1.style.opacity    = String(op1);
-    C1.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op1})`;
-    C1.style.zIndex     = '3';
-    C1.style.visibility = e1 >= 0.99 ? 'hidden' : 'visible';
+      // CARD 2
+      if (p2 > 0) {
+        const op2 = 1 - e2 * 0.85;
+        C2.style.transform  = `perspective(1800px) rotateX(${e2 * -62}deg) translateY(${e2 * -48}px)`;
+        C2.style.opacity    = String(op2);
+        C2.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op2})`;
+        C2.style.visibility = e2 >= 0.99 ? 'hidden' : 'visible';
+      } else {
+        const rise2 = 22 * (1 - e1);
+        C2.style.transform  = `perspective(1800px) translateY(${rise2}px) scale(${0.96 + e1 * 0.04})`;
+        C2.style.opacity    = '1';
+        C2.style.boxShadow  = '0 40px 120px rgba(0,0,0,0.4)';
+        C2.style.visibility = 'visible';
+      }
+      C2.style.zIndex = '2';
 
-    // CARD 2 (svc2 = AI — middle, z-index 2)
-    if (p2 > 0) {
-      const op2 = 1 - e2 * 0.85;
-      C2.style.transform  = `perspective(1800px) rotateX(${e2 * -62}deg) translateY(${e2 * -48}px)`;
-      C2.style.opacity    = String(op2);
-      C2.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op2})`;
-      C2.style.visibility = e2 >= 0.99 ? 'hidden' : 'visible';
-    } else {
-      const rise2 = 22 * (1 - e1);
-      const sc2   = 0.96 + e1 * 0.04;
-      C2.style.transform  = `perspective(1800px) translateY(${rise2}px) scale(${sc2})`;
-      C2.style.opacity    = '1';
-      C2.style.boxShadow  = '0 40px 120px rgba(0,0,0,0.4)';
-      C2.style.visibility = 'visible';
+      // CARD 3
+      if (p3 > 0) {
+        const op3 = 1 - e3 * 0.85;
+        C3.style.transform  = `perspective(1800px) rotateX(${e3 * -62}deg) translateY(${e3 * -48}px)`;
+        C3.style.opacity    = String(op3);
+        C3.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op3})`;
+        C3.style.visibility = e3 >= 0.99 ? 'hidden' : 'visible';
+      } else if (p2 > 0) {
+        const rise3 = 22 * (1 - e2);
+        C3.style.transform  = `perspective(1800px) translateY(${rise3}px) scale(${0.96 + e2 * 0.04})`;
+        C3.style.opacity    = '1';
+        C3.style.boxShadow  = '0 40px 120px rgba(0,0,0,0.4)';
+        C3.style.visibility = 'visible';
+      } else {
+        const op3init = Math.min(1, 0.5 + e1 * 0.5);
+        C3.style.transform  = `perspective(1800px) translateY(${44 * (1 - e1)}px) scale(${0.92 + e1 * 0.08})`;
+        C3.style.opacity    = String(op3init);
+        C3.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op3init})`;
+        C3.style.visibility = 'visible';
+      }
+      C3.style.zIndex = '1';
     }
-    C2.style.zIndex = '2';
 
-    // CARD 3 (svc3 = systems — bottom, z-index 1)
-    if (p3 > 0) {
-      const op3 = 1 - e3 * 0.85;
-      C3.style.transform  = `perspective(1800px) rotateX(${e3 * -62}deg) translateY(${e3 * -48}px)`;
-      C3.style.opacity    = String(op3);
-      C3.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op3})`;
-      C3.style.visibility = e3 >= 0.99 ? 'hidden' : 'visible';
-    } else if (p2 > 0) {
-      const rise3 = 22 * (1 - e2);
-      const sc3   = 0.96 + e2 * 0.04;
-      C3.style.transform  = `perspective(1800px) translateY(${rise3}px) scale(${sc3})`;
-      C3.style.opacity    = '1';
-      C3.style.boxShadow  = '0 40px 120px rgba(0,0,0,0.4)';
-      C3.style.visibility = 'visible';
-    } else {
-      const rise3   = 44 * (1 - e1);
-      const sc3     = 0.92 + e1 * 0.08;
-      const op3init = Math.min(1, 0.5 + e1 * 0.5);
-      C3.style.transform  = `perspective(1800px) translateY(${rise3}px) scale(${sc3})`;
-      C3.style.opacity    = String(op3init);
-      C3.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op3init})`;
-      C3.style.visibility = 'visible';
-    }
-    C3.style.zIndex = '1';
-  }
-
-  window.addEventListener('scroll', updatePeel, { passive: true });
-  updatePeel();
+    window.addEventListener('scroll', updatePeel, { passive: true });
+    updatePeel();
+  });
 };
 
 /* ─── NUMBERS ─────────────────────────────────────────────── */
-const initNumbers = (gsap: any, ST: any) => {
+const initNumbers = (ST: any) => {
   document.querySelectorAll('.nv[data-t]').forEach((el: any) => {
     const cell = el.closest('.nc');
     ST.create({
@@ -380,9 +381,9 @@ const initNumbers = (gsap: any, ST: any) => {
         const target = +el.dataset.t;
         const suf    = el.dataset.s || '';
         const dur    = 1800;
-        const st     = performance.now();
-        function go(n: number) {
-          const p = Math.min((n - st) / dur, 1);
+        const start  = performance.now();
+        function go(now: number) {
+          const p = Math.min((now - start) / dur, 1);
           const e = 1 - Math.pow(1 - p, 4);
           el.textContent = Math.floor(e * target) + suf;
           if (p < 1) requestAnimationFrame(go);
@@ -400,60 +401,80 @@ const initRevealObserver = (ST: any) => {
   });
 };
 
-/* ─── PROCESS (with progress ring + step nav) ────────────── */
+/* ─── PROCESS ─────────────────────────────────────────────── */
+/* FIX: use scrub-based ScrollTrigger for progress ring + nav so they
+   update bidirectionally (scrolling back reverses them).
+   onEnter/onLeave only fire once per direction — not suitable for
+   continuous reverse-scroll updates. */
 const initProcess = (ST: any) => {
-  const processSteps = document.querySelectorAll('.ps');
-  const progressCircle = document.querySelector('.progress-circle') as SVGCircleElement | null;
-  const progressPercent = document.getElementById('progressPercent');
-  const processNav = document.querySelector('.process-nav');
+  const processSteps      = document.querySelectorAll('.ps');
+  const progressCircle    = document.querySelector('.progress-circle')            as SVGCircleElement | null;
+  const progressPercent   = document.getElementById('progressPercent');
+  const processNav        = document.querySelector('.process-nav');
   const progressContainer = document.querySelector('.process-progress-container');
+  const navItems          = document.querySelectorAll('.process-nav-item');
+  const totalSteps        = processSteps.length;
+  const circumference     = 314.159;
 
-  // Show/hide fixed overlays
+  // Show/hide fixed overlays when #process is in viewport
   if (processNav && progressContainer) {
     ST.create({
       trigger: '#process',
       start: 'top center',
       end: 'bottom center',
-      onEnter:      () => { processNav.classList.add('visible'); progressContainer.classList.add('visible'); },
+      onEnter:      () => { processNav.classList.add('visible');    progressContainer.classList.add('visible'); },
       onLeave:      () => { processNav.classList.remove('visible'); progressContainer.classList.remove('visible'); },
-      onEnterBack:  () => { processNav.classList.add('visible'); progressContainer.classList.add('visible'); },
+      onEnterBack:  () => { processNav.classList.add('visible');    progressContainer.classList.add('visible'); },
       onLeaveBack:  () => { processNav.classList.remove('visible'); progressContainer.classList.remove('visible'); },
     });
   }
 
-  const totalSteps = processSteps.length;
+  // Per-step: reveal class + bidirectional nav/ring update
   processSteps.forEach((ps: any, idx: number) => {
     ST.create({
       trigger: ps,
       start: 'top 75%',
+      // onEnter: step scrolled INTO view going DOWN
       onEnter: () => {
         ps.classList.add('revealed');
-        // Update nav circles
-        document.querySelectorAll('.process-nav-item').forEach((item: any, i: number) => {
-          item.classList.toggle('active', i === idx);
-        });
-        // Update progress ring
-        const pct = Math.round(((idx + 1) / totalSteps) * 100);
-        if (progressCircle) {
-          const circumference = 314.159;
-          progressCircle.style.strokeDashoffset = String(circumference - (circumference * pct / 100));
-        }
-        if (progressPercent) progressPercent.textContent = pct + '%';
+        updateNavAndRing(idx);
+      },
+      // onLeaveBack: step scrolled OUT going UP — revert to previous step
+      onLeaveBack: () => {
+        ps.classList.remove('revealed');
+        updateNavAndRing(idx - 1);
       },
     });
   });
 
+  function updateNavAndRing(activeIdx: number) {
+    // Update nav circles — highlight only the current active step
+    navItems.forEach((item: any, i: number) => {
+      item.classList.toggle('active', i === activeIdx);
+    });
+    // Update progress ring
+    if (activeIdx < 0) {
+      // Before any step — reset to 0%
+      if (progressCircle) progressCircle.style.strokeDashoffset = String(circumference);
+      if (progressPercent) progressPercent.textContent = '0%';
+    } else {
+      const pct = Math.round(((activeIdx + 1) / totalSteps) * 100);
+      if (progressCircle) progressCircle.style.strokeDashoffset = String(circumference - (circumference * pct / 100));
+      if (progressPercent) progressPercent.textContent = pct + '%';
+    }
+  }
+
   // Nav click-to-scroll
-  document.querySelectorAll('.process-nav-item').forEach((item: any) => {
+  navItems.forEach((item: any) => {
     item.addEventListener('click', () => {
-      const step = item.dataset.step;
+      const step   = item.dataset.step;
       const target = document.querySelector(`.ps[data-step="${step}"]`);
       target?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   });
 };
 
-/* ─── ABOUT (laptop animation) ───────────────────────────── */
+/* ─── ABOUT ───────────────────────────────────────────────── */
 const initAbout = (gsap: any) => {
   const laptopScene  = document.getElementById('laptopScene');
   const aboutSection = document.getElementById('about');
@@ -488,7 +509,7 @@ const initAbout = (gsap: any) => {
       const obj = { v: 0 };
       gsap.to(obj, {
         v: target, duration: 1.5, ease: 'power2.out', delay: i * .07,
-        onUpdate: () => { el.textContent = Math.round(obj.v) + suffix; },
+        onUpdate:  () => { el.textContent = Math.round(obj.v) + suffix; },
         onComplete: () => { el.textContent = target + suffix; },
       });
     });
@@ -503,7 +524,7 @@ const runAboutAnimation = (gsap: any) => {
   const edLinesEl = document.getElementById('edLines');
   if (!editorEl || !browserEl || !edCodeEl || !edLinesEl) return;
 
-  // Alias to non-null so nested closures stay type-safe
+  // Non-null aliases so nested closures are type-safe
   const editor  = editorEl;
   const browser = browserEl;
   const edCode  = edCodeEl;
@@ -556,7 +577,7 @@ const runAboutAnimation = (gsap: any) => {
     gsap.to(browser, { opacity: 0, duration: .6, onComplete: () => {
       abItems.forEach((id) => document.getElementById(id)?.classList.remove('show'));
       gsap.set(editor, { opacity: 0 });
-      gsap.to(editor, { opacity: 1, duration: .4, delay: .2 });
+      gsap.to(editor,  { opacity: 1, duration: .4, delay: .2 });
       typeCode(() => { gsap.to(editor, { opacity: 0, duration: .5 }); setTimeout(showBrowser, 400); });
     }});
   };
@@ -598,9 +619,9 @@ const initFlipCardTilt = () => {
 
 /* ─── PARALLAX ────────────────────────────────────────────── */
 const initParallax = (gsap: any, ST: any) => {
-  gsap.to('.orb-a', { y: -50, ease: 'none', scrollTrigger: { trigger: '#story', start: 'top bottom', end: 'bottom top', scrub: 1.5 } });
-  gsap.to('.orb-b', { y: -100, x: 30, ease: 'none', scrollTrigger: { trigger: '#story', start: 'top bottom', end: 'bottom top', scrub: 2 } });
-  gsap.to('#hcanvas', { y: 100, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1 } });
+  gsap.to('.orb-a',   { y: -50,         ease: 'none', scrollTrigger: { trigger: '#story', start: 'top bottom', end: 'bottom top', scrub: 1.5 } });
+  gsap.to('.orb-b',   { y: -100, x: 30, ease: 'none', scrollTrigger: { trigger: '#story', start: 'top bottom', end: 'bottom top', scrub: 2   } });
+  gsap.to('#hcanvas', { y: 100,          ease: 'none', scrollTrigger: { trigger: '#hero',  start: 'top top',    end: 'bottom top', scrub: 1   } });
 };
 
 /* ─── CTA PARTICLES ───────────────────────────────────────── */
@@ -610,8 +631,9 @@ const initCTAParticles = () => {
   const snippets = ['const q = "quality"','npm run build','git push origin main','type: "production"','✓ 98 lighthouse','export default function','next.js 14','zero downtime','mobile-first'];
   for (let i = 0; i < 12; i++) {
     const cp = document.createElement('div');
-    cp.className = 'cp'; cp.textContent = snippets[i % snippets.length];
-    cp.style.left = (Math.random() * 95) + '%';
+    cp.className = 'cp';
+    cp.textContent = snippets[i % snippets.length];
+    cp.style.left             = (Math.random() * 95) + '%';
     cp.style.animationDuration = (8 + Math.random() * 12) + 's';
     cp.style.animationDelay   = (Math.random() * 10) + 's';
     ctap.appendChild(cp);
