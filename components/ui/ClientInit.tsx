@@ -254,7 +254,6 @@ const initHeroWords = (gsap: any) => {
 };
 
 /* ─── STORY WORD REVEAL ───────────────────────────────────── */
-/* ─── STORY WORD REVEAL ───────────────────────────────────── */
 const initStory = () => {
   const storyEl = document.getElementById('story');
   const tws     = document.querySelectorAll('#story .tw');
@@ -262,19 +261,14 @@ const initStory = () => {
   const S     = storyEl;
   const total = tws.length;
 
-  function getAbsTop(el: HTMLElement): number {
-    let top = 0;
-    let cur: HTMLElement | null = el;
-    while (cur) { top += cur.offsetTop; cur = cur.offsetParent as HTMLElement | null; }
-    return top;
-  }
-
   function updateStoryWords() {
-    const sectionTop = getAbsTop(S);
+    // Use getBoundingClientRect for reliable position even with sticky parents
+    const rect       = S.getBoundingClientRect();
+    const sectionTop = rect.top + window.scrollY;
     const scrollable = S.offsetHeight - window.innerHeight;
     if (scrollable <= 0) return;
-    const scrolled   = window.scrollY - sectionTop;
-    const progress   = Math.max(0, Math.min(1, scrolled / scrollable));
+    const scrolled  = window.scrollY - sectionTop;
+    const progress  = Math.max(0, Math.min(1, scrolled / scrollable));
     tws.forEach((w: any, i: number) => {
       w.classList.toggle('lit', progress >= i / (total - 1));
     });
@@ -293,22 +287,22 @@ const initServicesPeel = () => {
   if (!wrapEl || !card1 || !card2 || !card3) return;
 
   const W    = wrapEl;
-  const C1   = card1;
-  const C2   = card2;
-  const C3   = card3;
+  const C1   = card1;  // svc1 = orange = Web (top card, z:3)
+  const C2   = card2;  // svc2 = purple = AI  (mid card, z:2)
+  const C3   = card3;  // svc3 = green  = Systems (bottom card, z:1)
   const hint = hintEl;
 
-  function getAbsTop(el: HTMLElement): number {
-    let top = 0;
-    let cur: HTMLElement | null = el;
-    while (cur) { top += cur.offsetTop; cur = cur.offsetParent as HTMLElement | null; }
-    return top;
-  }
+  // Set initial z-indexes explicitly
+  C1.style.zIndex = '3';
+  C2.style.zIndex = '2';
+  C3.style.zIndex = '1';
 
   function ease(t: number) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
 
   function updatePeel() {
-    const wrapAbsTop = getAbsTop(W);
+    // Use getBoundingClientRect for reliable absolute position
+    const rect       = W.getBoundingClientRect();
+    const wrapAbsTop = rect.top + window.scrollY;
     const scrollable = W.offsetHeight - window.innerHeight;
     if (scrollable <= 0) return;
     const scrolled   = window.scrollY - wrapAbsTop;
@@ -321,7 +315,7 @@ const initServicesPeel = () => {
     const p3 = Math.max(0, Math.min(1, (prog - 0.7)  / 0.3));
     const e1 = ease(p1), e2 = ease(p2), e3 = ease(p3);
 
-    // CARD 1 — web (top, z:3)
+    // CARD 1 — web (top, z:3) — peels off first
     const op1 = 1 - e1 * 0.85;
     C1.style.transform  = `perspective(1800px) rotateX(${e1 * -62}deg) translateY(${e1 * -48}px)`;
     C1.style.opacity    = String(op1);
@@ -329,7 +323,7 @@ const initServicesPeel = () => {
     C1.style.zIndex     = '3';
     C1.style.visibility = e1 >= 0.99 ? 'hidden' : 'visible';
 
-    // CARD 2 — AI (mid, z:2)
+    // CARD 2 — AI (mid, z:2) — peels off second
     if (p2 > 0) {
       const op2 = 1 - e2 * 0.85;
       C2.style.transform  = `perspective(1800px) rotateX(${e2 * -62}deg) translateY(${e2 * -48}px)`;
@@ -344,7 +338,7 @@ const initServicesPeel = () => {
     }
     C2.style.zIndex = '2';
 
-    // CARD 3 — systems (bottom, z:1)
+    // CARD 3 — systems (bottom, z:1) — peels off last
     if (p3 > 0) {
       const op3 = 1 - e3 * 0.85;
       C3.style.transform  = `perspective(1800px) rotateX(${e3 * -62}deg) translateY(${e3 * -48}px)`;
