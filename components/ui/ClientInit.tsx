@@ -254,9 +254,7 @@ const initHeroWords = (gsap: any) => {
 };
 
 /* ─── STORY WORD REVEAL ───────────────────────────────────── */
-/* Use window.scrollY - offsetTop (NOT getBoundingClientRect) because
-   #story itself is a normal-flow section; getBoundingClientRect gives
-   wrong results once the browser has scrolled into the sticky child */
+/* ─── STORY WORD REVEAL ───────────────────────────────────── */
 const initStory = () => {
   const storyEl = document.getElementById('story');
   const tws     = document.querySelectorAll('#story .tw');
@@ -264,14 +262,20 @@ const initStory = () => {
   const S     = storyEl;
   const total = tws.length;
 
+  function getAbsTop(el: HTMLElement): number {
+    let top = 0;
+    let cur: HTMLElement | null = el;
+    while (cur) { top += cur.offsetTop; cur = cur.offsetParent as HTMLElement | null; }
+    return top;
+  }
+
   function updateStoryWords() {
-    const sectionTop = S.offsetTop;                         // stable — section is in normal flow
-    const scrollable = S.offsetHeight - window.innerHeight; // 300vh - 100vh = 200vh of scroll
+    const sectionTop = getAbsTop(S);
+    const scrollable = S.offsetHeight - window.innerHeight;
     if (scrollable <= 0) return;
     const scrolled   = window.scrollY - sectionTop;
     const progress   = Math.max(0, Math.min(1, scrolled / scrollable));
     tws.forEach((w: any, i: number) => {
-      // toggle removes .lit when scrolling back up (bidirectional)
       w.classList.toggle('lit', progress >= i / (total - 1));
     });
   }
@@ -280,96 +284,90 @@ const initStory = () => {
 };
 
 /* ─── SERVICES PEEL ───────────────────────────────────────── */
-/* FIX: defer one frame so offsetHeight is correct after first paint,
-   and use live getBoundingClientRect throughout */
 const initServicesPeel = () => {
-  // Defer so layout is settled and offsetHeight is correct
-  requestAnimationFrame(() => {
-    const wrapEl = document.getElementById('svcWrap') as HTMLElement | null;
-    const card1  = document.getElementById('svc1')    as HTMLElement | null;
-    const card2  = document.getElementById('svc2')    as HTMLElement | null;
-    const card3  = document.getElementById('svc3')    as HTMLElement | null;
-    const hintEl = document.getElementById('svcHint') as HTMLElement | null;
-    if (!wrapEl || !card1 || !card2 || !card3) return;
+  const wrapEl = document.getElementById('svcWrap') as HTMLElement | null;
+  const card1  = document.getElementById('svc1')    as HTMLElement | null;
+  const card2  = document.getElementById('svc2')    as HTMLElement | null;
+  const card3  = document.getElementById('svc3')    as HTMLElement | null;
+  const hintEl = document.getElementById('svcHint') as HTMLElement | null;
+  if (!wrapEl || !card1 || !card2 || !card3) return;
 
-    // Alias to non-null consts so nested fns are type-safe
-    const W    = wrapEl;
-    const C1   = card1;
-    const C2   = card2;
-    const C3   = card3;
-    const hint = hintEl;
+  const W    = wrapEl;
+  const C1   = card1;
+  const C2   = card2;
+  const C3   = card3;
+  const hint = hintEl;
 
-    function ease(t: number) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+  function getAbsTop(el: HTMLElement): number {
+    let top = 0;
+    let cur: HTMLElement | null = el;
+    while (cur) { top += cur.offsetTop; cur = cur.offsetParent as HTMLElement | null; }
+    return top;
+  }
 
-    function updatePeel() {
-      // Use offsetTop (stable) instead of getBoundingClientRect which drifts
-      // once the sticky child is pinned
-      const scrollable = W.offsetHeight - window.innerHeight;
-      if (scrollable <= 0) return;
-      const scrolled   = window.scrollY - W.offsetTop;
-      const prog       = Math.max(0, Math.min(1, scrolled / scrollable));
+  function ease(t: number) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
 
-      if (hint) hint.style.opacity = prog > 0.02 ? '0' : '1';
+  function updatePeel() {
+    const wrapAbsTop = getAbsTop(W);
+    const scrollable = W.offsetHeight - window.innerHeight;
+    if (scrollable <= 0) return;
+    const scrolled   = window.scrollY - wrapAbsTop;
+    const prog       = Math.max(0, Math.min(1, scrolled / scrollable));
 
-      // Three phases:
-      // 0 → 0.35  : card1 peels (web, top)
-      // 0.35 → 0.7: card2 peels (AI, mid)
-      // 0.7 → 1.0 : card3 peels (systems, bottom)
-      const p1 = Math.max(0, Math.min(1, prog / 0.35));
-      const p2 = Math.max(0, Math.min(1, (prog - 0.35) / 0.35));
-      const p3 = Math.max(0, Math.min(1, (prog - 0.7)  / 0.3));
-      const e1 = ease(p1), e2 = ease(p2), e3 = ease(p3);
+    if (hint) hint.style.opacity = prog > 0.02 ? '0' : '1';
 
-      // CARD 1 — top of visual stack (z-index 3 in CSS nth-child(3))
-      const op1 = 1 - e1 * 0.85;
-      C1.style.transform  = `perspective(1800px) rotateX(${e1 * -62}deg) translateY(${e1 * -48}px)`;
-      C1.style.opacity    = String(op1);
-      C1.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op1})`;
-      C1.style.zIndex     = '3';
-      C1.style.visibility = e1 >= 0.99 ? 'hidden' : 'visible';
+    const p1 = Math.max(0, Math.min(1, prog / 0.35));
+    const p2 = Math.max(0, Math.min(1, (prog - 0.35) / 0.35));
+    const p3 = Math.max(0, Math.min(1, (prog - 0.7)  / 0.3));
+    const e1 = ease(p1), e2 = ease(p2), e3 = ease(p3);
 
-      // CARD 2
-      if (p2 > 0) {
-        const op2 = 1 - e2 * 0.85;
-        C2.style.transform  = `perspective(1800px) rotateX(${e2 * -62}deg) translateY(${e2 * -48}px)`;
-        C2.style.opacity    = String(op2);
-        C2.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op2})`;
-        C2.style.visibility = e2 >= 0.99 ? 'hidden' : 'visible';
-      } else {
-        const rise2 = 22 * (1 - e1);
-        C2.style.transform  = `perspective(1800px) translateY(${rise2}px) scale(${0.96 + e1 * 0.04})`;
-        C2.style.opacity    = '1';
-        C2.style.boxShadow  = '0 40px 120px rgba(0,0,0,0.4)';
-        C2.style.visibility = 'visible';
-      }
-      C2.style.zIndex = '2';
+    // CARD 1 — web (top, z:3)
+    const op1 = 1 - e1 * 0.85;
+    C1.style.transform  = `perspective(1800px) rotateX(${e1 * -62}deg) translateY(${e1 * -48}px)`;
+    C1.style.opacity    = String(op1);
+    C1.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op1})`;
+    C1.style.zIndex     = '3';
+    C1.style.visibility = e1 >= 0.99 ? 'hidden' : 'visible';
 
-      // CARD 3
-      if (p3 > 0) {
-        const op3 = 1 - e3 * 0.85;
-        C3.style.transform  = `perspective(1800px) rotateX(${e3 * -62}deg) translateY(${e3 * -48}px)`;
-        C3.style.opacity    = String(op3);
-        C3.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op3})`;
-        C3.style.visibility = e3 >= 0.99 ? 'hidden' : 'visible';
-      } else if (p2 > 0) {
-        const rise3 = 22 * (1 - e2);
-        C3.style.transform  = `perspective(1800px) translateY(${rise3}px) scale(${0.96 + e2 * 0.04})`;
-        C3.style.opacity    = '1';
-        C3.style.boxShadow  = '0 40px 120px rgba(0,0,0,0.4)';
-        C3.style.visibility = 'visible';
-      } else {
-        const op3init = Math.min(1, 0.5 + e1 * 0.5);
-        C3.style.transform  = `perspective(1800px) translateY(${44 * (1 - e1)}px) scale(${0.92 + e1 * 0.08})`;
-        C3.style.opacity    = String(op3init);
-        C3.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op3init})`;
-        C3.style.visibility = 'visible';
-      }
-      C3.style.zIndex = '1';
+    // CARD 2 — AI (mid, z:2)
+    if (p2 > 0) {
+      const op2 = 1 - e2 * 0.85;
+      C2.style.transform  = `perspective(1800px) rotateX(${e2 * -62}deg) translateY(${e2 * -48}px)`;
+      C2.style.opacity    = String(op2);
+      C2.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op2})`;
+      C2.style.visibility = e2 >= 0.99 ? 'hidden' : 'visible';
+    } else {
+      C2.style.transform  = `perspective(1800px) translateY(${22 * (1 - e1)}px) scale(${0.96 + e1 * 0.04})`;
+      C2.style.opacity    = '1';
+      C2.style.boxShadow  = '0 40px 120px rgba(0,0,0,0.4)';
+      C2.style.visibility = 'visible';
     }
+    C2.style.zIndex = '2';
 
-    window.addEventListener('scroll', updatePeel, { passive: true });
-    updatePeel();
-  });
+    // CARD 3 — systems (bottom, z:1)
+    if (p3 > 0) {
+      const op3 = 1 - e3 * 0.85;
+      C3.style.transform  = `perspective(1800px) rotateX(${e3 * -62}deg) translateY(${e3 * -48}px)`;
+      C3.style.opacity    = String(op3);
+      C3.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op3})`;
+      C3.style.visibility = e3 >= 0.99 ? 'hidden' : 'visible';
+    } else if (p2 > 0) {
+      C3.style.transform  = `perspective(1800px) translateY(${22 * (1 - e2)}px) scale(${0.96 + e2 * 0.04})`;
+      C3.style.opacity    = '1';
+      C3.style.boxShadow  = '0 40px 120px rgba(0,0,0,0.4)';
+      C3.style.visibility = 'visible';
+    } else {
+      const op3init = Math.min(1, 0.5 + e1 * 0.5);
+      C3.style.transform  = `perspective(1800px) translateY(${44 * (1 - e1)}px) scale(${0.92 + e1 * 0.08})`;
+      C3.style.opacity    = String(op3init);
+      C3.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op3init})`;
+      C3.style.visibility = 'visible';
+    }
+    C3.style.zIndex = '1';
+  }
+
+  window.addEventListener('scroll', updatePeel, { passive: true });
+  updatePeel();
 };
 
 /* ─── NUMBERS ─────────────────────────────────────────────── */
