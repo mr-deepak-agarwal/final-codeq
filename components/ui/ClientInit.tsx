@@ -282,24 +282,28 @@ const initStory = () => {
 
 /* ─── SERVICES PEEL (raw scroll — matches HTML exactly) ──── */
 const initServicesPeel = () => {
-  const wrap = document.getElementById('svcWrap') as HTMLElement | null;
-  const c1   = document.getElementById('svc1') as HTMLElement | null;
-  const c2   = document.getElementById('svc2') as HTMLElement | null;
-  const c3   = document.getElementById('svc3') as HTMLElement | null;
-  const hint = document.getElementById('svcHint') as HTMLElement | null;
-  if (!wrap || !c1 || !c2 || !c3) return;
+  const wrapEl = document.getElementById('svcWrap') as HTMLElement | null;
+  const card1  = document.getElementById('svc1')    as HTMLElement | null;
+  const card2  = document.getElementById('svc2')    as HTMLElement | null;
+  const card3  = document.getElementById('svc3')    as HTMLElement | null;
+  const hint   = document.getElementById('svcHint') as HTMLElement | null;
+  if (!wrapEl || !card1 || !card2 || !card3) return;
 
-  const safeWrap = wrap;
+  // Reassign to non-null locals so nested functions stay type-safe
+  const W  = wrapEl;
+  const C1 = card1;
+  const C2 = card2;
+  const C3 = card3;
 
   function ease(t: number) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
 
   function updatePeel() {
-    const wRect      = safeWrap.getBoundingClientRect();
-    const scrollable = safeWrap.offsetHeight - window.innerHeight;
+    const wRect      = W.getBoundingClientRect();
+    const scrollable = W.offsetHeight - window.innerHeight;
     const scrolled   = -wRect.top;
     const prog       = Math.max(0, Math.min(1, scrolled / scrollable));
 
-    // phase 1: 0→0.35  card1 (web) peels off
+    // phase 1: 0→0.35   card1 (web) peels off
     // phase 2: 0.35→0.7 card2 (AI) peels off
     // phase 3: 0.7→1.0  card3 (systems) peels off
     const p1 = Math.max(0, Math.min(1, prog / 0.35));
@@ -312,53 +316,53 @@ const initServicesPeel = () => {
 
     // CARD 1 (svc1 = web — top of stack, z-index 3)
     const op1 = 1 - e1 * 0.85;
-    c1.style.transform   = `perspective(1800px) rotateX(${e1 * -62}deg) translateY(${e1 * -48}px)`;
-    c1.style.opacity     = String(op1);
-    c1.style.boxShadow   = `0 40px 120px rgba(0,0,0,${0.4 * op1})`;
-    c1.style.zIndex      = '3';
-    c1.style.visibility  = e1 >= 0.99 ? 'hidden' : 'visible';
+    C1.style.transform  = `perspective(1800px) rotateX(${e1 * -62}deg) translateY(${e1 * -48}px)`;
+    C1.style.opacity    = String(op1);
+    C1.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op1})`;
+    C1.style.zIndex     = '3';
+    C1.style.visibility = e1 >= 0.99 ? 'hidden' : 'visible';
 
     // CARD 2 (svc2 = AI — middle, z-index 2)
     if (p2 > 0) {
       const op2 = 1 - e2 * 0.85;
-      c2.style.transform  = `perspective(1800px) rotateX(${e2 * -62}deg) translateY(${e2 * -48}px)`;
-      c2.style.opacity    = String(op2);
-      c2.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op2})`;
-      c2.style.visibility = e2 >= 0.99 ? 'hidden' : 'visible';
+      C2.style.transform  = `perspective(1800px) rotateX(${e2 * -62}deg) translateY(${e2 * -48}px)`;
+      C2.style.opacity    = String(op2);
+      C2.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op2})`;
+      C2.style.visibility = e2 >= 0.99 ? 'hidden' : 'visible';
     } else {
       const rise2 = 22 * (1 - e1);
       const sc2   = 0.96 + e1 * 0.04;
-      c2.style.transform  = `perspective(1800px) translateY(${rise2}px) scale(${sc2})`;
-      c2.style.opacity    = '1';
-      c2.style.boxShadow  = '0 40px 120px rgba(0,0,0,0.4)';
-      c2.style.visibility = 'visible';
+      C2.style.transform  = `perspective(1800px) translateY(${rise2}px) scale(${sc2})`;
+      C2.style.opacity    = '1';
+      C2.style.boxShadow  = '0 40px 120px rgba(0,0,0,0.4)';
+      C2.style.visibility = 'visible';
     }
-    c2.style.zIndex = '2';
+    C2.style.zIndex = '2';
 
     // CARD 3 (svc3 = systems — bottom, z-index 1)
     if (p3 > 0) {
       const op3 = 1 - e3 * 0.85;
-      c3.style.transform  = `perspective(1800px) rotateX(${e3 * -62}deg) translateY(${e3 * -48}px)`;
-      c3.style.opacity    = String(op3);
-      c3.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op3})`;
-      c3.style.visibility = e3 >= 0.99 ? 'hidden' : 'visible';
+      C3.style.transform  = `perspective(1800px) rotateX(${e3 * -62}deg) translateY(${e3 * -48}px)`;
+      C3.style.opacity    = String(op3);
+      C3.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op3})`;
+      C3.style.visibility = e3 >= 0.99 ? 'hidden' : 'visible';
     } else if (p2 > 0) {
       const rise3 = 22 * (1 - e2);
       const sc3   = 0.96 + e2 * 0.04;
-      c3.style.transform  = `perspective(1800px) translateY(${rise3}px) scale(${sc3})`;
-      c3.style.opacity    = '1';
-      c3.style.boxShadow  = '0 40px 120px rgba(0,0,0,0.4)';
-      c3.style.visibility = 'visible';
+      C3.style.transform  = `perspective(1800px) translateY(${rise3}px) scale(${sc3})`;
+      C3.style.opacity    = '1';
+      C3.style.boxShadow  = '0 40px 120px rgba(0,0,0,0.4)';
+      C3.style.visibility = 'visible';
     } else {
       const rise3   = 44 * (1 - e1);
       const sc3     = 0.92 + e1 * 0.08;
       const op3init = Math.min(1, 0.5 + e1 * 0.5);
-      c3.style.transform  = `perspective(1800px) translateY(${rise3}px) scale(${sc3})`;
-      c3.style.opacity    = String(op3init);
-      c3.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op3init})`;
-      c3.style.visibility = 'visible';
+      C3.style.transform  = `perspective(1800px) translateY(${rise3}px) scale(${sc3})`;
+      C3.style.opacity    = String(op3init);
+      C3.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op3init})`;
+      C3.style.visibility = 'visible';
     }
-    c3.style.zIndex = '1';
+    C3.style.zIndex = '1';
   }
 
   window.addEventListener('scroll', updatePeel, { passive: true });
@@ -493,11 +497,17 @@ const initAbout = (gsap: any) => {
 };
 
 const runAboutAnimation = (gsap: any) => {
-  const editor  = document.getElementById('phaseEditor');
-  const browser = document.getElementById('phaseBrowser');
-  const edCode  = document.getElementById('edCode');
-  const edLines = document.getElementById('edLines');
-  if (!editor || !browser || !edCode || !edLines) return;
+  const editorEl  = document.getElementById('phaseEditor');
+  const browserEl = document.getElementById('phaseBrowser');
+  const edCodeEl  = document.getElementById('edCode');
+  const edLinesEl = document.getElementById('edLines');
+  if (!editorEl || !browserEl || !edCodeEl || !edLinesEl) return;
+
+  // Alias to non-null so nested closures stay type-safe
+  const editor  = editorEl;
+  const browser = browserEl;
+  const edCode  = edCodeEl;
+  const edLines = edLinesEl;
 
   const codeLines = [
     '<span class="sp">export default</span> <span class="sk">function</span> <span class="sf">HomePage</span>() {',
