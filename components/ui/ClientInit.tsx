@@ -262,9 +262,10 @@ const initStory = () => {
   const total = tws.length;
 
   function updateStoryWords() {
-    // Use getBoundingClientRect for reliable position even with sticky parents
-    const rect       = S.getBoundingClientRect();
-    const sectionTop = rect.top + window.scrollY;
+    // offsetTop gives the absolute position from the document top (no sticky confusion)
+    const sectionTop = S.offsetTop;
+    // The scrollable range is the section height minus the viewport height
+    // Section is 300vh, so scrollable = 300vh - 100vh = 200vh
     const scrollable = S.offsetHeight - window.innerHeight;
     if (scrollable <= 0) return;
     const scrolled  = window.scrollY - sectionTop;
@@ -274,6 +275,7 @@ const initStory = () => {
     });
   }
   window.addEventListener('scroll', updateStoryWords, { passive: true });
+  // Run once on load in case user starts mid-page
   updateStoryWords();
 };
 
@@ -300,9 +302,7 @@ const initServicesPeel = () => {
   function ease(t: number) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
 
   function updatePeel() {
-    // Use getBoundingClientRect for reliable absolute position
-    const rect       = W.getBoundingClientRect();
-    const wrapAbsTop = rect.top + window.scrollY;
+    const wrapAbsTop = W.offsetTop;
     const scrollable = W.offsetHeight - window.innerHeight;
     if (scrollable <= 0) return;
     const scrolled   = window.scrollY - wrapAbsTop;
