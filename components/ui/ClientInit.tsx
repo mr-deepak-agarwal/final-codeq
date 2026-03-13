@@ -255,22 +255,32 @@ const initHeroWords = (gsap: any) => {
 
 /* ─── STORY WORD REVEAL ───────────────────────────────────── */
 const initStory = (ST: any) => {
-  const tws = document.querySelectorAll('#story .tw');
-  if (!tws.length) return;
-  const total = tws.length;
+  const words = document.querySelectorAll('#story .tw');
+  if (!words.length) return;
+
+  const total = words.length;
 
   ST.create({
     trigger: '#story',
-    start: 'top top',
-    end: 'bottom bottom',
-    scrub: 0.3,
+    start: 'top center',
+    end: 'bottom center',
+    scrub: true,
+
     onUpdate: (self: any) => {
-      const p = self.progress;
-      tws.forEach((w: any, i: number) => {
-        w.classList.toggle('lit', p >= i / (total - 1));
+      const progress = self.progress;
+      const active = Math.floor(progress * total);
+
+      words.forEach((word: any, i: number) => {
+        if (i <= active) {
+          word.classList.add('lit');
+        } else {
+          word.classList.remove('lit');
+        }
       });
-    },
+    }
   });
+
+  ST.refresh();
 };
 
 /* ─── SERVICES PEEL ───────────────────────────────────────── */
