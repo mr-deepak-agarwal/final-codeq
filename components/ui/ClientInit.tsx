@@ -54,7 +54,7 @@ const runMain = (THREE: any, gsap: any, ST: any) => {
   initHeroThree(THREE);
   initHeroTerminal();
   initHeroWords(gsap);
-  initStory();
+  initStory(ST);
   initServicesPeel();
   initNumbers(ST);
   initRevealObserver(ST);
@@ -254,29 +254,23 @@ const initHeroWords = (gsap: any) => {
 };
 
 /* ─── STORY WORD REVEAL ───────────────────────────────────── */
-const initStory = () => {
-  const storyEl = document.getElementById('story');
-  const tws     = document.querySelectorAll('#story .tw');
-  if (!storyEl || !tws.length) return;
-  const S     = storyEl;
+const initStory = (ST: any) => {
+  const tws = document.querySelectorAll('#story .tw');
+  if (!tws.length) return;
   const total = tws.length;
 
-  function updateStoryWords() {
-    // offsetTop gives the absolute position from the document top (no sticky confusion)
-    const sectionTop = S.offsetTop;
-    // The scrollable range is the section height minus the viewport height
-    // Section is 300vh, so scrollable = 300vh - 100vh = 200vh
-    const scrollable = S.offsetHeight - window.innerHeight;
-    if (scrollable <= 0) return;
-    const scrolled  = window.scrollY - sectionTop;
-    const progress  = Math.max(0, Math.min(1, scrolled / scrollable));
-    tws.forEach((w: any, i: number) => {
-      w.classList.toggle('lit', progress >= i / (total - 1));
-    });
-  }
-  window.addEventListener('scroll', updateStoryWords, { passive: true });
-  // Run once on load in case user starts mid-page
-  updateStoryWords();
+  ST.create({
+    trigger: '#story',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 0.3,
+    onUpdate: (self: any) => {
+      const p = self.progress;
+      tws.forEach((w: any, i: number) => {
+        w.classList.toggle('lit', p >= i / (total - 1));
+      });
+    },
+  });
 };
 
 /* ─── SERVICES PEEL ───────────────────────────────────────── */
