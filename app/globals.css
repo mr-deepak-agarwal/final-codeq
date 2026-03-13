@@ -334,7 +334,7 @@ nav#nav.up {
 /* ─────────────────────────────────────────────
    STORY TYPEWRITER
 ───────────────────────────────────────────── */
-#story { height: 170vh; position: relative; }
+#story {   min-height: 130vh; position: relative; }
 .story-pin {
   position: sticky; top: 0; height: 100vh; overflow: hidden;
   display: flex; align-items: center; justify-content: center; background: var(--dark);
