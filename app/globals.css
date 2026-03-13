@@ -334,7 +334,7 @@ nav#nav.up {
 /* ─────────────────────────────────────────────
    STORY TYPEWRITER
 ───────────────────────────────────────────── */
-#story { height: 220vh; position: relative; }
+#story { height: 170vh; position: relative; }
 .story-pin {
   position: sticky; top: 0; height: 100vh; overflow: hidden;
   display: flex; align-items: center; justify-content: center; background: var(--dark);
@@ -359,6 +359,7 @@ nav#nav.up {
 }
 .tw {
   display: inline-block;
+  line-height: 1.05;
   font-family: var(--font-serif, serif);
   font-size: clamp(48px, 7.5vw, 110px); font-weight: 300; line-height: 1.1;
   color: rgba(240,237,228,.07);

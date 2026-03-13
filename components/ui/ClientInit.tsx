@@ -54,7 +54,7 @@ const runMain = (THREE: any, gsap: any, ST: any) => {
   initHeroThree(THREE);
   initHeroTerminal();
   initHeroWords(gsap);
-  initStory(ST);
+  initStory(gsap, ST);
   initServicesPeel();
   initNumbers(ST);
   initRevealObserver(ST);
@@ -254,31 +254,23 @@ const initHeroWords = (gsap: any) => {
 };
 
 /* ─── STORY WORD REVEAL ───────────────────────────────────── */
-const initStory = (ST: any) => {
-  const words = Array.from(document.querySelectorAll('#story .tw')) as HTMLElement[];
+const initStory = (gsap: any, ST: any) => {
+  const words = gsap.utils.toArray('#story .tw');
+
   if (!words.length) return;
 
-  const total = words.length;
-
-  ST.create({
-    trigger: '#story',
-    start: 'top top',
-    end: 'bottom bottom',
-    scrub: 0.5,
-
-    onUpdate: (self: any) => {
-      const progress = self.progress;
-
-      const activeIndex = Math.floor(progress * (total + 2));
-
-      words.forEach((w, i) => {
-        if (i <= activeIndex) {
-          w.classList.add('lit');
-        } else {
-          w.classList.remove('lit');
-        }
-      });
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: "#story",
+      start: "top center",
+      end: "+=800",
+      scrub: true
     }
+  })
+  .to(words, {
+    color: "var(--cream)",
+    stagger: 0.15,
+    ease: "none"
   });
 };
 
