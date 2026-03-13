@@ -64,6 +64,7 @@ const runMain = (THREE: any, gsap: any, ST: any) => {
   initFlipCardTilt();
   initParallax(gsap, ST);
   initCTAParticles();
+  initServices(gsap, ScrollTrigger);
 };
 
 /* ─── CURSOR ──────────────────────────────────────────────── */
@@ -273,6 +274,36 @@ const initStory = (gsap: any, ST: any) => {
     ease: "none"
   });
 };
+
+
+function initServices(gsap, ScrollTrigger) {
+  const cards = gsap.utils.toArray(".svc-card");
+
+  if (!cards.length) return;
+
+  gsap.set(cards, {
+    y: (i) => i * 30,
+    scale: (i) => 1 - i * 0.04,
+    zIndex: (i) => cards.length - i
+  });
+
+  cards.forEach((card, i) => {
+    if (i === cards.length - 1) return;
+
+    gsap.to(card, {
+      y: -120,
+      rotation: -6,
+      ease: "none",
+      scrollTrigger: {
+        trigger: "#services",
+        start: "top top",
+        end: "+=900",
+        scrub: true
+      }
+    });
+  });
+}
+
 
 /* ─── SERVICES PEEL ───────────────────────────────────────── */
 const initServicesPeel = () => {
