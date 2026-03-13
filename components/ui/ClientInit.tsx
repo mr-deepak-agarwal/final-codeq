@@ -276,18 +276,18 @@ const initStory = (gsap: any, ST: any) => {
 };
 
 
-function initServices(gsap, ScrollTrigger) {
+function initServices(gsap: any, ScrollTrigger: any) {
   const cards = gsap.utils.toArray(".svc-card");
 
   if (!cards.length) return;
 
   gsap.set(cards, {
-    y: (i) => i * 30,
-    scale: (i) => 1 - i * 0.04,
-    zIndex: (i) => cards.length - i
+    y: (i: number) => i * 30,
+    scale: (i: number) => 1 - i * 0.04,
+    zIndex: (i: number) => cards.length - i
   });
 
-  cards.forEach((card, i) => {
+  cards.forEach((card: any, i: number) => {
     if (i === cards.length - 1) return;
 
     gsap.to(card, {

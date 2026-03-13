@@ -396,7 +396,7 @@ nav#nav.up {
 .sec-h2 .hw { display: inline-block; transition: color .3s; cursor: default; }
 .sec-h2 .hw:hover { color: var(--ga); }
 
-.svc-scroll-wrap { height: 360vh; position: relative; }
+.svc-scroll-wrap { height: 240vh; position: relative; }
 .svc-sticky {
   position: sticky; top: 0; height: 100vh;
   display: flex; align-items: center; justify-content: center; background: var(--cream);
