@@ -295,8 +295,15 @@ const initServicesPeel = () => {
 
   function ease(t: number) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
 
+  function getAbsoluteTop(el: HTMLElement): number {
+    let top = 0;
+    let cur: HTMLElement | null = el;
+    while (cur) { top += cur.offsetTop; cur = cur.offsetParent as HTMLElement | null; }
+    return top;
+  }
+
   function updatePeel() {
-    const wrapAbsTop = W.offsetTop;
+    const wrapAbsTop = getAbsoluteTop(W);
     const scrollable = W.offsetHeight - window.innerHeight;
     if (scrollable <= 0) return;
     const scrolled   = window.scrollY - wrapAbsTop;
