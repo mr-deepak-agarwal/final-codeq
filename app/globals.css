@@ -396,22 +396,23 @@ nav#nav.up {
 .sec-h2 .hw { display: inline-block; transition: color .3s; cursor: default; }
 .sec-h2 .hw:hover { color: var(--ga); }
 
-.svc-scroll-wrap { height: 300vh; position: relative; }
+.svc-scroll-wrap { height: 400vh; position: relative; }
 .svc-sticky {
-/*  position: sticky; top: 0; height: 100vh;
-  display: flex; align-items: center; justify-content: center; background: var(--cream);*/
-
-  position: sticky;
-  top: 0;
+  position: relative;
   height: 100vh;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--cream);
+
   perspective: 1200px;
 }
 .svc-card {
-  position: absolute; width: min(860px, 88vw); height: min(480px, 70vh);
+   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(860px, 88vw); height: min(480px, 70vh);
   border-radius: 20px; will-change: transform, opacity;
   transform-origin: center bottom; overflow: hidden;
   box-shadow: 0 40px 120px rgba(0,0,0,.4);

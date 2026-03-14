@@ -282,29 +282,25 @@ function initServices(gsap: any, ScrollTrigger: any) {
 
   if (!cards.length) return;
 
-  gsap.set(cards, {
-    y: (i: number) => i * 40,
-    scale: (i: number) => 1 - i * 0.05,
-    zIndex: (i: number) => cards.length - i
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".svc-scroll-wrap",
+      start: "top top",
+      end: "bottom bottom",
+      scrub: true
+    }
   });
 
   cards.forEach((card: any, i: number) => {
 
-    if (i === cards.length - 1) return;
+    if (i === 0) return;
 
-    gsap.to(card, {
+    tl.to(cards[i - 1], {
       y: -220,
-      rotationX: 12,
-      rotationZ: -6,
+      rotation: -8,
       scale: 0.92,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".svc-scroll-wrap",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: true
-      }
-    });
+      ease: "none"
+    }, i);
 
   });
 
