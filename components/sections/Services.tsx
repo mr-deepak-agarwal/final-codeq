@@ -3,14 +3,14 @@
 
 const services = [
   {
-    id: 'svc3',
-    num: '03',
-    label: '03 / Systems',
-    badge: 'Backends that scale',
-    title: 'Full-Stack\nSystems',
-    tags: ['Node.js', 'PostgreSQL', 'Prisma', 'AWS', 'tRPC'],
-    body: 'Robust APIs, admin portals, ERP systems, and CRM tools. We architect for scale and maintain for years — not sprints. Clean code, proper docs, handoff-ready from day one.',
-    outs: ['99.9% uptime targets', 'Clean, documented code', 'Handoff-ready systems'],
+    id: 'svc1',
+    num: '01',
+    label: '01 / Web',
+    badge: 'Interfaces that convert',
+    title: 'Web Design\n& Development',
+    tags: ['Next.js', 'React', 'TypeScript', 'Figma', 'Tailwind'],
+    body: "Pixel-perfect, performance-first websites built in Next.js. We design in Figma and obsess over every interaction until it's right — from marketing sites to complex SaaS dashboards. No handoffs, no excuses.",
+    outs: ['Sub-1s load times', '98+ Lighthouse score', 'Mobile-first always'],
   },
   {
     id: 'svc2',
@@ -23,14 +23,14 @@ const services = [
     outs: ['Measurable time savings', 'Production-grade reliability', 'Explainable outputs'],
   },
   {
-    id: 'svc1',
-    num: '01',
-    label: '01 / Web',
-    badge: 'Interfaces that convert',
-    title: 'Web Design\n& Development',
-    tags: ['Next.js', 'React', 'TypeScript', 'Figma', 'Tailwind'],
-    body: "Pixel-perfect, performance-first websites built in Next.js. We design in Figma and obsess over every interaction until it's right — from marketing sites to complex SaaS dashboards. No handoffs, no excuses.",
-    outs: ['Sub-1s load times', '98+ Lighthouse score', 'Mobile-first always'],
+    id: 'svc3',
+    num: '03',
+    label: '03 / Systems',
+    badge: 'Backends that scale',
+    title: 'Full-Stack\nSystems',
+    tags: ['Node.js', 'PostgreSQL', 'Prisma', 'AWS', 'tRPC'],
+    body: 'Robust APIs, admin portals, ERP systems, and CRM tools. We architect for scale and maintain for years — not sprints. Clean code, proper docs, handoff-ready from day one.',
+    outs: ['99.9% uptime targets', 'Clean, documented code', 'Handoff-ready systems'],
   },
 ];
 

@@ -276,41 +276,64 @@ const initStory = (gsap: any, ST: any) => {
 
 
 function initServices(gsap: any, ScrollTrigger: any) {
-
-  const cards = gsap.utils.toArray(".svc-card");
-
+  const cards = gsap.utils.toArray(".svc-card") as HTMLElement[];
+  const hint = document.getElementById("svcHint");
+  
   if (!cards.length) return;
 
-  cards.forEach((card: any, i: number) => {
+  // Reverse cards array so svc1 (Web/orange) is on top, svc3 (Systems/green) is at bottom
+  const orderedCards = [...cards].reverse();
+
+  // Set initial stacking: first card (svc1) on top with highest z-index
+  orderedCards.forEach((card: HTMLElement, i: number) => {
     gsap.set(card, {
-      y: i * 30,
-      scale: 1 - i * 0.04,
-      zIndex: cards.length - i
+      y: i * 20,
+      scale: 1 - i * 0.03,
+      zIndex: orderedCards.length - i,
+      transformOrigin: "center bottom"
     });
   });
 
+  // Create timeline for peel animation
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: ".svc-scroll-wrap",
       start: "top top",
       end: "bottom bottom",
-      scrub: true
+      scrub: 0.8,
+      onUpdate: (self: any) => {
+        // Hide hint after scroll starts
+        if (hint) {
+          hint.style.opacity = self.progress > 0.02 ? "0" : "1";
+        }
+      }
     }
   });
 
-  cards.forEach((card: any, i: number) => {
+  // Animate each card except the last one (bottom card stays)
+  orderedCards.forEach((card: HTMLElement, i: number) => {
+    if (i === orderedCards.length - 1) return;
 
-    if (i === cards.length - 1) return;
-
+    // Peel off animation for current card
     tl.to(card, {
-      y: -220,
-      rotationX: -50,
+      rotationX: -45,
+      y: -150,
       opacity: 0,
-      ease: "none"
-    }, i);
+      scale: 0.9,
+      ease: "power1.inOut",
+      duration: 1
+    }, i * 0.8);
 
+    // Bring next card up as current one peels
+    if (i < orderedCards.length - 1) {
+      tl.to(orderedCards[i + 1], {
+        y: 0,
+        scale: 1,
+        ease: "power1.out",
+        duration: 0.8
+      }, i * 0.8 + 0.2);
+    }
   });
-
 }
 
 
