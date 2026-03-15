@@ -55,7 +55,6 @@ const runMain = (THREE: any, gsap: any, ST: any) => {
   initHeroTerminal();
   initHeroWords(gsap);
   initStory(gsap, ST);
-  initServicesPeel();
   initNumbers(ST);
   initRevealObserver(ST);
   initProcess(ST);
@@ -64,7 +63,7 @@ const runMain = (THREE: any, gsap: any, ST: any) => {
   initFlipCardTilt();
   initParallax(gsap, ST);
   initCTAParticles();
-  initServices(gsap, ScrollTrigger);
+  initServices(gsap, ST);
 };
 
 /* ─── CURSOR ──────────────────────────────────────────────── */
@@ -282,6 +281,14 @@ function initServices(gsap: any, ScrollTrigger: any) {
 
   if (!cards.length) return;
 
+  cards.forEach((card: any, i: number) => {
+    gsap.set(card, {
+      y: i * 30,
+      scale: 1 - i * 0.04,
+      zIndex: cards.length - i
+    });
+  });
+
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: ".svc-scroll-wrap",
@@ -293,12 +300,12 @@ function initServices(gsap: any, ScrollTrigger: any) {
 
   cards.forEach((card: any, i: number) => {
 
-    if (i === 0) return;
+    if (i === cards.length - 1) return;
 
-    tl.to(cards[i - 1], {
+    tl.to(card, {
       y: -220,
-      rotation: -8,
-      scale: 0.92,
+      rotationX: -50,
+      opacity: 0,
       ease: "none"
     }, i);
 
