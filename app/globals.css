@@ -398,7 +398,8 @@ nav#nav.up {
 
 .svc-scroll-wrap { height: 400vh; position: relative; }
 .svc-sticky {
-  position: relative;
+  position: sticky;
+  top: 0;
   height: 100vh;
 
   display: flex;
@@ -408,14 +409,17 @@ nav#nav.up {
   perspective: 1200px;
 }
 .svc-card {
-   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(860px, 88vw); height: min(480px, 70vh);
-  border-radius: 20px; will-change: transform, opacity;
-  transform-origin: center bottom; overflow: hidden;
+  position: absolute;
+  width: min(860px, 88vw);
+  height: min(480px, 70vh);
+
+  border-radius: 20px;
+  will-change: transform, opacity;
+  transform-origin: center bottom;
+
+  overflow: hidden;
   box-shadow: 0 40px 120px rgba(0,0,0,.4);
+
   transform-style: preserve-3d;
   backface-visibility: hidden;
 }
