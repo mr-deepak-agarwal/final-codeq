@@ -278,93 +278,96 @@ const initStory = (gsap: any, ST: any) => {
 
 /* ─── SERVICES PEEL ───────────────────────────────────────── */
 const initServicesPeel = () => {
-  const wrapEl = document.getElementById('svcWrap') as HTMLElement | null;
+  const wrapEl = document.querySelector('.svc-scroll-wrap') as HTMLElement | null;
   const card1  = document.getElementById('svc1')    as HTMLElement | null;
   const card2  = document.getElementById('svc2')    as HTMLElement | null;
   const card3  = document.getElementById('svc3')    as HTMLElement | null;
   const hintEl = document.getElementById('svcHint') as HTMLElement | null;
-  if (!wrapEl || !card1 || !card2 || !card3) return;
+  
+  if (!wrapEl || !card1 || !card2 || !card3) {
+    console.log('Peel animation: elements not found');
+    return;
+  }
 
-  const W    = wrapEl;
-  const C1   = card1;  // svc1 = orange = Web (top card, z:3)
-  const C2   = card2;  // svc2 = purple = AI  (mid card, z:2)
-  const C3   = card3;  // svc3 = green  = Systems (bottom card, z:1)
-  const hint = hintEl;
+  console.log('Peel animation initialized!');
 
-  // Set initial z-indexes explicitly
-  C1.style.zIndex = '3';
-  C2.style.zIndex = '2';
-  C3.style.zIndex = '1';
+  // Set initial z-indexes
+  card1.style.zIndex = '3';
+  card2.style.zIndex = '2';
+  card3.style.zIndex = '1';
 
-  function ease(t: number) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
-
-  function getAbsoluteTop(el: HTMLElement): number {
-    let top = 0;
-    let cur: HTMLElement | null = el;
-    while (cur) { top += cur.offsetTop; cur = cur.offsetParent as HTMLElement | null; }
-    return top;
+  function ease(t: number) { 
+    return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; 
   }
 
   function updatePeel() {
-    const wrapAbsTop = getAbsoluteTop(W);
-    const scrollable = W.offsetHeight - window.innerHeight;
-    if (scrollable <= 0) return;
-    const scrolled   = window.scrollY - wrapAbsTop;
-    const prog       = Math.max(0, Math.min(1, scrolled / scrollable));
+    const rect = wrapEl.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    // Calculate scroll progress through the section
+    const scrollStart = -rect.top;
+    const scrollHeight = rect.height - windowHeight;
+    const progress = Math.max(0, Math.min(1, scrollStart / scrollHeight));
 
-    if (hint) hint.style.opacity = prog > 0.02 ? '0' : '1';
+    // Hide hint after starting scroll
+    if (hintEl) {
+      hintEl.style.opacity = progress > 0.05 ? '0' : '1';
+    }
 
-    const p1 = Math.max(0, Math.min(1, prog / 0.35));
-    const p2 = Math.max(0, Math.min(1, (prog - 0.35) / 0.35));
-    const p3 = Math.max(0, Math.min(1, (prog - 0.7)  / 0.3));
-    const e1 = ease(p1), e2 = ease(p2), e3 = ease(p3);
+    // Card 1 peels from 0 to 0.33
+    const p1 = Math.max(0, Math.min(1, progress / 0.33));
+    const e1 = ease(p1);
+    
+    // Card 2 peels from 0.33 to 0.66
+    const p2 = Math.max(0, Math.min(1, (progress - 0.33) / 0.33));
+    const e2 = ease(p2);
+    
+    // Card 3 peels from 0.66 to 1.0
+    const p3 = Math.max(0, Math.min(1, (progress - 0.66) / 0.34));
+    const e3 = ease(p3);
 
-    // CARD 1 — web (top, z:3) — peels off first
+    // CARD 1 (top, orange - Web Development)
     const op1 = 1 - e1 * 0.85;
-    C1.style.transform  = `perspective(1800px) rotateX(${e1 * -62}deg) translateY(${e1 * -48}px)`;
-    C1.style.opacity    = String(op1);
-    C1.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op1})`;
-    C1.style.zIndex     = '3';
-    C1.style.visibility = e1 >= 0.99 ? 'hidden' : 'visible';
+    card1.style.transform = `perspective(1800px) rotateX(${e1 * -65}deg) translateY(${e1 * -50}px)`;
+    card1.style.opacity = String(op1);
+    card1.style.visibility = e1 >= 0.99 ? 'hidden' : 'visible';
 
-    // CARD 2 — AI (mid, z:2) — peels off second
+    // CARD 2 (middle, purple - AI)
     if (p2 > 0) {
       const op2 = 1 - e2 * 0.85;
-      C2.style.transform  = `perspective(1800px) rotateX(${e2 * -62}deg) translateY(${e2 * -48}px)`;
-      C2.style.opacity    = String(op2);
-      C2.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op2})`;
-      C2.style.visibility = e2 >= 0.99 ? 'hidden' : 'visible';
+      card2.style.transform = `perspective(1800px) rotateX(${e2 * -65}deg) translateY(${e2 * -50}px)`;
+      card2.style.opacity = String(op2);
+      card2.style.visibility = e2 >= 0.99 ? 'hidden' : 'visible';
     } else {
-      C2.style.transform  = `perspective(1800px) translateY(${22 * (1 - e1)}px) scale(${0.96 + e1 * 0.04})`;
-      C2.style.opacity    = '1';
-      C2.style.boxShadow  = '0 40px 120px rgba(0,0,0,0.4)';
-      C2.style.visibility = 'visible';
+      // Scale up as card 1 peels away
+      card2.style.transform = `perspective(1800px) translateY(${25 * (1 - e1)}px) scale(${0.95 + e1 * 0.05})`;
+      card2.style.opacity = '1';
+      card2.style.visibility = 'visible';
     }
-    C2.style.zIndex = '2';
 
-    // CARD 3 — systems (bottom, z:1) — peels off last
+    // CARD 3 (bottom, green - Systems)
     if (p3 > 0) {
       const op3 = 1 - e3 * 0.85;
-      C3.style.transform  = `perspective(1800px) rotateX(${e3 * -62}deg) translateY(${e3 * -48}px)`;
-      C3.style.opacity    = String(op3);
-      C3.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op3})`;
-      C3.style.visibility = e3 >= 0.99 ? 'hidden' : 'visible';
+      card3.style.transform = `perspective(1800px) rotateX(${e3 * -65}deg) translateY(${e3 * -50}px)`;
+      card3.style.opacity = String(op3);
+      card3.style.visibility = e3 >= 0.99 ? 'hidden' : 'visible';
     } else if (p2 > 0) {
-      C3.style.transform  = `perspective(1800px) translateY(${22 * (1 - e2)}px) scale(${0.96 + e2 * 0.04})`;
-      C3.style.opacity    = '1';
-      C3.style.boxShadow  = '0 40px 120px rgba(0,0,0,0.4)';
-      C3.style.visibility = 'visible';
+      // Scale up as card 2 peels away
+      card3.style.transform = `perspective(1800px) translateY(${25 * (1 - e2)}px) scale(${0.95 + e2 * 0.05})`;
+      card3.style.opacity = '1';
+      card3.style.visibility = 'visible';
     } else {
-      const op3init = Math.min(1, 0.5 + e1 * 0.5);
-      C3.style.transform  = `perspective(1800px) translateY(${44 * (1 - e1)}px) scale(${0.92 + e1 * 0.08})`;
-      C3.style.opacity    = String(op3init);
-      C3.style.boxShadow  = `0 40px 120px rgba(0,0,0,${0.4 * op3init})`;
-      C3.style.visibility = 'visible';
+      // Scale up as card 1 peels away
+      const initialOpacity = Math.min(1, 0.5 + e1 * 0.5);
+      card3.style.transform = `perspective(1800px) translateY(${50 * (1 - e1)}px) scale(${0.90 + e1 * 0.10})`;
+      card3.style.opacity = String(initialOpacity);
+      card3.style.visibility = 'visible';
     }
-    C3.style.zIndex = '1';
   }
 
+  // Listen to scroll
   window.addEventListener('scroll', updatePeel, { passive: true });
+  // Initial update
   updatePeel();
 };
 
