@@ -276,64 +276,91 @@ const initStory = (gsap: any, ST: any) => {
 
 
 function initServices(gsap: any, ScrollTrigger: any) {
-  const cards = gsap.utils.toArray(".svc-card") as HTMLElement[];
-  const hint = document.getElementById("svcHint");
+  const wrapEl = document.getElementById('svcWrap') as HTMLElement | null;
+  const stickyEl = document.getElementById('svcSticky') as HTMLElement | null;
+  const cards = document.querySelectorAll('.svc-card') as NodeListOf<HTMLElement>;
+  const hint = document.getElementById('svcHint') as HTMLElement | null;
   
-  if (!cards.length) return;
+  if (!wrapEl || !stickyEl || !cards.length) return;
 
-  // Reverse cards array so svc1 (Web/orange) is on top, svc3 (Systems/green) is at bottom
-  const orderedCards = [...cards].reverse();
+  // Convert to array and reverse so svc1 is first (top card)
+  const cardArray = Array.from(cards).reverse();
 
-  // Set initial stacking: first card (svc1) on top with highest z-index
-  orderedCards.forEach((card: HTMLElement, i: number) => {
-    gsap.set(card, {
-      y: i * 20,
-      scale: 1 - i * 0.03,
-      zIndex: orderedCards.length - i,
-      transformOrigin: "center bottom"
-    });
+  // Set initial z-index stacking
+  cardArray.forEach((card, i) => {
+    card.style.zIndex = String(cardArray.length - i);
   });
 
-  // Create timeline for peel animation
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".svc-scroll-wrap",
-      start: "top top",
-      end: "bottom bottom",
-      scrub: 0.8,
-      onUpdate: (self: any) => {
-        // Hide hint after scroll starts
-        if (hint) {
-          hint.style.opacity = self.progress > 0.02 ? "0" : "1";
+  function ease(t: number) {
+    return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+  }
+
+  function updatePeel() {
+    const wrapRect = wrapEl!.getBoundingClientRect();
+    const wrapTop = wrapEl!.offsetTop;
+    const scrollable = wrapEl!.offsetHeight - window.innerHeight;
+    
+    if (scrollable <= 0) return;
+    
+    const scrolled = window.scrollY - wrapTop;
+    const progress = Math.max(0, Math.min(1, scrolled / scrollable));
+
+    // Hide hint after scroll starts
+    if (hint) {
+      hint.style.opacity = progress > 0.02 ? '0' : '1';
+    }
+
+    // Calculate progress for each card (3 cards = 3 phases)
+    const phase = 1 / cardArray.length;
+    
+    cardArray.forEach((card, i) => {
+      const cardStart = i * phase;
+      const cardEnd = (i + 1) * phase;
+      const cardProgress = Math.max(0, Math.min(1, (progress - cardStart) / phase));
+      const easedProgress = ease(cardProgress);
+
+      if (i < cardArray.length - 1) {
+        // Cards that peel off
+        if (cardProgress > 0) {
+          // Peeling animation
+          const rotateX = easedProgress * -55;
+          const translateY = easedProgress * -120;
+          const opacity = 1 - easedProgress * 0.9;
+          const scale = 1 - easedProgress * 0.1;
+
+          card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) translateY(${translateY}px) scale(${scale})`;
+          card.style.opacity = String(Math.max(0, opacity));
+          card.style.visibility = easedProgress >= 0.99 ? 'hidden' : 'visible';
+        } else {
+          // Waiting state - stacked behind
+          const stackOffset = i * 15;
+          const stackScale = 1 - i * 0.02;
+          card.style.transform = `perspective(1200px) translateY(${stackOffset}px) scale(${stackScale})`;
+          card.style.opacity = '1';
+          card.style.visibility = 'visible';
         }
+      } else {
+        // Last card (bottom) - just stays visible
+        const prevProgress = Math.max(0, Math.min(1, (progress - (i - 1) * phase) / phase));
+        const stackOffset = Math.max(0, 15 * (1 - prevProgress));
+        const stackScale = 0.98 + 0.02 * prevProgress;
+        
+        card.style.transform = `perspective(1200px) translateY(${stackOffset}px) scale(${stackScale})`;
+        card.style.opacity = '1';
+        card.style.visibility = 'visible';
       }
-    }
+    });
+  }
+
+  // Initial setup
+  cardArray.forEach((card, i) => {
+    const stackOffset = i * 15;
+    const stackScale = 1 - i * 0.02;
+    card.style.transform = `perspective(1200px) translateY(${stackOffset}px) scale(${stackScale})`;
   });
 
-  // Animate each card except the last one (bottom card stays)
-  orderedCards.forEach((card: HTMLElement, i: number) => {
-    if (i === orderedCards.length - 1) return;
-
-    // Peel off animation for current card
-    tl.to(card, {
-      rotationX: -45,
-      y: -150,
-      opacity: 0,
-      scale: 0.9,
-      ease: "power1.inOut",
-      duration: 1
-    }, i * 0.8);
-
-    // Bring next card up as current one peels
-    if (i < orderedCards.length - 1) {
-      tl.to(orderedCards[i + 1], {
-        y: 0,
-        scale: 1,
-        ease: "power1.out",
-        duration: 0.8
-      }, i * 0.8 + 0.2);
-    }
-  });
+  window.addEventListener('scroll', updatePeel, { passive: true });
+  updatePeel();
 }
 
 
