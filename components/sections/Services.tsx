@@ -1,5 +1,5 @@
-// Card order: svc3 (bottom of stack), svc2 (middle), svc1 (top) — matches HTML
-// nth-child(1) = svc3 = green, nth-child(2) = svc2 = purple, nth-child(3) = svc1 = orange
+'use client';
+import { useState } from 'react';
 
 const services = [
   {
@@ -11,6 +11,8 @@ const services = [
     tags: ['Next.js', 'React', 'TypeScript', 'Figma', 'Tailwind'],
     body: "Pixel-perfect, performance-first websites built in Next.js. We design in Figma and obsess over every interaction until it's right — from marketing sites to complex SaaS dashboards. No handoffs, no excuses.",
     outs: ['Sub-1s load times', '98+ Lighthouse score', 'Mobile-first always'],
+    stat: { val: '98+', key: 'Lighthouse score' },
+    accent: 'var(--gl)',
   },
   {
     id: 'svc2',
@@ -21,6 +23,8 @@ const services = [
     tags: ['OpenAI', 'Anthropic', 'LangChain', 'Python', 'RAG'],
     body: 'We integrate LLMs and ML pipelines directly into your product. Custom AI tools, document processors, and automations that deliver measurable ROI — not demos that never ship.',
     outs: ['Measurable time savings', 'Production-grade reliability', 'Explainable outputs'],
+    stat: { val: 'RAG', key: 'Architecture' },
+    accent: 'var(--gl)',
   },
   {
     id: 'svc3',
@@ -31,10 +35,15 @@ const services = [
     tags: ['Node.js', 'PostgreSQL', 'Prisma', 'AWS', 'tRPC'],
     body: 'Robust APIs, admin portals, ERP systems, and CRM tools. We architect for scale and maintain for years — not sprints. Clean code, proper docs, handoff-ready from day one.',
     outs: ['99.9% uptime targets', 'Clean, documented code', 'Handoff-ready systems'],
+    stat: { val: '99.9%', key: 'Uptime targets' },
+    accent: 'var(--gl)',
   },
 ];
 
 export default function Services() {
+  const [active, setActive] = useState(0);
+  const svc = services[active];
+
   return (
     <section id="services" aria-labelledby="services-heading">
       <div className="svc-header">
@@ -50,48 +59,70 @@ export default function Services() {
         </h2>
       </div>
 
-      <div className="svc-scroll-wrap" id="svcWrap">
-        <div className="svc-sticky" id="svcSticky">
-          {services.map((svc) => (
+      <div className="svc-split">
+        {/* LEFT — service list */}
+        <div className="svc-split-left">
+          {services.map((s, i) => (
             <div
-              className="svc-card"
-              id={svc.id}
-              key={svc.id}
-              aria-label={`Service: ${svc.title.replace('\n', ' ')}`}
+              key={s.id}
+              className={`svc-row${active === i ? ' active' : ''}`}
+              onMouseEnter={() => setActive(i)}
+              onClick={() => setActive(i)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && setActive(i)}
+              aria-label={`View ${s.title.replace('\n', ' ')}`}
             >
-              <div className="svc-orb" aria-hidden="true"></div>
-              <div className="svc-cn" aria-hidden="true">{svc.num}</div>
-              <div className="svc-card-inner">
-                <div className="svc-left">
-                  <div>
-                    <div className="svc-top-row">
-                      <span className="svc-num">{svc.label}</span>
-                      <span className="svc-badge">{svc.badge}</span>
-                    </div>
-                    <h3 className="svc-title">
-                      {svc.title.split('\n').map((line, i, arr) => (
-                        <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
-                      ))}
-                    </h3>
-                  </div>
-                  <div className="tags">
-                    {svc.tags.map((tag) => (
-                      <span className="tag" key={tag}>{tag}</span>
-                    ))}
-                  </div>
-                </div>
-                <div className="svc-right">
-                  <p className="svc-body">{svc.body}</p>
-                  <ul className="svc-outs">
-                    {svc.outs.map((out) => (
-                      <li key={out}>{out}</li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="svc-row-left">
+                <span className="svc-row-num">{s.num}</span>
+                <span className="svc-row-name">
+                  {s.title.split('\n').map((line, j, arr) => (
+                    <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
+                  ))}
+                </span>
+              </div>
+              <div className="svc-row-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.5">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12,5 19,12 12,19" />
+                </svg>
               </div>
             </div>
           ))}
-          <div className="svc-hint" id="svcHint" aria-hidden="true">Scroll to explore</div>
+          <p className="svc-hint" aria-hidden="true">Hover to explore</p>
+        </div>
+
+        {/* RIGHT — detail panel */}
+        <div className="svc-split-right" aria-live="polite">
+          {services.map((s, i) => (
+            <div
+              key={s.id}
+              className={`svc-panel${active === i ? ' active' : ''}`}
+              aria-hidden={active !== i}
+            >
+              <span className="svc-panel-badge">{s.badge}</span>
+              <h3 className="svc-panel-title">
+                {s.title.split('\n').map((line, j, arr) => (
+                  <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
+                ))}
+              </h3>
+              <p className="svc-panel-body">{s.body}</p>
+              <div className="svc-panel-stat">
+                <span className="svc-stat-val">{s.stat.val}</span>
+                <span className="svc-stat-key">{s.stat.key}</span>
+              </div>
+              <ul className="svc-panel-outs">
+                {s.outs.map((out) => (
+                  <li key={out}>{out}</li>
+                ))}
+              </ul>
+              <div className="tags">
+                {s.tags.map((tag) => (
+                  <span className="tag" key={tag}>{tag}</span>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
