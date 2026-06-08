@@ -404,7 +404,6 @@ const initServicesPeel = () => {
     }
   }
 
-  // rAF-throttled scroll handler — smoother on high-refresh displays
   let ticking = false;
   const onScroll = () => {
     if (ticking) return;
