@@ -153,7 +153,7 @@ export default function Work() {
             Projects that<br /><em>move the needle.</em>
           </h2>
         </div>
-        <p className="work-note rv">Hover each card to see results. Every number is real.</p>
+        <p className="work-note rv">Sample projects illustrating our capabilities.<br />Real client work available on request.</p>
       </div>
 
       <div className="flip-row-big">

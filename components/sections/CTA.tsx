@@ -21,14 +21,26 @@ export default function CTA() {
         hello@codeq.tech
       </a>
 
-      <a
-        href="mailto:hello@codeq.tech"
-        className="cta-btn mag"
-        aria-label="Start a project with codeq"
-      >
-        <span>Start a Project</span>
-        <span aria-hidden="true">→</span>
-      </a>
+      <div className="cta-actions">
+        <a
+          href="mailto:hello@codeq.tech"
+          className="cta-btn mag"
+          aria-label="Start a project with codeq"
+        >
+          <span>Start a Project</span>
+          <span aria-hidden="true">→</span>
+        </a>
+        <a
+          href="https://calendly.com/codeq-tech/30min"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cta-btn-ghost mag"
+          aria-label="Book a 30-minute call with codeq"
+        >
+          <span>Book a 30-min Call</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
     </section>
   );
 }

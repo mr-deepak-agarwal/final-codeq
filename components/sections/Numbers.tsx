@@ -1,8 +1,8 @@
 const stats = [
-  { value: 40,  suffix: '+',  label: 'Projects Shipped' },
+  { value: 50,  suffix: '+',  label: 'Projects Shipped' },
   { value: 28,  suffix: '',   label: 'US Clients' },
-  { value: 6,   suffix: '+',  label: 'Years Deep' },
-  { value: 100, suffix: '%',  label: 'On-Time Rate' },
+  { value: 8,   suffix: '+',  label: 'Years Deep' },
+  { value: 4.5, suffix: '★',  label: 'Avg Client Rating' },
 ];
 
 export default function Numbers() {

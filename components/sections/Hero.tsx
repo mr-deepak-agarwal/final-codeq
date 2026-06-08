@@ -9,7 +9,7 @@ export default function Hero() {
         <div className="h-left">
           <div className="hero-badge">
             <span className="hbp" aria-hidden="true"></span>
-            <span>Accepting New Projects · Est. 2019</span>
+            <span>Accepting New Projects · Est. 2016</span>
           </div>
 
           {/* h1 words split for animation — wrapped in landmark for SEO */}

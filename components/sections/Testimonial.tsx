@@ -1,8 +1,7 @@
 export default function Testimonial() {
   const words = [
-    'codeq','delivered','a','production','AI','platform','in','5','weeks.',
-    'The','code','quality','surpassed','what','our','internal','team',
-    "would've",'produced.',"We're",'already','on','our','third','project.',
+    'Your', 'real', 'testimonial', 'quote', 'goes', 'here', '—',
+    'replace', 'this', 'with', 'the', 'actual', 'words', 'from', 'your', 'client.',
   ];
 
   return (
@@ -18,7 +17,7 @@ export default function Testimonial() {
             ))}
           </p>
           <footer className="testi-by rv" style={{ transitionDelay: '.3s' }}>
-            <cite>James M. &nbsp;·&nbsp; CTO, San Francisco, California</cite>
+            <cite>Client Name &nbsp;·&nbsp; Role, Company</cite>
           </footer>
         </blockquote>
       </div>

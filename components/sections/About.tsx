@@ -9,7 +9,7 @@ const stats = [
   { val: 50,  suffix: '+', key: 'projects_shipped' },
   { val: 28,  suffix: '',  key: 'us_clients' },
   { val: 8,   suffix: '+', key: 'years_deep' },
-  { val: 100, suffix: '%', key: 'satisfaction' },
+  { val: 4.5, suffix: '★', key: 'avg_client_rating' },
 ];
 
 export default function About() {
@@ -126,8 +126,9 @@ export default function About() {
         </h2>
 
         <p className="ab-desc" id="abDesc">
-          A boutique development studio where the Q stands for Quality — not a tagline, but a
-          filter for every decision we make. We work directly with founders who need a technical
+          Founded by <strong>Deepak Agarwal</strong> — AI Agent Developer, Automation Engineer,
+          and Educator with 8+ years building complete AI solutions for modern businesses.
+          LangChain, RAG, React, Python. We work directly with founders who need a technical
           partner they can trust. No junior developers hidden behind a polished sales front.
         </p>
 
