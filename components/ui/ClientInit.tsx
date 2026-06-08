@@ -286,13 +286,19 @@ const initServicesPeel = () => {
 
   if (!wrapEl || !card1 || !card2 || !card3) return;
 
+  // Capture as non-null locals so nested functions satisfy TypeScript
+  const wrap = wrapEl;
+  const c1   = card1;
+  const c2   = card2;
+  const c3   = card3;
+
   // Ensure transform-origin is top center for a realistic page-peel pivot
-  [card1, card2, card3].forEach(c => { c.style.transformOrigin = 'top center'; });
+  [c1, c2, c3].forEach(c => { c.style.transformOrigin = 'top center'; });
 
   // Initial stack: card1 on top
-  card1.style.zIndex = '3';
-  card2.style.zIndex = '2';
-  card3.style.zIndex = '1';
+  c1.style.zIndex = '3';
+  c2.style.zIndex = '2';
+  c3.style.zIndex = '1';
 
   // Ease in-out quad
   function ease(t: number) {
@@ -300,7 +306,7 @@ const initServicesPeel = () => {
   }
 
   function updatePeel() {
-    const rect        = wrapEl.getBoundingClientRect();
+    const rect        = wrap.getBoundingClientRect();
     const windowH     = window.innerHeight;
     const scrollStart = -rect.top;
     const scrollTotal = rect.height - windowH;
@@ -320,45 +326,45 @@ const initServicesPeel = () => {
 
     // ── CARD 1 (orange — Web Dev) ──────────────────────────
     // Peel upward: rotateX around top edge, fade out
-    card1.style.transform  = `perspective(1800px) rotateX(${e1 * -75}deg)`;
-    card1.style.opacity    = String(1 - e1 * 0.9);
-    card1.style.visibility = e1 >= 0.98 ? 'hidden' : 'visible';
+    c1.style.transform  = `perspective(1800px) rotateX(${e1 * -75}deg)`;
+    c1.style.opacity    = String(1 - e1 * 0.9);
+    c1.style.visibility = e1 >= 0.98 ? 'hidden' : 'visible';
     // Promote card2 above card1 the moment card1 starts peeling
-    card1.style.zIndex     = p1 > 0 ? '2' : '3';
-    card2.style.zIndex     = p1 > 0 ? '3' : '2';
+    c1.style.zIndex     = p1 > 0 ? '2' : '3';
+    c2.style.zIndex     = p1 > 0 ? '3' : '2';
 
     // ── CARD 2 (purple — AI) ──────────────────────────────
     if (p2 > 0) {
       // Now peeling
-      card2.style.transform  = `perspective(1800px) rotateX(${e2 * -75}deg)`;
-      card2.style.opacity    = String(1 - e2 * 0.9);
-      card2.style.visibility = e2 >= 0.98 ? 'hidden' : 'visible';
+      c2.style.transform  = `perspective(1800px) rotateX(${e2 * -75}deg)`;
+      c2.style.opacity    = String(1 - e2 * 0.9);
+      c2.style.visibility = e2 >= 0.98 ? 'hidden' : 'visible';
       // Promote card3
-      card2.style.zIndex     = p2 > 0 ? '2' : '3';
-      card3.style.zIndex     = p2 > 0 ? '3' : '1';
+      c2.style.zIndex     = p2 > 0 ? '2' : '3';
+      c3.style.zIndex     = p2 > 0 ? '3' : '1';
     } else {
       // Waiting: rise up slightly and scale as card1 peels
-      card2.style.transform  = `perspective(1800px) translateY(${20 * (1 - e1)}px) scale(${0.96 + e1 * 0.04})`;
-      card2.style.opacity    = '1';
-      card2.style.visibility = 'visible';
+      c2.style.transform  = `perspective(1800px) translateY(${20 * (1 - e1)}px) scale(${0.96 + e1 * 0.04})`;
+      c2.style.opacity    = '1';
+      c2.style.visibility = 'visible';
     }
 
     // ── CARD 3 (green — Systems) ──────────────────────────
     if (p3 > 0) {
       // Now peeling
-      card3.style.transform  = `perspective(1800px) rotateX(${e3 * -75}deg)`;
-      card3.style.opacity    = String(1 - e3 * 0.9);
-      card3.style.visibility = e3 >= 0.98 ? 'hidden' : 'visible';
+      c3.style.transform  = `perspective(1800px) rotateX(${e3 * -75}deg)`;
+      c3.style.opacity    = String(1 - e3 * 0.9);
+      c3.style.visibility = e3 >= 0.98 ? 'hidden' : 'visible';
     } else if (p2 > 0) {
       // Rise as card2 peels
-      card3.style.transform  = `perspective(1800px) translateY(${20 * (1 - e2)}px) scale(${0.96 + e2 * 0.04})`;
-      card3.style.opacity    = '1';
-      card3.style.visibility = 'visible';
+      c3.style.transform  = `perspective(1800px) translateY(${20 * (1 - e2)}px) scale(${0.96 + e2 * 0.04})`;
+      c3.style.opacity    = '1';
+      c3.style.visibility = 'visible';
     } else {
       // Deep in stack: offset behind card2
-      card3.style.transform  = `perspective(1800px) translateY(${40 * (1 - e1)}px) scale(${0.92 + e1 * 0.04})`;
-      card3.style.opacity    = String(Math.min(1, 0.4 + e1 * 0.6));
-      card3.style.visibility = 'visible';
+      c3.style.transform  = `perspective(1800px) translateY(${40 * (1 - e1)}px) scale(${0.92 + e1 * 0.04})`;
+      c3.style.opacity    = String(Math.min(1, 0.4 + e1 * 0.6));
+      c3.style.visibility = 'visible';
     }
   }
 
