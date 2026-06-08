@@ -277,16 +277,7 @@ const initStory = (gsap: any, ST: any) => {
 
 
 /* ─── SERVICES PEEL ───────────────────────────────────────── */
-Here's the exact code to copy-paste. In your file components/ui/ClientInit.tsx, find the section starting with /* ─── SERVICES PEEL ─── (around line 279) and ending at the closing }; before /* ─── NUMBERS ───. Replace that entire block (the whole initServicesPeel function, ~95 lines) with this:
 
-/* ─── SERVICES PEEL ─────────────────────────────────────────
-   FIX: Added explicit "rest" phases between each card peel so
-   the new card is fully visible (flat, centered) long enough
-   to be read BEFORE it starts tilting away. Previously each
-   card began peeling the instant the previous one finished,
-   which is why every screenshot caught a card mid-tilt.
-   Also rAF-throttled the scroll handler for smoother motion.
-─────────────────────────────────────────────────────────────*/
 const initServicesPeel = () => {
   const wrapEl = document.querySelector('.svc-scroll-wrap') as HTMLElement | null;
   const card1  = document.getElementById('svc1')    as HTMLElement | null;
