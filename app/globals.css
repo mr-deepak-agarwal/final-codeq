@@ -27,19 +27,38 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
-  overflow-x: hidden;
+/*  overflow-x: hidden;*/
   scroll-behavior: smooth;
 }
 
-body {
+/*body {
   font-family: var(--font-sans, 'Syne', sans-serif);
   background: var(--dark);
   color: var(--cream);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  @media (hover: hover) { cursor: none; }
+}
+*/
+
+
+
+
+
+
+
+body {
+  font-family: var(--font-sans, 'Syne', sans-serif);
+  background: var(--dark);
+  color: var(--cream);
+  overflow-x: clip;          /* clip = hides horizontal overflow WITHOUT
+                                creating a scroll container, so sticky still works */
+  -webkit-font-smoothing: antialiased;
   /* Only hide cursor on non-touch devices */
   @media (hover: hover) { cursor: none; }
 }
+
+
 
 /* ─────────────────────────────────────────────
    ACCESSIBILITY — focus rings (keyboard nav)
@@ -396,7 +415,7 @@ nav#nav.up {
 .sec-h2 .hw { display: inline-block; transition: color .3s; cursor: default; }
 .sec-h2 .hw:hover { color: var(--ga); }
 
-.svc-scroll-wrap { height: 300vh; position: relative; }
+.svc-scroll-wrap { height: 220vh; position: relative; }
 .svc-sticky {
  position: sticky;
   top: 0;
