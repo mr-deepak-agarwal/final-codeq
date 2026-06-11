@@ -280,42 +280,41 @@ const initStory = (gsap: any, ST: any) => {
 
 const initServicesPeel = () => {
   const wrapEl = document.querySelector('.svc-scroll-wrap') as HTMLElement | null;
-  const card1  = document.getElementById('svc1') as HTMLElement | null;
-  const card2  = document.getElementById('svc2') as HTMLElement | null;
-  const card3  = document.getElementById('svc3') as HTMLElement | null;
-  const card4  = document.getElementById('svc4') as HTMLElement | null;
+  const card1  = document.getElementById('svc1')    as HTMLElement | null;
+  const card2  = document.getElementById('svc2')    as HTMLElement | null;
+  const card3  = document.getElementById('svc3')    as HTMLElement | null;
   const hintEl = document.getElementById('svcHint') as HTMLElement | null;
 
-  if (!wrapEl || !card1 || !card2 || !card3 || !card4) {
+  if (!wrapEl || !card1 || !card2 || !card3) {
     console.log('Peel animation: elements not found');
     return;
   }
 
-  console.log('Peel animation initialized (4 cards)!');
+  console.log('Peel animation initialized!');
 
-  // Front-to-back stacking: card1 on top, card4 at bottom
-  card1.style.zIndex = '4';
-  card2.style.zIndex = '3';
-  card3.style.zIndex = '2';
-  card4.style.zIndex = '1';
+  // Front-to-back stacking
+  card1.style.zIndex = '3';
+  card2.style.zIndex = '2';
+  card3.style.zIndex = '1';
 
+  // easeInOutQuad
   const ease  = (t: number) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
   const clamp = (v: number, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 
   /* ── Phase timeline (0 → 1 of scroll through section) ─────
-     0.00 → 0.18  Card 1 (Web) PEEL
-     0.18 → 0.34  REST  (Card 2/SEO fully visible)
-     0.34 → 0.50  Card 2 (SEO) PEEL
-     0.50 → 0.66  REST  (Card 3/AI fully visible)
-     0.66 → 0.82  Card 3 (AI) PEEL
-     0.82 → 1.00  REST + Card 4 (ERP) fully revealed
+     0.00 → 0.22  Card 1 PEEL
+     0.22 → 0.40  REST  (Card 2 fully visible — read it)
+     0.40 → 0.60  Card 2 PEEL
+     0.60 → 0.78  REST  (Card 3 fully visible — read it)
+     0.78 → 1.00  Card 3 PEEL
   ─────────────────────────────────────────────────────────── */
-  const C1_END = 0.18;
-  const C2_BEG = 0.34;
-  const C2_END = 0.50;
-  const C3_BEG = 0.66;
-  const C3_END = 0.82;
+  const C1_END = 0.22;
+  const C2_BEG = 0.40;
+  const C2_END = 0.60;
+  const C3_BEG = 0.78;
+  const C3_END = 1.00;
 
+  // How far/how much each card tilts when peeling
   const ROT_DEG  = -75;
   const SHIFT_PX = -60;
 
@@ -332,24 +331,27 @@ const initServicesPeel = () => {
 
     if (hintEl) hintEl.style.opacity = progress > 0.04 ? '0' : '1';
 
-    /* ── CARD 1 (Web) ────────────────────────────────────── */
+    /* ── CARD 1 ──────────────────────────────────────────── */
     const p1 = clamp(progress / C1_END);
     const e1 = ease(p1);
     card1!.style.transform  = peel(e1);
     card1!.style.opacity    = String(1 - e1 * 0.9);
     card1!.style.visibility = e1 >= 0.999 ? 'hidden' : 'visible';
 
-    /* ── CARD 2 (SEO) ────────────────────────────────────── */
+    /* ── CARD 2 ──────────────────────────────────────────── */
     if (progress < C1_END) {
+      // Card 1 still peeling — Card 2 lifts/scales subtly into view
       const s = 0.96 + e1 * 0.04;
       card2!.style.transform  = `perspective(1800px) translateY(${20 * (1 - e1)}px) scale(${s})`;
       card2!.style.opacity    = '1';
       card2!.style.visibility = 'visible';
     } else if (progress < C2_BEG) {
+      // REST — Card 2 sits perfectly flat & centered
       card2!.style.transform  = flat;
       card2!.style.opacity    = '1';
       card2!.style.visibility = 'visible';
     } else if (progress < C2_END) {
+      // Card 2 peels
       const e2 = ease(clamp((progress - C2_BEG) / (C2_END - C2_BEG)));
       card2!.style.transform  = peel(e2);
       card2!.style.opacity    = String(1 - e2 * 0.9);
@@ -360,68 +362,36 @@ const initServicesPeel = () => {
       card2!.style.visibility = 'hidden';
     }
 
-    /* ── CARD 3 (AI) ─────────────────────────────────────── */
+    /* ── CARD 3 ──────────────────────────────────────────── */
     if (progress < C1_END) {
+      // Two cards in front — sit further back
       const s = 0.92 + e1 * 0.04;
       card3!.style.transform  = `perspective(1800px) translateY(${40 * (1 - e1)}px) scale(${s})`;
       card3!.style.opacity    = String(0.6 + e1 * 0.4);
       card3!.style.visibility = 'visible';
     } else if (progress < C2_BEG) {
+      // Card 2 resting in front — Card 3 just behind
       card3!.style.transform  = 'perspective(1800px) translateY(20px) scale(0.96)';
       card3!.style.opacity    = '1';
       card3!.style.visibility = 'visible';
     } else if (progress < C2_END) {
+      // Card 2 peeling — Card 3 rises into focus
       const e2 = ease(clamp((progress - C2_BEG) / (C2_END - C2_BEG)));
       const s  = 0.96 + e2 * 0.04;
       card3!.style.transform  = `perspective(1800px) translateY(${20 * (1 - e2)}px) scale(${s})`;
       card3!.style.opacity    = '1';
       card3!.style.visibility = 'visible';
     } else if (progress < C3_BEG) {
+      // REST — Card 3 fully visible
       card3!.style.transform  = flat;
       card3!.style.opacity    = '1';
       card3!.style.visibility = 'visible';
-    } else if (progress < C3_END) {
+    } else {
+      // Card 3 peels (last card)
       const e3 = ease(clamp((progress - C3_BEG) / (C3_END - C3_BEG)));
       card3!.style.transform  = peel(e3);
       card3!.style.opacity    = String(1 - e3 * 0.9);
       card3!.style.visibility = e3 >= 0.999 ? 'hidden' : 'visible';
-    } else {
-      card3!.style.transform  = peel(1);
-      card3!.style.opacity    = '0';
-      card3!.style.visibility = 'hidden';
-    }
-
-    /* ── CARD 4 (ERP) — last card, just rises and stays ───── */
-    if (progress < C1_END) {
-      const s = 0.88 + e1 * 0.04;
-      card4!.style.transform  = `perspective(1800px) translateY(${60 * (1 - e1)}px) scale(${s})`;
-      card4!.style.opacity    = String(0.4 + e1 * 0.3);
-      card4!.style.visibility = 'visible';
-    } else if (progress < C2_BEG) {
-      card4!.style.transform  = 'perspective(1800px) translateY(40px) scale(0.92)';
-      card4!.style.opacity    = '0.7';
-      card4!.style.visibility = 'visible';
-    } else if (progress < C2_END) {
-      const e2 = ease(clamp((progress - C2_BEG) / (C2_END - C2_BEG)));
-      const s  = 0.92 + e2 * 0.04;
-      card4!.style.transform  = `perspective(1800px) translateY(${40 * (1 - e2)}px) scale(${s})`;
-      card4!.style.opacity    = String(0.7 + e2 * 0.3);
-      card4!.style.visibility = 'visible';
-    } else if (progress < C3_BEG) {
-      card4!.style.transform  = 'perspective(1800px) translateY(20px) scale(0.96)';
-      card4!.style.opacity    = '1';
-      card4!.style.visibility = 'visible';
-    } else if (progress < C3_END) {
-      const e3 = ease(clamp((progress - C3_BEG) / (C3_END - C3_BEG)));
-      const s  = 0.96 + e3 * 0.04;
-      card4!.style.transform  = `perspective(1800px) translateY(${20 * (1 - e3)}px) scale(${s})`;
-      card4!.style.opacity    = '1';
-      card4!.style.visibility = 'visible';
-    } else {
-      // Final card stays flat and fully visible
-      card4!.style.transform  = flat;
-      card4!.style.opacity    = '1';
-      card4!.style.visibility = 'visible';
     }
   }
 

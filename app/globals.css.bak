@@ -415,7 +415,7 @@ nav#nav.up {
 .sec-h2 .hw { display: inline-block; transition: color .3s; cursor: default; }
 .sec-h2 .hw:hover { color: var(--ga); }
 
-.svc-scroll-wrap { height: 300vh; position: relative; }
+.svc-scroll-wrap { height: 220vh; position: relative; }
 .svc-sticky {
  position: sticky;
   top: 0;
@@ -437,11 +437,9 @@ nav#nav.up {
   transform-style: preserve-3d;
   backface-visibility: hidden;
 }
-/* 1=Web(green) 2=SEO(purple) 3=AI(orange) 4=ERP(teal) */
-.svc-card:nth-child(1) { background: linear-gradient(135deg,#061a0d 0%,#0d3318 40%,#1e6e38 80%,#071510 100%); z-index: 4; }
-.svc-card:nth-child(2) { background: linear-gradient(135deg,#100828 0%,#2d1060 45%,#5c2aac 80%,#160830 100%); z-index: 3; }
-.svc-card:nth-child(3) { background: linear-gradient(135deg,#1c0a02 0%,#501800 45%,#a83800 80%,#220c02 100%); z-index: 2; }
-.svc-card:nth-child(4) { background: linear-gradient(135deg,#021a1a 0%,#0a3838 40%,#0e6e6e 80%,#051515 100%); z-index: 1; }
+.svc-card:nth-child(1) { background: linear-gradient(135deg,#1c0a02 0%,#501800 45%,#a83800 80%,#220c02 100%); z-index: 3; }
+.svc-card:nth-child(2) { background: linear-gradient(135deg,#100828 0%,#2d1060 45%,#5c2aac 80%,#160830 100%); z-index: 2; }
+.svc-card:nth-child(3) { background: linear-gradient(135deg,#061a0d 0%,#0d3318 40%,#1e6e38 80%,#071510 100%); z-index: 1; }
 .svc-card::before {
   content: ''; position: absolute; inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
@@ -453,10 +451,9 @@ nav#nav.up {
   pointer-events: none; z-index: 0;
 }
 .svc-orb { position: absolute; width: 500px; height: 500px; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
-.svc-card:nth-child(1) .svc-orb { background: rgba(82,201,122,.22);  top: -80px;    right: -60px; }
+.svc-card:nth-child(1) .svc-orb { background: rgba(240,150,74,.2);   top: -80px;    right: -60px; }
 .svc-card:nth-child(2) .svc-orb { background: rgba(176,127,235,.22); bottom: -110px; left: -80px; }
-.svc-card:nth-child(3) .svc-orb { background: rgba(240,150,74,.2);   bottom: -130px; right: -80px; }
-.svc-card:nth-child(4) .svc-orb { background: rgba(56,200,200,.2);   top: -80px;    left: -60px; }
+.svc-card:nth-child(3) .svc-orb { background: rgba(82,201,122,.2);   bottom: -130px; right: -80px; }
 .svc-cn {
   position: absolute; bottom: 16px; right: 44px;
   font-family: var(--font-serif, serif); font-size: 160px; font-weight: 300;
@@ -473,7 +470,6 @@ nav#nav.up {
 .svc-card:nth-child(1) .svc-badge { background: rgba(82,201,122,.15);   color: #52C97A; }
 .svc-card:nth-child(2) .svc-badge { background: rgba(176,127,235,.15);  color: #B07FEB; }
 .svc-card:nth-child(3) .svc-badge { background: rgba(240,150,74,.15);   color: #F0964A; }
-.svc-card:nth-child(4) .svc-badge { background: rgba(56,200,200,.15);   color: #38C8C8; }
 .svc-title {
   font-family: var(--font-serif, serif);
   font-size: clamp(34px, 3.8vw, 56px); font-weight: 300; line-height: .95;
@@ -482,7 +478,6 @@ nav#nav.up {
 .svc-card:nth-child(1) .svc-title { color: #52C97A; }
 .svc-card:nth-child(2) .svc-title { color: #B07FEB; }
 .svc-card:nth-child(3) .svc-title { color: #F0964A; }
-.svc-card:nth-child(4) .svc-title { color: #38C8C8; }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 18px; }
 .tag  { font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 5px 10px; border: 1px solid rgba(255,255,255,.1); color: rgba(255,255,255,.38); border-radius: 3px; }
 .svc-right {
@@ -500,7 +495,6 @@ nav#nav.up {
 .svc-card:nth-child(1) .svc-outs li::before { color: #52C97A; }
 .svc-card:nth-child(2) .svc-outs li::before { color: #B07FEB; }
 .svc-card:nth-child(3) .svc-outs li::before { color: #F0964A; }
-.svc-card:nth-child(4) .svc-outs li::before { color: #38C8C8; }
 .svc-hint {
   position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
   font-size: 9px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;

@@ -1,5 +1,5 @@
-// Card order: svc1 (top/front), svc2, svc3, svc4 (bottom/back)
-// nth-child(1)=Web=green, nth-child(2)=SEO=purple, nth-child(3)=AI=orange, nth-child(4)=ERP=teal
+// Card order: svc4 (bottom), svc2, svc3 (middle), svc1 (top) — matches HTML
+// nth-child(1) = svc1 = orange, nth-child(2) = svc4 = teal, nth-child(3) = svc3 = purple, nth-child(4) = svc2 = green
 const services = [
   {
     id: 'svc1',
@@ -12,7 +12,7 @@ const services = [
     outs: ['Sub-1s load times', '98+ Lighthouse score', 'Mobile-first always'],
   },
   {
-    id: 'svc2',
+    id: 'svc4',
     num: '02',
     label: '02 / Growth',
     badge: 'Rankings that compound',
@@ -22,7 +22,7 @@ const services = [
     outs: ['Ranking improvements in 90 days', 'Full-funnel ad strategy', 'Monthly reporting with real KPIs'],
   },
   {
-    id: 'svc3',
+    id: 'svc2',
     num: '03',
     label: '03 / AI',
     badge: 'Intelligence, applied',
@@ -32,7 +32,7 @@ const services = [
     outs: ['Measurable time savings', 'Production-grade reliability', 'Explainable outputs'],
   },
   {
-    id: 'svc4',
+    id: 'svc3',
     num: '04',
     label: '04 / Systems',
     badge: 'Backends that scale',
