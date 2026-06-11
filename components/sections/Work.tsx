@@ -1,15 +1,15 @@
 const bigProjects = [
   {
-    num: '01 / 2024',
+    num: '',
     cat: 'Consulting Website',
-    name: 'Vertex Consulting',
-    desc: 'High-converting B2B consulting site. Precision storytelling, surgical UX, Figma to launch in 3 weeks flat.',
-    gradient: 'linear-gradient(145deg,#0a0e1e,#14203a 50%,#060810)',
+    name: 'MARC Glocal',
+    desc: 'Full-stack Next.js rebuild for a 15-year-old growth advisory firm. SEO migration from WordPress, Supabase lead capture, blog & insights CMS, Google Ads integration, and a global hub for US clients.',
+    gradient: 'linear-gradient(145deg,#0a1628,#1a3a5c 50%,#060d1a)',
     catColor: '',
     stats: [
-      { label: 'Inbound Leads', val: '+40%' },
-      { label: 'Load Time',     val: '0.9s' },
-      { label: 'Timeline',      val: '3 weeks' },
+      { label: 'Services Covered', val: '8+' },
+      { label: 'Load Time',        val: '<1s' },
+      { label: 'Timeline',         val: '6 weeks' },
     ],
     icon: (
       <svg viewBox="0 0 100 100" fill="none" stroke="rgba(82,201,122,.6)" strokeWidth="1">
@@ -17,76 +17,87 @@ const bigProjects = [
         <circle cx="50" cy="50" r="10"/>
         <line x1="50" y1="10" x2="50" y2="90"/>
         <line x1="10" y1="50" x2="90" y2="50"/>
-      </svg>
-    ),
+        </svg>
+        ),
   },
   {
-    num: '02 / 2024',
-    cat: 'School Website',
-    name: 'Brightfield Academy',
-    desc: 'Parent-first school site. Admissions flow, events calendar, 98 Lighthouse score out of the box.',
-    gradient: 'linear-gradient(145deg,#1a0d18,#38143a 50%,#0f070f)',
-    catColor: 'rgba(201,122,46,.3)',
-    catTextColor: '#E9AA5E',
+    num: '',
+    cat: 'Healthcare Platform',
+    name: 'Arogyaxpress',
+    desc: 'Home healthcare booking platform offering 12 services including nursing, physiotherapy, palliative care, and lab visits. Multi-step enquiry flow with service routing and WhatsApp integration.',
+    gradient: 'linear-gradient(145deg,#0d1f0f,#1a3d20 50%,#060e07)',
+    catColor: '',
     stats: [
-      { label: 'Admissions Enquiries', val: '3×' },
-      { label: 'Lighthouse Score',     val: '98' },
-      { label: 'Timeline',             val: '2 weeks' },
+      { label: 'Services Listed',  val: '12' },
+      { label: 'Booking Flow',     val: '2-step' },
+      { label: 'Timeline',         val: '3 weeks' },
     ],
     icon: (
       <svg viewBox="0 0 100 100" fill="none" stroke="rgba(201,122,46,.6)" strokeWidth="1">
         <rect x="15" y="15" width="70" height="70" rx="4"/>
         <line x1="15" y1="35" x2="85" y2="35"/>
         <line x1="50" y1="35" x2="50" y2="85"/>
-      </svg>
-    ),
+        </svg>
+        ),
   },
 ];
 
 const gridProjects = [
   {
-    num: '03 / 2024',
-    cat: 'AI SaaS Platform',
-    name: 'NeuroFlow',
-    desc: 'A no-code AI workflow builder for non-technical founders. Built with LangChain + RAG.',
-    gradient: 'linear-gradient(145deg,#0d2416,#1B4D2F 50%,#091009)',
-    stats: [{ label: 'Time saved / user', val: '6h/wk' }, { label: 'MAU Growth', val: '+220%' }, { label: 'Timeline', val: '6 weeks' }],
+    num: '',
+    cat: 'Local Business Website',
+    name: 'FlyBon Stamps',
+    desc: 'Clean, fast Next.js site for a stamp-making studio operating since 2010 across Goa and Bengaluru. 4.9-star rated, 376 reviews. Showcases product range with a direct call-to-order CTA.',
+    gradient: 'linear-gradient(145deg,#1a0a00,#3d1f00 50%,#0d0500)',
+    stats: [
+      { label: 'Google Rating',    val: '4.9★' },
+      { label: 'Reviews',          val: '376' },
+      { label: 'Timeline',         val: '2 weeks' },
+    ],
     icon: (
       <svg viewBox="0 0 100 100" fill="none" stroke="rgba(82,201,122,.6)" strokeWidth="1">
         <circle cx="25" cy="50" r="10"/><circle cx="75" cy="25" r="10"/><circle cx="75" cy="75" r="10"/>
         <line x1="35" y1="50" x2="65" y2="25"/><line x1="35" y1="50" x2="65" y2="75"/>
-      </svg>
-    ),
+        </svg>
+        ),
   },
   {
-    num: '04 / 2023',
+    num: '',
     cat: 'ERP System',
-    name: 'Meridian ERP',
-    desc: 'Full internal operations platform: inventory, HR, CRM. Built in 10 weeks, live in 12.',
-    gradient: 'linear-gradient(145deg,#1a1208,#3d2a14 50%,#0d0a04)',
-    catColor: 'rgba(201,122,46,.3)',
-    catTextColor: '#E9AA5E',
-    stats: [{ label: 'Processes automated', val: '14' }, { label: 'Team hours saved', val: '40/wk' }, { label: 'Timeline', val: '12 weeks' }],
+    name: 'Bizpally',
+    desc: 'Full-featured business management ERP with CRM, HR, project tracking, inventory, task management, calendar, and team chat — all under one dashboard. Multi-role access with admin controls.',
+    gradient: 'linear-gradient(145deg,#0a1a0a,#1a3d1a 50%,#060e06)',
+    catColor: '',
+    stats: [
+      { label: 'Modules Built',    val: '8+' },
+      { label: 'User Roles',       val: 'Multi' },
+      { label: 'Timeline',         val: '12 weeks' },
+    ],
     icon: (
       <svg viewBox="0 0 100 100" fill="none" stroke="rgba(201,122,46,.6)" strokeWidth="1">
         <rect x="20" y="20" width="25" height="25" rx="2"/><rect x="55" y="20" width="25" height="25" rx="2"/>
         <rect x="20" y="55" width="25" height="25" rx="2"/><rect x="55" y="55" width="25" height="25" rx="2"/>
-      </svg>
-    ),
+        </svg>
+        ),
   },
   {
-    num: '05 / 2023',
-    cat: 'E-Commerce',
-    name: 'Luxe Studio',
-    desc: 'Fashion-forward e-commerce with custom animations, 3D product viewer, and blazing-fast checkout.',
-    gradient: 'linear-gradient(145deg,#160828,#38145a 50%,#0d0614)',
-    stats: [{ label: 'Conversion Rate', val: '+35%' }, { label: 'Cart abandonment', val: '-28%' }, { label: 'Timeline', val: '5 weeks' }],
+    num: '',
+    cat: 'School Website',
+    name: 'Hansraj Academy',
+    desc: 'Institutional website for a RBSE-affiliated school in Jaipur established in 2011. Covers admissions, facilities, and contact — clean, mobile-friendly, and built for parent-facing trust.',
+    gradient: 'linear-gradient(145deg,#0a0a1a,#1a1a3d 50%,#06060e)',
+    catColor: '',
+    stats: [
+      { label: 'Est.',             val: '2011' },
+      { label: 'Classes',          val: 'PG–X' },
+      { label: 'Timeline',         val: '2 weeks' },
+    ],
     icon: (
       <svg viewBox="0 0 100 100" fill="none" stroke="rgba(176,127,235,.6)" strokeWidth="1">
         <path d="M20 35h60l-8 35H28z"/><circle cx="38" cy="82" r="5"/><circle cx="62" cy="82" r="5"/>
         <path d="M20 35l-8-20h-8"/>
-      </svg>
-    ),
+        </svg>
+        ),
   },
 ];
 
@@ -135,12 +146,12 @@ function FlipCard({
                 <span className="fstat-l">{s.label}</span>
                 <span className="fstat-v">{s.val}</span>
               </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>
     </article>
-  );
+    );
 }
 
 export default function Work() {
@@ -153,20 +164,20 @@ export default function Work() {
             Projects that<br /><em>move the needle.</em>
           </h2>
         </div>
-        <p className="work-note rv">Sample projects illustrating our capabilities.<br />Real client work available on request.</p>
-      </div>
+        {/*<p className="work-note rv">Sample projects illustrating our capabilities.<br />Real client work available on request.</p>
+      */}</div>
 
-      <div className="flip-row-big">
-        {bigProjects.map((p) => (
-          <FlipCard key={p.name} {...p} big />
-        ))}
-      </div>
+        <div className="flip-row-big">
+          {bigProjects.map((p) => (
+            <FlipCard key={p.name} {...p} big />
+            ))}
+        </div>
 
-      <div className="flip-grid">
-        {gridProjects.map((p) => (
-          <FlipCard key={p.name} {...p} />
-        ))}
-      </div>
-    </section>
-  );
+        <div className="flip-grid">
+          {gridProjects.map((p) => (
+            <FlipCard key={p.name} {...p} />
+            ))}
+        </div>
+      </section>
+      );
 }

@@ -1,6 +1,5 @@
-// Card order: svc3 (bottom of stack), svc2 (middle), svc1 (top) — matches HTML
-// nth-child(1) = svc3 = green, nth-child(2) = svc2 = purple, nth-child(3) = svc1 = orange
-
+// Card order: svc4 (bottom), svc3, svc2 (middle), svc1 (top) — matches HTML
+// nth-child(1) = svc4 = teal, nth-child(2) = svc3 = green, nth-child(3) = svc2 = purple, nth-child(4) = svc1 = orange
 const services = [
   {
     id: 'svc1',
@@ -8,8 +7,8 @@ const services = [
     label: '01 / Web',
     badge: 'Interfaces that convert',
     title: 'Web Design\n& Development',
-    tags: ['Next.js', 'React', 'TypeScript', 'Figma', 'Tailwind'],
-    body: "Pixel-perfect, performance-first websites built in Next.js. We design in Figma and obsess over every interaction until it's right — from marketing sites to complex SaaS dashboards. No handoffs, no excuses.",
+    tags: ['Next.js', 'React', 'TypeScript', 'GSAP', 'Tailwind'],
+    body: "Pixel-perfect, performance-first websites built in Next.js. We obsess over every interaction until it's right — from marketing sites to complex SaaS dashboards. No handoffs, no excuses.",
     outs: ['Sub-1s load times', '98+ Lighthouse score', 'Mobile-first always'],
   },
   {
@@ -28,9 +27,19 @@ const services = [
     label: '03 / Systems',
     badge: 'Backends that scale',
     title: 'Full-Stack\nSystems',
-    tags: ['Node.js', 'PostgreSQL', 'Prisma', 'AWS', 'tRPC'],
+    tags: ['Next.js', 'PostgreSQL', 'FastAPI', 'AWS', 'n8n', 'Redis'],
     body: 'Robust APIs, admin portals, ERP systems, and CRM tools. We architect for scale and maintain for years — not sprints. Clean code, proper docs, handoff-ready from day one.',
     outs: ['99.9% uptime targets', 'Clean, documented code', 'Handoff-ready systems'],
+  },
+  {
+    id: 'svc4',
+    num: '04',
+    label: '04 / Growth',
+    badge: 'Rankings that compound',
+    title: 'SEO & Growth\nMarketing',
+    tags: ['Google Ads', 'Search Console', 'Ahrefs', 'Meta Ads', 'GA4'],
+    body: 'From technical audits to full-funnel campaigns — we grow organic traffic, build ad strategies that convert, and track everything that matters. No vanity metrics, no bloated retainers. Just measurable growth.',
+    outs: ['Ranking improvements in 90 days', 'Full-funnel ad strategy', 'Monthly reporting with real KPIs'],
   },
 ];
 
@@ -40,7 +49,7 @@ export default function Services() {
       <div className="svc-header">
         <p className="sec-label rv">What We Do</p>
         <h2 className="sec-h2 rv" id="services-heading">
-          <span className="hw">Three</span>{' '}
+          <span className="hw">Four</span>{' '}
           <span className="hw">disciplines.</span>
           <br />
           <em>
@@ -49,7 +58,6 @@ export default function Services() {
           </em>
         </h2>
       </div>
-
       <div className="svc-scroll-wrap" id="svcWrap">
         <div className="svc-sticky" id="svcSticky">
           {services.map((svc) => (

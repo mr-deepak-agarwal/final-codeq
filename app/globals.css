@@ -852,6 +852,10 @@ nav#nav.up {
 .tw-q:hover { color: var(--gl); }
 .testi-by { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--grey); transition: color .3s; cursor: default; }
 .testi-by:hover { color: var(--cream); }
+.testi-dots { display: flex; gap: 10px; justify-content: center; margin-top: 40px; }
+.testi-dot  { width: 8px; height: 8px; border-radius: 50%; border: none; background: rgba(240,237,228,.2); cursor: pointer; padding: 0; transition: background .3s, transform .3s; }
+.testi-dot.active { background: var(--gl); transform: scale(1.3); }
+.testi-dot:hover:not(.active) { background: rgba(240,237,228,.45); }
 
 @media (max-width: 640px) { #testi { padding: 80px 24px; } }
 
