@@ -107,9 +107,9 @@ const gridProjects = [
 ];
 
 function FlipCard({
-  num, cat, name, desc, gradient, catColor, catTextColor, stats, icon, big = false,
+  num, cat, name, desc, gradient,image, catColor, catTextColor, stats, icon, big = false,
 }: {
-  num: string; cat: string; name: string; desc: string; gradient: string;
+  num: string; cat: string; name: string; desc: string; image?: string; gradient: string;
   catColor?: string; catTextColor?: string; stats: { label: string; val: string }[];
   icon: React.ReactNode; big?: boolean;
 }) {
@@ -117,46 +117,51 @@ function FlipCard({
     <article className={`fcard rv${big ? ' fcard-big' : ''}`} aria-label={`Project: ${name}`}>
       <div className="fcard-inner">
         {/* Front */}
-        <div className="fcard-f" style={{ background: gradient }}>
-          <div className="fcard-anim" aria-hidden="true">
-            <div className="fcard-dot" style={{ width: '200px', height: '200px', top: '-40px', right: '-40px', animationDuration: '4s' }}></div>
-          </div>
-          <div className="fcard-icon" aria-hidden="true">{icon}</div>
-          <div className="fcard-arr" aria-hidden="true">↗</div>
-          <span className="fcard-num">{num}</span>
+        <div className="fcard-f" style={{ background: gradient,
+          backgroundImage: `url(${image}), ${gradient}`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundBlendMode: 'luminosity',
+        }}>
+        <div className="fcard-anim" aria-hidden="true">
+          <div className="fcard-dot" style={{ width: '200px', height: '200px', top: '-40px', right: '-40px', animationDuration: '4s' }}></div>
+        </div>
+        <div className="fcard-icon" aria-hidden="true">{icon}</div>
+        <div className="fcard-arr" aria-hidden="true">↗</div>
+        <span className="fcard-num">{num}</span>
+        <span
+          className="fcard-cat"
+          style={catColor ? { borderColor: catColor, color: catTextColor } : {}}
+        >
+          {cat}
+        </span>
+        <h3 className="fcard-name">{name}</h3>
+      </div>
+
+        {/* Back */}
+      <div className="fcard-b">
+        <div className="fcard-b-top">
           <span
-            className="fcard-cat"
+            className="fcard-b-cat"
             style={catColor ? { borderColor: catColor, color: catTextColor } : {}}
           >
             {cat}
           </span>
-          <h3 className="fcard-name">{name}</h3>
+          <h3 className="fcard-b-name">{name}</h3>
+          <p className="fcard-b-desc">{desc}</p>
         </div>
-
-        {/* Back */}
-        <div className="fcard-b">
-          <div className="fcard-b-top">
-            <span
-              className="fcard-b-cat"
-              style={catColor ? { borderColor: catColor, color: catTextColor } : {}}
-            >
-              {cat}
-            </span>
-            <h3 className="fcard-b-name">{name}</h3>
-            <p className="fcard-b-desc">{desc}</p>
-          </div>
-          <div className="fcard-b-stats">
-            {stats.map((s) => (
-              <div className="fstat" key={s.label}>
-                <span className="fstat-l">{s.label}</span>
-                <span className="fstat-v">{s.val}</span>
-              </div>
-              ))}
-          </div>
+        <div className="fcard-b-stats">
+          {stats.map((s) => (
+            <div className="fstat" key={s.label}>
+              <span className="fstat-l">{s.label}</span>
+              <span className="fstat-v">{s.val}</span>
+            </div>
+            ))}
         </div>
       </div>
-    </article>
-    );
+    </div>
+  </article>
+  );
 }
 
 export default function Work() {
