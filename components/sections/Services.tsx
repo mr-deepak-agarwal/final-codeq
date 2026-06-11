@@ -1,5 +1,5 @@
-// Card order: svc4 (bottom), svc3, svc2 (middle), svc1 (top) — matches HTML
-// nth-child(1) = svc4 = teal, nth-child(2) = svc3 = green, nth-child(3) = svc2 = purple, nth-child(4) = svc1 = orange
+// Card order: svc4 (bottom), svc2, svc3 (middle), svc1 (top) — matches HTML
+// nth-child(1) = svc1 = orange, nth-child(2) = svc4 = teal, nth-child(3) = svc3 = purple, nth-child(4) = svc2 = green
 const services = [
   {
     id: 'svc1',
@@ -12,9 +12,19 @@ const services = [
     outs: ['Sub-1s load times', '98+ Lighthouse score', 'Mobile-first always'],
   },
   {
-    id: 'svc2',
+    id: 'svc4',
     num: '02',
-    label: '02 / AI',
+    label: '02 / Growth',
+    badge: 'Rankings that compound',
+    title: 'SEO & Growth\nMarketing',
+    tags: ['Google Ads', 'Search Console', 'Ahrefs', 'Meta Ads', 'GA4'],
+    body: 'From technical audits to full-funnel campaigns — we grow organic traffic, build ad strategies that convert, and track everything that matters. No vanity metrics, no bloated retainers. Just measurable growth.',
+    outs: ['Ranking improvements in 90 days', 'Full-funnel ad strategy', 'Monthly reporting with real KPIs'],
+  },
+  {
+    id: 'svc2',
+    num: '03',
+    label: '03 / AI',
     badge: 'Intelligence, applied',
     title: 'AI-Powered\nApplications',
     tags: ['OpenAI', 'Anthropic', 'LangChain', 'Python', 'RAG'],
@@ -23,23 +33,13 @@ const services = [
   },
   {
     id: 'svc3',
-    num: '03',
-    label: '03 / Systems',
+    num: '04',
+    label: '04 / Systems',
     badge: 'Backends that scale',
     title: 'Full-Stack\nSystems',
     tags: ['Next.js', 'PostgreSQL', 'FastAPI', 'AWS', 'n8n', 'Redis'],
     body: 'Robust APIs, admin portals, ERP systems, and CRM tools. We architect for scale and maintain for years — not sprints. Clean code, proper docs, handoff-ready from day one.',
     outs: ['99.9% uptime targets', 'Clean, documented code', 'Handoff-ready systems'],
-  },
-  {
-    id: 'svc4',
-    num: '04',
-    label: '04 / Growth',
-    badge: 'Rankings that compound',
-    title: 'SEO & Growth\nMarketing',
-    tags: ['Google Ads', 'Search Console', 'Ahrefs', 'Meta Ads', 'GA4'],
-    body: 'From technical audits to full-funnel campaigns — we grow organic traffic, build ad strategies that convert, and track everything that matters. No vanity metrics, no bloated retainers. Just measurable growth.',
-    outs: ['Ranking improvements in 90 days', 'Full-funnel ad strategy', 'Monthly reporting with real KPIs'],
   },
 ];
 
