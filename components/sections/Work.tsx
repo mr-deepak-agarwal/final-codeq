@@ -117,8 +117,8 @@ function FlipCard({
     <article className={`fcard rv${big ? ' fcard-big' : ''}`} aria-label={`Project: ${name}`}>
       <div className="fcard-inner">
         {/* Front */}
-        <div className="fcard-f" style={{ background: gradient,
-          backgroundImage: `url(${image}), ${gradient}`,
+        <div className="fcard-f" style={{ 
+          background: `linear-gradient(145deg, rgba(10,22,40,0.85), rgba(26,58,92,0.85) 50%, rgba(6,13,26,0.85)), url(${image})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundBlendMode: 'luminosity',
