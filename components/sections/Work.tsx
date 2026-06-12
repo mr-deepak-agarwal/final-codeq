@@ -124,6 +124,7 @@ function FlipCard({
             position: 'relative',
             backgroundImage: image ? `url(${image})` : undefined,
             backgroundSize: 'cover',
+            filter: 'grayscale(100%)',
             backgroundPosition: 'center top',
           }}
         >

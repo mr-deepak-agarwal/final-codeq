@@ -573,6 +573,10 @@ nav#nav.up {
 .fcard-big    { height: 400px; }
 .fcard-inner  { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.16,1,.3,1); }
 .fcard:hover .fcard-inner { transform: rotateY(180deg); }
+
+.fcard.fcard-big { height: 400px; }
+.fcard-f, .fcard-b { height: 100%; }
+
 .fcard-f, .fcard-b {
   position: absolute; inset: 0; backface-visibility: hidden;
   border-radius: 14px; padding: 36px; display: flex; flex-direction: column;
