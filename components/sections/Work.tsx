@@ -117,50 +117,58 @@ function FlipCard({
     <article className={`fcard rv${big ? ' fcard-big' : ''}`} aria-label={`Project: ${name}`}>
       <div className="fcard-inner">
 
-        {/* Front */}
+        {/* ── FRONT ── */}
         <div
           className="fcard-f"
           style={{
+            position: 'relative',
             backgroundImage: image ? `url(${image})` : undefined,
             backgroundSize: 'cover',
             backgroundPosition: 'center top',
-            position: 'relative',
           }}
         >
-          {/* Gradient overlay — sits on top of the screenshot */}
+          {/* gradient overlay — no blend mode, just opacity */}
           <div
             aria-hidden="true"
             style={{
               position: 'absolute',
               inset: 0,
               background: gradient,
-              opacity: 0.78,
-              zIndex: 0,
+              opacity: 0.75,
             }}
           />
 
-          {/* All card content above the overlay */}
-          <div style={{ position: 'relative', zIndex: 1, height: '100%', display: 'flex', flexDirection: 'column' }}>
-            <div className="fcard-anim" aria-hidden="true">
-              <div
-                className="fcard-dot"
-                style={{ width: '200px', height: '200px', top: '-40px', right: '-40px', animationDuration: '4s' }}
-              />
-            </div>
-            <div className="fcard-icon" aria-hidden="true">{icon}</div>
-            <div className="fcard-arr" aria-hidden="true">↗</div>
-            <span className="fcard-num">{num}</span>
-            <span
-              className="fcard-cat"
-              style={catColor ? { borderColor: catColor, color: catTextColor } : {}}
-            >
-              {cat}
-            </span>
-            <h3 className="fcard-name">{name}</h3>
+          {/* animated dot — above overlay */}
+          <div className="fcard-anim" aria-hidden="true" style={{ position: 'relative', zIndex: 1 }}>
+            <div className="fcard-dot" style={{ width: '200px', height: '200px', top: '-40px', right: '-40px', animationDuration: '4s' }} />
           </div>
+
+          {/* icon */}
+          <div className="fcard-icon" aria-hidden="true" style={{ position: 'relative', zIndex: 1 }}>{icon}</div>
+
+          {/* arrow */}
+          <div className="fcard-arr" aria-hidden="true" style={{ position: 'relative', zIndex: 1 }}>↗</div>
+
+          {/* number */}
+          <span className="fcard-num" style={{ position: 'relative', zIndex: 1 }}>{num}</span>
+
+          {/* category pill */}
+          <span
+            className="fcard-cat"
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              ...(catColor ? { borderColor: catColor, color: catTextColor } : {}),
+            }}
+          >
+            {cat}
+          </span>
+
+          {/* project name */}
+          <h3 className="fcard-name" style={{ position: 'relative', zIndex: 1 }}>{name}</h3>
         </div>
 
-        {/* Back */}
+        {/* ── BACK ── */}
         <div className="fcard-b">
           <div className="fcard-b-top">
             <span
