@@ -18,8 +18,8 @@ const bigProjects = [
         <circle cx="50" cy="50" r="10"/>
         <line x1="50" y1="10" x2="50" y2="90"/>
         <line x1="10" y1="50" x2="90" y2="50"/>
-        </svg>
-        ),
+      </svg>
+    ),
   },
   {
     num: '',
@@ -39,8 +39,8 @@ const bigProjects = [
         <rect x="15" y="15" width="70" height="70" rx="4"/>
         <line x1="15" y1="35" x2="85" y2="35"/>
         <line x1="50" y1="35" x2="50" y2="85"/>
-        </svg>
-        ),
+      </svg>
+    ),
   },
 ];
 
@@ -61,8 +61,8 @@ const gridProjects = [
       <svg viewBox="0 0 100 100" fill="none" stroke="rgba(82,201,122,.6)" strokeWidth="1">
         <circle cx="25" cy="50" r="10"/><circle cx="75" cy="25" r="10"/><circle cx="75" cy="75" r="10"/>
         <line x1="35" y1="50" x2="65" y2="25"/><line x1="35" y1="50" x2="65" y2="75"/>
-        </svg>
-        ),
+      </svg>
+    ),
   },
   {
     num: '',
@@ -81,8 +81,8 @@ const gridProjects = [
       <svg viewBox="0 0 100 100" fill="none" stroke="rgba(201,122,46,.6)" strokeWidth="1">
         <rect x="20" y="20" width="25" height="25" rx="2"/><rect x="55" y="20" width="25" height="25" rx="2"/>
         <rect x="20" y="55" width="25" height="25" rx="2"/><rect x="55" y="55" width="25" height="25" rx="2"/>
-        </svg>
-        ),
+      </svg>
+    ),
   },
   {
     num: '',
@@ -101,13 +101,13 @@ const gridProjects = [
       <svg viewBox="0 0 100 100" fill="none" stroke="rgba(176,127,235,.6)" strokeWidth="1">
         <path d="M20 35h60l-8 35H28z"/><circle cx="38" cy="82" r="5"/><circle cx="62" cy="82" r="5"/>
         <path d="M20 35l-8-20h-8"/>
-        </svg>
-        ),
+      </svg>
+    ),
   },
 ];
 
 function FlipCard({
-  num, cat, name, desc, gradient,image, catColor, catTextColor, stats, icon, big = false,
+  num, cat, name, desc, gradient, image, catColor, catTextColor, stats, icon, big = false,
 }: {
   num: string; cat: string; name: string; desc: string; image?: string; gradient: string;
   catColor?: string; catTextColor?: string; stats: { label: string; val: string }[];
@@ -116,51 +116,74 @@ function FlipCard({
   return (
     <article className={`fcard rv${big ? ' fcard-big' : ''}`} aria-label={`Project: ${name}`}>
       <div className="fcard-inner">
+
         {/* Front */}
-        <div className="fcard-f" style={{ 
-          background: `linear-gradient(145deg, rgba(10,22,40,0.85), rgba(26,58,92,0.85) 50%, rgba(6,13,26,0.85)), url(${image})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundBlendMode: 'luminosity',
-        }}>
-        <div className="fcard-anim" aria-hidden="true">
-          <div className="fcard-dot" style={{ width: '200px', height: '200px', top: '-40px', right: '-40px', animationDuration: '4s' }}></div>
-        </div>
-        <div className="fcard-icon" aria-hidden="true">{icon}</div>
-        <div className="fcard-arr" aria-hidden="true">↗</div>
-        <span className="fcard-num">{num}</span>
-        <span
-          className="fcard-cat"
-          style={catColor ? { borderColor: catColor, color: catTextColor } : {}}
+        <div
+          className="fcard-f"
+          style={{
+            backgroundImage: image ? `url(${image})` : undefined,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center top',
+            position: 'relative',
+          }}
         >
-          {cat}
-        </span>
-        <h3 className="fcard-name">{name}</h3>
-      </div>
+          {/* Gradient overlay — sits on top of the screenshot */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: gradient,
+              opacity: 0.78,
+              zIndex: 0,
+            }}
+          />
+
+          {/* All card content above the overlay */}
+          <div style={{ position: 'relative', zIndex: 1, height: '100%', display: 'flex', flexDirection: 'column' }}>
+            <div className="fcard-anim" aria-hidden="true">
+              <div
+                className="fcard-dot"
+                style={{ width: '200px', height: '200px', top: '-40px', right: '-40px', animationDuration: '4s' }}
+              />
+            </div>
+            <div className="fcard-icon" aria-hidden="true">{icon}</div>
+            <div className="fcard-arr" aria-hidden="true">↗</div>
+            <span className="fcard-num">{num}</span>
+            <span
+              className="fcard-cat"
+              style={catColor ? { borderColor: catColor, color: catTextColor } : {}}
+            >
+              {cat}
+            </span>
+            <h3 className="fcard-name">{name}</h3>
+          </div>
+        </div>
 
         {/* Back */}
-      <div className="fcard-b">
-        <div className="fcard-b-top">
-          <span
-            className="fcard-b-cat"
-            style={catColor ? { borderColor: catColor, color: catTextColor } : {}}
-          >
-            {cat}
-          </span>
-          <h3 className="fcard-b-name">{name}</h3>
-          <p className="fcard-b-desc">{desc}</p>
-        </div>
-        <div className="fcard-b-stats">
-          {stats.map((s) => (
-            <div className="fstat" key={s.label}>
-              <span className="fstat-l">{s.label}</span>
-              <span className="fstat-v">{s.val}</span>
-            </div>
+        <div className="fcard-b">
+          <div className="fcard-b-top">
+            <span
+              className="fcard-b-cat"
+              style={catColor ? { borderColor: catColor, color: catTextColor } : {}}
+            >
+              {cat}
+            </span>
+            <h3 className="fcard-b-name">{name}</h3>
+            <p className="fcard-b-desc">{desc}</p>
+          </div>
+          <div className="fcard-b-stats">
+            {stats.map((s) => (
+              <div className="fstat" key={s.label}>
+                <span className="fstat-l">{s.label}</span>
+                <span className="fstat-v">{s.val}</span>
+              </div>
             ))}
+          </div>
         </div>
+
       </div>
-    </div>
-  </article>
+    </article>
   );
 }
 
@@ -174,20 +197,19 @@ export default function Work() {
             Projects that<br /><em>move the needle.</em>
           </h2>
         </div>
-        {/*<p className="work-note rv">Sample projects illustrating our capabilities.<br />Real client work available on request.</p>
-      */}</div>
+      </div>
 
-        <div className="flip-row-big">
-          {bigProjects.map((p) => (
-            <FlipCard key={p.name} {...p} big />
-            ))}
-        </div>
+      <div className="flip-row-big">
+        {bigProjects.map((p) => (
+          <FlipCard key={p.name} {...p} big />
+        ))}
+      </div>
 
-        <div className="flip-grid">
-          {gridProjects.map((p) => (
-            <FlipCard key={p.name} {...p} />
-            ))}
-        </div>
-      </section>
-      );
+      <div className="flip-grid">
+        {gridProjects.map((p) => (
+          <FlipCard key={p.name} {...p} />
+        ))}
+      </div>
+    </section>
+  );
 }
