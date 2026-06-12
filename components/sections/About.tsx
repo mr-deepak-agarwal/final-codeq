@@ -132,10 +132,12 @@ export default function About() {
             className="ab-photo"
           />
           <p className="ab-desc" id="abDesc">
-            Founded by <strong>Deepak Agarwal</strong> — AI Agent Developer, Automation Engineer,
-            and Educator with 8+ years building complete AI solutions for modern businesses.
-            LangChain, RAG, React, Python. We work directly with founders who need a technical
-            partner they can trust. No junior developers hidden behind a polished sales front.
+            Founded by <strong>Deepak Agarwal</strong> — engineer and founder with 8+ years
+            building web & mobile products. He founded and scaled a digital products company,
+            served as CTO for a legal-tech startup, and has shipped software across healthcare,
+            education, and SaaS. A background in teaching complex technical subjects means clear
+            communication and no jargon-wrapped excuses — just direct access to the person
+            actually building your product, not a sales layer in front of junior talent.
           </p>
         </div>
 
