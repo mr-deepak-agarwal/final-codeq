@@ -556,7 +556,7 @@ const initAbout = (gsap: any) => {
   }, { threshold: 0.3 });
   laptopObs.observe(aboutSection);
 
-  ['abTop','abHl','abDesc','abVals','abNums'].forEach((id) => {
+  ['abTop','abHl','abFounder','abVals','abNums'].forEach((id) => {
     const el = document.getElementById(id);
     if (!el) return;
     const o = new IntersectionObserver((entries) => {

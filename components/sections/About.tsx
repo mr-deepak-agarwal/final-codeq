@@ -14,7 +14,7 @@ const stats = [
 
 export default function About() {
   return (
-    <section id="about" aria-labelledby="about-heading">
+    <section id="about">
       {/* LEFT — laptop animation */}
       <div className="ab-left">
         <div className="laptop-scene" id="laptopScene" aria-label="Animated laptop showing code editor and browser preview" role="img">
@@ -121,16 +121,23 @@ export default function About() {
           <span className="ab-qtag">quality_first</span>
         </div>
 
-        <h2 className="ab-hl" id="abHl about-heading">
+        <h2 className="ab-hl" id="abHl">
           Small studio.<br /><em>Senior craft.</em>
         </h2>
 
-        <p className="ab-desc" id="abDesc">
-          Founded by <strong>Deepak Agarwal</strong> — AI Agent Developer, Automation Engineer,
-          and Educator with 8+ years building complete AI solutions for modern businesses.
-          LangChain, RAG, React, Python. We work directly with founders who need a technical
-          partner they can trust. No junior developers hidden behind a polished sales front.
-        </p>
+        <div className="ab-founder" id="abFounder">
+          <img
+            src="/deepak.jpeg"
+            alt="Deepak Agarwal, founder of codeq"
+            className="ab-photo"
+          />
+          <p className="ab-desc" id="abDesc">
+            Founded by <strong>Deepak Agarwal</strong> — AI Agent Developer, Automation Engineer,
+            and Educator with 8+ years building complete AI solutions for modern businesses.
+            LangChain, RAG, React, Python. We work directly with founders who need a technical
+            partner they can trust. No junior developers hidden behind a polished sales front.
+          </p>
+        </div>
 
         <div className="ab-vlist" id="abVals">
           {values.map((v) => (
