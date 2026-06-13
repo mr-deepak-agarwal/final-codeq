@@ -109,6 +109,10 @@ export default function RootLayout({
       className={`${cormorant.variable} ${syne.variable} ${dmMono.variable}`}
     >
       <body className="font-sans bg-dark text-cream overflow-x-hidden antialiased">
+        {/* Hide loader for crawlers/bots that don't run JS */}
+        <noscript>
+          <style>{`#loader { display: none !important; } .rv,.rvl { opacity: 1 !important; transform: none !important; }`}</style>
+        </noscript>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-CNBKER80ZF"
           strategy="afterInteractive"

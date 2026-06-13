@@ -245,6 +245,10 @@ const initHeroTerminal = () => {
 
 /* ─── HERO WORDS ──────────────────────────────────────────── */
 const initHeroWords = (gsap: any) => {
+  // Add js-ready BEFORE gsap.set so CSS hides elements only when JS is running.
+  // Googlebot / crawlers that don't execute JS never see opacity:0 content.
+  document.body.classList.add('js-ready');
+
   gsap.set('.h1w', { y: 90, opacity: 0 });
   document.querySelectorAll('.h1w').forEach((w, i) => {
     gsap.to(w, { y: 0, opacity: 1, duration: 1.1, ease: 'power4.out', delay: 0.5 + i * 0.13 });

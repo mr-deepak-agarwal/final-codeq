@@ -266,6 +266,16 @@ nav#nav.up {
   display: inline-block; will-change: transform;
   transition: color .4s; cursor: default;
 }
+/* SEO: content visible by default. JS adds .js-ready to <body> before
+   GSAP animates — so crawlers always see the text. */
+body.js-ready .h1w {
+  opacity: 0;
+  transform: translateY(90px);
+}
+body.js-ready .hero-badge,
+body.js-ready .hero-right {
+  opacity: 0;
+}
 .h1w:hover        { color: var(--ga); }
 .h1w.em           { color: var(--ga); font-style: italic; }
 .h1w.em:hover     { color: var(--gl); }
@@ -1088,4 +1098,15 @@ footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; hei
 @media (max-width: 480px) {
   .cm-panel { padding: 28px 20px; }
   .cm-title { font-size: 26px; }
+}
+
+/* ── NOSCRIPT / NO-JS FALLBACK ────────────────────────────────
+   If JS never runs, content must still be visible.
+   The .rv, .rvl classes start hidden for scroll animations
+   but should show without JS. ──────────────────────────────── */
+@media (scripting: none) {
+  .rv, .rvl { opacity: 1 !important; transform: none !important; }
+  .h1w      { opacity: 1 !important; transform: none !important; }
+  .hero-badge, .hero-right { opacity: 1 !important; }
+  #loader   { display: none !important; }
 }
