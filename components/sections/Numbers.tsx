@@ -1,8 +1,8 @@
 const stats = [
   { value: 50,  suffix: '+',  label: 'Projects Shipped' },
-  { value: 28,  suffix: '',   label: 'US Clients' },
-  { value: 8,   suffix: '+',  label: 'Years Deep' },
-  { value: 4.5, suffix: '★',  label: 'Avg Client Rating' },
+  { value: 10,  suffix: '+',  label: 'Years in Business' },
+  { value: 100, suffix: '%',  label: 'Projects Delivered' },
+  { value: 4,   suffix: '',   label: 'Core Services' },
 ];
 
 export default function Numbers() {
@@ -18,7 +18,8 @@ export default function Numbers() {
               data-s={stat.suffix}
               aria-label={`${stat.value}${stat.suffix} ${stat.label}`}
             >
-              0
+              {/* SEO: render real value — JS animates from 0 on scroll */}
+              {stat.value}{stat.suffix}
             </span>
             <span className="nl">{stat.label}</span>
             <div className="nc-bar" aria-hidden="true"></div>

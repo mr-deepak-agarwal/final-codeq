@@ -84,10 +84,10 @@ export default function About() {
                           <div className="site-card" id="sc3"><div className="site-card-icon">◈</div><div className="site-card-title">TECH LEADERSHIP</div><div className="site-card-body">CTO-level strategy for growing teams.</div></div>
                         </div>
                         <div className="site-stats-row">
-                          <div className="site-stat-cell" id="ss1"><div className="site-stat-v">50+</div><div className="site-stat-k">PROJECTS</div></div>
-                          <div className="site-stat-cell" id="ss2"><div className="site-stat-v">8+</div><div className="site-stat-k">YEARS</div></div>
-                          <div className="site-stat-cell" id="ss3"><div className="site-stat-v">28</div><div className="site-stat-k">US CLIENTS</div></div>
-                          <div className="site-stat-cell" id="ss4"><div className="site-stat-v">100%</div><div className="site-stat-k">QUALITY</div></div>
+                          <div className="site-stat-cell" id="ss1"><div className="site-stat-v">10+</div><div className="site-stat-k">Years in Business</div></div>
+                          <div className="site-stat-cell" id="ss2"><div className="site-stat-v">100+</div><div className="site-stat-k">Projects Shipped</div></div>
+                          <div className="site-stat-cell" id="ss3"><div className="site-stat-v">4</div><div className="site-stat-k">Core Services</div></div>
+                          <div className="site-stat-cell" id="ss4"><div className="site-stat-v">100%</div><div className="site-stat-k">Projects Delivered</div></div>
                         </div>
                       </div>
                     </div>
