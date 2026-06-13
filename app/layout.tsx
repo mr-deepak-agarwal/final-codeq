@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from 'next';
+import Script from 'next/script';
+import ContactModal from '@/components/ui/ContactModal';
 import { Cormorant_Garamond, Syne, DM_Mono } from 'next/font/google';
 import './globals.css';
 
@@ -33,15 +35,17 @@ export const metadata: Metadata = {
     template: '%s | codeq',
   },
   description:
-    'codeq is a boutique web development studio. We design and engineer pixel-perfect web experiences, AI-powered tools, and full-stack systems that businesses are proud to ship.',
+    'codeq is a senior engineering studio. We design and build pixel-perfect web experiences, AI-powered tools, and full-stack systems for businesses worldwide — direct access to the engineers building your product, no junior layers.',
   keywords: [
-    'web development',
-    'Next.js',
-    'React',
+    'web development agency',
+    'Next.js development',
+    'React developers',
     'TypeScript',
-    'AI applications',
-    'full-stack',
-    'boutique dev studio',
+    'AI application development',
+    'full-stack development',
+    'senior development team',
+    'custom software development',
+    'SaaS development agency',
     'codeq',
   ],
   authors: [{ name: 'codeq', url: 'https://codeq.tech' }],
@@ -53,7 +57,7 @@ export const metadata: Metadata = {
     siteName: 'codeq',
     title: 'codeq — Quality in Every Line',
     description:
-      'A boutique dev studio where the Q stands for Quality. We build web experiences, AI tools, and full-stack systems that businesses are proud to ship.',
+      'Senior engineering, delivered directly. We build web experiences, AI tools, and full-stack systems that businesses are proud to ship — for clients worldwide.',
     images: [
       {
         url: '/og-image.png',
@@ -67,9 +71,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'codeq — Quality in Every Line',
     description:
-      'A boutique dev studio where the Q stands for Quality.',
+      'Senior engineering, delivered directly. The Q stands for Quality.',
     images: ['/og-image.png'],
-    creator: '@codeqtech',
   },
   robots: {
     index: true,
@@ -106,7 +109,41 @@ export default function RootLayout({
       className={`${cormorant.variable} ${syne.variable} ${dmMono.variable}`}
     >
       <body className="font-sans bg-dark text-cream overflow-x-hidden antialiased">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-CNBKER80ZF"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-CNBKER80ZF');
+          `}
+        </Script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'ProfessionalService',
+              name: 'codeq',
+              url: 'https://codeq.tech',
+              image: 'https://codeq.tech/og-image.png',
+              description:
+                'codeq is a senior engineering studio building web experiences, AI-powered tools, and full-stack systems for businesses worldwide.',
+              founder: {
+                '@type': 'Person',
+                name: 'Deepak Agarwal',
+                sameAs: 'https://www.linkedin.com/in/deepak-agarwal-08369876/',
+              },
+              areaServed: 'Worldwide',
+              email: 'hello@codeq.tech',
+            }),
+          }}
+        />
         {children}
+        <ContactModal />
       </body>
     </html>
   );

@@ -122,7 +122,7 @@ export default function About() {
         </div>
 
         <h2 className="ab-hl" id="abHl">
-          Small studio.<br /><em>Senior craft.</em>
+          No juniors.<br /><em>No layers.</em>
         </h2>
 
         <div className="ab-founder" id="abFounder">

@@ -1,3 +1,5 @@
+'use client';
+
 export default function CTA() {
   return (
     <section id="cta" aria-labelledby="cta-heading">
@@ -22,14 +24,15 @@ export default function CTA() {
       </a>
 
       <div className="cta-actions">
-        <a
-          href="mailto:hello@codeq.tech"
+        <button
+          type="button"
           className="cta-btn mag"
           aria-label="Start a project with codeq"
+          onClick={() => window.dispatchEvent(new Event('open-contact-modal'))}
         >
           <span>Start a Project</span>
           <span aria-hidden="true">→</span>
-        </a>
+        </button>
         <a
           href="https://calendly.com/codeq-tech/30min"
           target="_blank"

@@ -21,9 +21,14 @@ export default function Navbar() {
           <li><a href="#cta">Contact</a></li>
         </ul>
 
-        <a href="#cta" className="ncta mag" aria-label="Start a project with codeq">
+        <button
+          type="button"
+          className="ncta mag"
+          aria-label="Start a project with codeq"
+          onClick={() => window.dispatchEvent(new Event('open-contact-modal'))}
+        >
           <span>Start a Project</span>
-        </a>
+        </button>
 
         {/* Mobile hamburger */}
         <button

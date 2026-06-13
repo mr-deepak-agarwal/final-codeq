@@ -1,3 +1,5 @@
+'use client';
+
 const navLinks  = ['Services', 'Work', 'Process', 'About', 'Contact'];
 const legalLinks = ['Privacy Policy', 'Terms of Service', 'Cookie Policy'];
 
@@ -15,17 +17,18 @@ export default function Footer() {
             </div>
           </a>
           <p className="fb-tagline">
-            A boutique studio where the Q stands for Quality. We build things that last.
+            Senior engineering, delivered directly. The Q stands for Quality.
           </p>
           <nav className="fb-social" aria-label="Social media links">
             {[
-              { label: 'Twitter / X', symbol: 'X' },
-              { label: 'LinkedIn',    symbol: 'in' },
-              { label: 'GitHub',      symbol: 'GH' },
+              { label: 'LinkedIn', symbol: 'in', href: 'https://www.linkedin.com/in/deepak-agarwal-08369876/' },
+              { label: 'GitHub',   symbol: 'GH', href: '#' },
             ].map((s) => (
               <a
                 key={s.label}
-                href="#"
+                href={s.href}
+                target={s.href.startsWith('http') ? '_blank' : undefined}
+                rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="fb-soc-link"
                 aria-label={s.label}
               >
@@ -62,13 +65,14 @@ export default function Footer() {
             hello@codeq.tech
           </a>
           <p className="fcol-cta-note">Currently accepting new projects</p>
-          <a
-            href="mailto:hello@codeq.tech"
+          <button
+            type="button"
             className="foot-cta-btn"
             aria-label="Get in touch with codeq"
+            onClick={() => window.dispatchEvent(new Event('open-contact-modal'))}
           >
             Get in Touch <span aria-hidden="true">→</span>
-          </a>
+          </button>
         </div>
       </div>
 

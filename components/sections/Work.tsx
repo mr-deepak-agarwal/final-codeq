@@ -128,6 +128,20 @@ function FlipCard({
             backgroundPosition: 'center top',
           }}
         >
+          {image && (
+            <img
+              src={image}
+              alt={`${name} — ${cat} project screenshot by codeq`}
+              style={{
+                position: 'absolute',
+                width: '1px',
+                height: '1px',
+                opacity: 0,
+                overflow: 'hidden',
+                pointerEvents: 'none',
+              }}
+            />
+          )}
           {/* gradient overlay — no blend mode, just opacity */}
           <div
             aria-hidden="true"
