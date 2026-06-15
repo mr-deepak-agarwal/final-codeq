@@ -6,11 +6,12 @@ const values = [
 ];
 
 const stats = [
-  { val: 50,  suffix: '+', key: 'projects_shipped' },
-  { val: 28,  suffix: '',  key: 'us_clients' },
-  { val: 8,   suffix: '+', key: 'years_deep' },
-  { val: 4.5, suffix: '★', key: 'avg_client_rating' },
+  { val: 100,  suffix: '+',  key: 'Projects Shipped' },
+  { val: 10,  suffix: '+',  key: 'Years in Business' },
+  { val: 100, suffix: '%',  key: 'Projects Delivered' },
+  { val: 4,   suffix: '',   key: 'Core Services' },
 ];
+
 
 export default function About() {
   return (

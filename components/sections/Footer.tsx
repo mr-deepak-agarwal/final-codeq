@@ -1,7 +1,11 @@
 'use client';
 
 const navLinks  = ['Services', 'Work', 'Process', 'About', 'Contact'];
-const legalLinks = ['Privacy Policy', 'Terms of Service', 'Cookie Policy'];
+const legalLinks = [
+  { label: 'Privacy Policy',    href: '/privacy_policy'    },
+  { label: 'Terms of Service',  href: '/terms_of_service'  },
+  { label: 'Cookie Policy',     href: '/cookie_policy'     },
+];
 
 export default function Footer() {
   return (
@@ -22,7 +26,6 @@ export default function Footer() {
           <nav className="fb-social" aria-label="Social media links">
             {[
               { label: 'LinkedIn', symbol: 'in', href: 'https://www.linkedin.com/in/deepak-agarwal-08369876/' },
-              { label: 'GitHub',   symbol: 'GH', href: '#' },
             ].map((s) => (
               <a
                 key={s.label}
