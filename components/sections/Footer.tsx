@@ -53,7 +53,7 @@ export default function Footer() {
         <div className="fcol">
           <h5>Legal</h5>
           {legalLinks.map((l) => (
-            <a href="#" key={l}>{l}</a>
+            <a href={l.href} key={l.href}>{l.label}</a>
           ))}
         </div>
 
