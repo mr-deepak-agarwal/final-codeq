@@ -147,8 +147,8 @@ nav#nav {
   display: flex; align-items: center; justify-content: space-between;
   transition: background .5s, border-color .4s, backdrop-filter .4s;
   border-bottom: 1px solid transparent;
-  background: linear-gradient(rgba(7,7,10,.32), rgba(7,7,10,.08));
-  backdrop-filter: blur(6px);
+  background: rgba(7,7,10,.72);
+  backdrop-filter: blur(14px);
 }
 nav#nav.up {
   background: rgba(7,7,10,.9);
