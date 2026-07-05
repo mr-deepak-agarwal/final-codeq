@@ -54,7 +54,9 @@ body {
   overflow-x: clip;          /* clip = hides horizontal overflow WITHOUT
                                 creating a scroll container, so sticky still works */
   -webkit-font-smoothing: antialiased;
-  /* Only hide cursor on non-touch devices */
+}
+/* Only hide the native pointer on pages that mount the custom animated cursor */
+body.cq-active {
   @media (hover: hover) { cursor: none; }
 }
 
@@ -143,8 +145,10 @@ nav#nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 900;
   height: 68px; padding: 0 52px;
   display: flex; align-items: center; justify-content: space-between;
-  transition: background .5s, border-color .4s;
+  transition: background .5s, border-color .4s, backdrop-filter .4s;
   border-bottom: 1px solid transparent;
+  background: linear-gradient(rgba(7,7,10,.32), rgba(7,7,10,.08));
+  backdrop-filter: blur(6px);
 }
 nav#nav.up {
   background: rgba(7,7,10,.9);
