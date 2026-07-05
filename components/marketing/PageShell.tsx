@@ -1,0 +1,60 @@
+import type { ReactNode } from 'react';
+import Navbar from '@/components/ui/Navbar';
+import Footer from '@/components/sections/Footer';
+import styles from '@/app/marketing.module.css';
+
+export const styles_ = styles;
+export { styles };
+
+type Crumb = { label: string; href?: string };
+
+export function StartProjectButton({ label = 'Start a Project' }: { label?: string }) {
+  return (
+    <button
+      type="button"
+      className={styles.btnFill}
+      onClick={() => window.dispatchEvent(new Event('open-contact-modal'))}
+    >
+      <span>{label}</span> <span aria-hidden="true">→</span>
+    </button>
+  );
+}
+
+export default function PageShell({
+  active,
+  breadcrumbs,
+  eyebrow,
+  title,
+  lede,
+  children,
+}: {
+  active?: string;
+  breadcrumbs: Crumb[];
+  eyebrow: string;
+  title: ReactNode;
+  lede: string;
+  children: ReactNode;
+}) {
+  return (
+    <>
+      <Navbar />
+      <main className={styles.main} id="main-content">
+        <div className={styles.hero}>
+          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+            {breadcrumbs.map((c, i) => (
+              <span key={c.label}>
+                {c.href ? <a href={c.href}>{c.label}</a> : <span>{c.label}</span>}
+                {i < breadcrumbs.length - 1 && <span> / </span>}
+              </span>
+            ))}
+          </nav>
+          <p className={styles.eyebrow}>{eyebrow}</p>
+          <h1 className={styles.h1}>{title}</h1>
+          <p className={styles.lede}>{lede}</p>
+        </div>
+        {children}
+      </main>
+      <Footer />
+    </>
+  );
+}
