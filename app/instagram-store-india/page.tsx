@@ -4,6 +4,7 @@ import Footer from '@/components/sections/Footer';
 import StoreHeroArt from '@/components/marketing/StoreHeroArt';
 import MessyInboxArt from '@/components/marketing/MessyInboxArt';
 import StorefrontArt from '@/components/marketing/StorefrontArt';
+import StartProjectButton from './StartProjectButton';
 import s from './store.module.css';
 
 export const metadata: Metadata = {
@@ -17,18 +18,6 @@ export const metadata: Metadata = {
     url: 'https://codeq.tech/instagram-store-india',
   },
 };
-
-function StartProjectButton({ label = 'Start a Project' }: { label?: string }) {
-  return (
-    <button
-      type="button"
-      className={s.btnFill}
-      onClick={() => window.dispatchEvent(new Event('open-contact-modal'))}
-    >
-      <span>{label}</span> <span aria-hidden="true">→</span>
-    </button>
-  );
-}
 
 const painPoints = [
   'Orders and prices buried in DM screenshots and notebooks',
