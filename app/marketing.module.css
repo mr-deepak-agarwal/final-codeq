@@ -84,6 +84,17 @@
   padding: clamp(56px, 9vw, 110px) clamp(20px, 5vw, 80px) clamp(40px, 6vw, 64px);
   max-width: 1100px;
 }
+.heroSplit {
+  max-width: 1240px !important;
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(280px,420px);
+  gap: 48px;
+  align-items: center;
+}
+@media (max-width: 860px) {
+  .heroSplit { grid-template-columns: 1fr; }
+  .heroVisual { order: -1; }
+}
 .breadcrumb {
   font-family: var(--font-mono, monospace);
   font-size: 10px; font-weight: 300; letter-spacing: .12em; text-transform: uppercase;
@@ -259,3 +270,17 @@
 
 .center { text-align: center; }
 .maxw { max-width: 760px; margin: 0 auto; }
+
+.heroCtaRow {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  padding: 0 clamp(20px, 5vw, 80px) clamp(32px, 5vw, 48px);
+  margin-top: -16px;
+}
+
+.popularBadge {
+  position: absolute; top: -12px; right: 20px;
+  background: #52C97A; color: #07070A;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 20px;
+}

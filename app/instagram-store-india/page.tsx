@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import PageShell, { StartProjectButton } from '@/components/marketing/PageShell';
+import StoreHeroArt from '@/components/marketing/StoreHeroArt';
 import s from '@/app/marketing.module.css';
 
 export const metadata: Metadata = {
@@ -118,7 +119,21 @@ export default function InstagramStoreIndiaPage() {
         eyebrow="For Indian Instagram & WhatsApp Sellers"
         title={<>Stop selling<br />from your <em>DMs.</em></>}
         lede="A real website for your shop \u2014 catalog, UPI payments, and order tracking in one place. Built for Instagram sellers in India who are ready to look professional and stop losing sales to messy DMs."
+        visual={<StoreHeroArt />}
       >
+        <div className={s.heroCtaRow}>
+          <StartProjectButton label="Get My Free Store Review" />
+          <a href="#pricing" className={s.btnGhost}>See Pricing</a>
+        </div>
+
+        <div className={s.section}>
+          <div className={s.statRow}>
+            <div><div className={s.statVal}>5\u20137 days</div><div className={s.statKey}>To Go Live</div></div>
+            <div><div className={s.statVal}>\u20B96,999</div><div className={s.statKey}>Starting Price</div></div>
+            <div><div className={s.statVal}>UPI + WhatsApp</div><div className={s.statKey}>Built In, Day One</div></div>
+          </div>
+        </div>
+
         <div className={s.section}>
           <p className={s.sectionLabel}>The Problem</p>
           <h2 className={s.h2}>Sound familiar?</h2>
@@ -135,7 +150,7 @@ export default function InstagramStoreIndiaPage() {
           </ul>
         </div>
 
-        <div className={s.section}>
+        <div className={s.section} id="pricing">
           <p className={s.sectionLabel}>Pricing</p>
           <h2 className={s.h2}>Plans built for small sellers, not enterprise budgets.</h2>
           <div className={s.grid3}>
@@ -143,8 +158,9 @@ export default function InstagramStoreIndiaPage() {
               <div
                 key={t.name}
                 className={s.card}
-                style={t.highlight ? { borderColor: 'rgba(82,201,122,.5)', background: 'rgba(82,201,122,.05)' } : undefined}
+                style={t.highlight ? { borderColor: 'rgba(82,201,122,.5)', background: 'rgba(82,201,122,.05)', position: 'relative' } : { position: 'relative' }}
               >
+                {t.highlight && <span className={s.popularBadge}>Most Popular</span>}
                 <h3 className={s.cardTitle}>{t.name}</h3>
                 <div className={s.statVal} style={{ fontSize: 'clamp(26px,3vw,34px)', marginBottom: 2 }}>{t.price}</div>
                 <div className={s.statKey} style={{ marginBottom: 14 }}>{t.period}</div>
