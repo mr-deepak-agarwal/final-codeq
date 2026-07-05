@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import PageShell, { StartProjectButton, styles as s } from '@/components/marketing/PageShell';
+import PageShell, { StartProjectButton } from '@/components/marketing/PageShell';
+import s from '@/app/marketing.module.css';
 
 export const metadata: Metadata = {
   title: 'Turn Your Instagram Shop Into a Real Website | codeq',

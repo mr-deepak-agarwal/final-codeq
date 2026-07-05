@@ -1,10 +1,9 @@
+'use client';
+
 import type { ReactNode } from 'react';
 import Navbar from '@/components/ui/Navbar';
 import Footer from '@/components/sections/Footer';
 import styles from '@/app/marketing.module.css';
-
-export const styles_ = styles;
-export { styles };
 
 type Crumb = { label: string; href?: string };
 
