@@ -17,26 +17,26 @@ export const metadata: Metadata = {
 
 const painPoints = [
   'Orders and prices buried in DM screenshots and notebooks',
-  'No way to know what\u2019s in stock without checking manually',
+  'No way to know what’s in stock without checking manually',
   'Customers ghost after "DM for price" instead of buying instantly',
-  'Payment proof sent as screenshots \u2014 easy to fake, hard to track',
-  'Zero visibility outside your follower list \u2014 no Google presence at all',
-  'No professional look \u2014 buyers hesitate to trust a DM-only seller',
+  'Payment proof sent as screenshots — easy to fake, hard to track',
+  'Zero visibility outside your follower list — no Google presence at all',
+  'No professional look — buyers hesitate to trust a DM-only seller',
 ];
 
 const included = [
   'Branded, mobile-first website with your product catalog',
-  'UPI / Razorpay checkout \u2014 no more manual payment screenshots',
+  'UPI / Razorpay checkout — no more manual payment screenshots',
   'Simple admin dashboard to add products, track orders & stock',
   'WhatsApp order confirmations sent automatically',
-  'Google-searchable pages \u2014 not just dependent on Instagram reach',
+  'Google-searchable pages — not just dependent on Instagram reach',
   'Your own domain (yourshop.com) instead of a generic app link',
 ];
 
 const tiers = [
   {
     name: 'Starter Store',
-    price: '\u20B96,999',
+    price: '₹6,999',
     period: 'one-time',
     tag: 'For sellers just getting off DMs',
     features: [
@@ -50,13 +50,13 @@ const tiers = [
   },
   {
     name: 'Growth Store',
-    price: '\u20B914,999',
-    period: 'one-time \u00B7 + \u20B9999/mo',
+    price: '₹14,999',
+    period: 'one-time · + ₹999/mo',
     tag: 'For sellers ready to scale orders',
     highlight: true,
     features: [
       'Everything in Starter, unlimited products',
-      'Admin dashboard \u2014 orders, stock & payments in one place',
+      'Admin dashboard — orders, stock & payments in one place',
       'Automated order & shipping status updates',
       'Basic on-page SEO setup (titles, descriptions, sitemap)',
       'Shipping/courier tracking link integration',
@@ -66,14 +66,14 @@ const tiers = [
   },
   {
     name: 'Pro Store + SEO',
-    price: '\u20B924,999',
-    period: 'one-time \u00B7 + \u20B91,999/mo',
+    price: '₹24,999',
+    period: 'one-time · + ₹1,999/mo',
     tag: 'For sellers who want Google traffic too',
     features: [
       'Everything in Growth',
-      'Ongoing SEO \u2014 ranking for real buyer search terms',
+      'Ongoing SEO — ranking for real buyer search terms',
       'Discount codes & promo tools',
-      'Sales analytics \u2014 best sellers, peak times, repeat buyers',
+      'Sales analytics — best sellers, peak times, repeat buyers',
       'Abandoned cart recovery messages',
       'Priority WhatsApp support',
     ],
@@ -82,17 +82,17 @@ const tiers = [
 ];
 
 const process = [
-  { num: '01', title: 'Quick Chat', body: 'Send us your Instagram handle and current catalog \u2014 we\u2019ll tell you exactly what to fix first, free.' },
-  { num: '02', title: 'We Build', body: 'Your store goes live in 5\u20137 days, using the product photos you already have.' },
+  { num: '01', title: 'Quick Chat', body: 'Send us your Instagram handle and current catalog — we’ll tell you exactly what to fix first, free.' },
+  { num: '02', title: 'We Build', body: 'Your store goes live in 5–7 days, using the product photos you already have.' },
   { num: '03', title: 'You Sell', body: 'Share one link in your bio. Orders, payments, and stock are finally in one place.' },
-  { num: '04', title: 'We Support', body: 'Ongoing plans keep your site updated, hosted, and growing \u2014 no tech headaches for you.' },
+  { num: '04', title: 'We Support', body: 'Ongoing plans keep your site updated, hosted, and growing — no tech headaches for you.' },
 ];
 
 const faqs = [
-  { q: 'I only sell through Instagram DMs right now \u2014 do I really need a website?', a: 'Instagram checkout still isn\u2019t available for most sellers in India, so you\u2019re manually handling every order anyway. A website doesn\u2019t replace your Instagram \u2014 it becomes the place your followers actually buy from, with payments and stock tracked automatically instead of in your head.' },
-  { q: 'I\u2019ve seen free/cheap app-based store builders. Why pay for this instead?', a: 'Those tools work, but you get a templated store on their app, with their branding and a per-order fee forever. We build you an actual branded website you own, plus real SEO so people can find you on Google \u2014 not just through your existing followers.' },
-  { q: 'What do I need to provide to get started?', a: 'Just your existing product photos, prices, and your Instagram/WhatsApp details. If you don\u2019t have great photos yet, we can advise on quick fixes before launch.' },
-  { q: 'Can I upgrade my plan later?', a: 'Yes \u2014 most sellers start with Starter or Growth and move up once orders pick up. We\u2019ll only recommend an upgrade when it actually pays for itself.' },
+  { q: 'I only sell through Instagram DMs right now — do I really need a website?', a: 'Instagram checkout still isn’t available for most sellers in India, so you’re manually handling every order anyway. A website doesn’t replace your Instagram — it becomes the place your followers actually buy from, with payments and stock tracked automatically instead of in your head.' },
+  { q: 'I’ve seen free/cheap app-based store builders. Why pay for this instead?', a: 'Those tools work, but you get a templated store on their app, with their branding and a per-order fee forever. We build you an actual branded website you own, plus real SEO so people can find you on Google — not just through your existing followers.' },
+  { q: 'What do I need to provide to get started?', a: 'Just your existing product photos, prices, and your Instagram/WhatsApp details. If you don’t have great photos yet, we can advise on quick fixes before launch.' },
+  { q: 'Can I upgrade my plan later?', a: 'Yes — most sellers start with Starter or Growth and move up once orders pick up. We’ll only recommend an upgrade when it actually pays for itself.' },
 ];
 
 const jsonLd = {
@@ -118,7 +118,7 @@ export default function InstagramStoreIndiaPage() {
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Instagram Store India' }]}
         eyebrow="For Indian Instagram & WhatsApp Sellers"
         title={<>Stop selling<br />from your <em>DMs.</em></>}
-        lede="A real website for your shop \u2014 catalog, UPI payments, and order tracking in one place. Built for Instagram sellers in India who are ready to look professional and stop losing sales to messy DMs."
+        lede="A real website for your shop — catalog, UPI payments, and order tracking in one place. Built for Instagram sellers in India who are ready to look professional and stop losing sales to messy DMs."
         visual={<StoreHeroArt />}
       >
         <div className={s.heroCtaRow}>
@@ -128,8 +128,8 @@ export default function InstagramStoreIndiaPage() {
 
         <div className={s.section}>
           <div className={s.statRow}>
-            <div><div className={s.statVal}>5\u20137 days</div><div className={s.statKey}>To Go Live</div></div>
-            <div><div className={s.statVal}>\u20B96,999</div><div className={s.statKey}>Starting Price</div></div>
+            <div><div className={s.statVal}>5–7 days</div><div className={s.statKey}>To Go Live</div></div>
+            <div><div className={s.statVal}>₹6,999</div><div className={s.statKey}>Starting Price</div></div>
             <div><div className={s.statVal}>UPI + WhatsApp</div><div className={s.statKey}>Built In, Day One</div></div>
           </div>
         </div>
@@ -205,7 +205,7 @@ export default function InstagramStoreIndiaPage() {
 
         <div className={s.ctaBand}>
           <h2 className={s.h2}>Ready to get off DMs?</h2>
-          <p className={s.lede} style={{ maxWidth: 480 }}>Send your Instagram handle and we&apos;ll tell you exactly what your store needs \u2014 no charge for the first look.</p>
+          <p className={s.lede} style={{ maxWidth: 480 }}>Send your Instagram handle and we&apos;ll tell you exactly what your store needs — no charge for the first look.</p>
           <div className={s.btnRow} style={{ justifyContent: 'center' }}>
             <StartProjectButton label="Get My Free Store Review" />
           </div>

@@ -30,14 +30,14 @@ const outcomes = [
 ];
 
 const process = [
-  { num: '01', title: 'Audit', body: 'Full technical, on-page, and conversion-tracking audit — we show you exactly what\u2019s broken before recommending fixes.' },
+  { num: '01', title: 'Audit', body: 'Full technical, on-page, and conversion-tracking audit — we show you exactly what’s broken before recommending fixes.' },
   { num: '02', title: 'Fix & Build', body: 'We implement technical fixes directly in your codebase and build out content for the pages that drive revenue.' },
   { num: '03', title: 'Run Campaigns', body: 'Google & Meta Ads campaigns built around real conversion data, not assumptions.' },
   { num: '04', title: 'Report & Iterate', body: 'Monthly reporting on rankings, traffic, and leads — with next-step recommendations every cycle.' },
 ];
 
 const faqs = [
-  { q: 'We already have an SEO or PPC agency — can you audit their work?', a: 'Yes. A common engagement is an independent audit of an existing agency\u2019s setup — we regularly find gaps like incomplete conversion tracking, missing structured data, or pages blocked from indexing that the current agency has missed.' },
+  { q: 'We already have an SEO or PPC agency — can you audit their work?', a: 'Yes. A common engagement is an independent audit of an existing agency’s setup — we regularly find gaps like incomplete conversion tracking, missing structured data, or pages blocked from indexing that the current agency has missed.' },
   { q: 'Do you handle Google Ads for international markets?', a: 'Yes — we set up and manage campaigns targeting India as well as the US, UK, and Australia, including currency, geo-targeting, and ad copy adapted per market.' },
   { q: 'How fast will we see results?', a: 'Technical fixes can show up in Search Console within weeks. Organic ranking gains typically take 90 days or more, depending on competition. Paid campaigns can generate leads from week one.' },
 ];

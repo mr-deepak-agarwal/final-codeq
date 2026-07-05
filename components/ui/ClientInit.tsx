@@ -50,7 +50,6 @@ const runLoader = (THREE: any, gsap: any, ST: any) => {
 /* ─── MAIN ────────────────────────────────────────────────── */
 const runMain = (THREE: any, gsap: any, ST: any) => {
   initCursor();
-  initNav();
   initHeroThree(THREE);
   initHeroTerminal();
   initHeroWords(gsap);

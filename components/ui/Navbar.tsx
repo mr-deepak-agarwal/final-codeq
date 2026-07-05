@@ -1,6 +1,29 @@
 'use client';
 
+import { useEffect } from 'react';
+
 export default function Navbar() {
+  useEffect(() => {
+    const nav = document.getElementById('nav');
+    const hamburger = document.getElementById('navHamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    const onScroll = () => nav?.classList.toggle('up', window.scrollY > 20);
+    onScroll(); // set correct state immediately (e.g. if page loads mid-scroll)
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    const onHamburgerClick = () => {
+      const isOpen = mobileMenu?.classList.toggle('open');
+      hamburger?.setAttribute('aria-expanded', String(!!isOpen));
+    };
+    hamburger?.addEventListener('click', onHamburgerClick);
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      hamburger?.removeEventListener('click', onHamburgerClick);
+    };
+  }, []);
+
   return (
     <>
       <nav id="nav" role="navigation" aria-label="Main navigation">
