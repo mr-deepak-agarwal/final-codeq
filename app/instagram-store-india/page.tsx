@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
-import PageShell, { StartProjectButton } from '@/components/marketing/PageShell';
+import Navbar from '@/components/ui/Navbar';
+import Footer from '@/components/sections/Footer';
 import StoreHeroArt from '@/components/marketing/StoreHeroArt';
-import s from '@/app/marketing.module.css';
+import MessyInboxArt from '@/components/marketing/MessyInboxArt';
+import StorefrontArt from '@/components/marketing/StorefrontArt';
+import s from './store.module.css';
 
 export const metadata: Metadata = {
   title: 'Turn Your Instagram Shop Into a Real Website | codeq',
@@ -14,6 +17,18 @@ export const metadata: Metadata = {
     url: 'https://codeq.tech/instagram-store-india',
   },
 };
+
+function StartProjectButton({ label = 'Start a Project' }: { label?: string }) {
+  return (
+    <button
+      type="button"
+      className={s.btnFill}
+      onClick={() => window.dispatchEvent(new Event('open-contact-modal'))}
+    >
+      <span>{label}</span> <span aria-hidden="true">→</span>
+    </button>
+  );
+}
 
 const painPoints = [
   'Orders and prices buried in DM screenshots and notebooks',
@@ -46,7 +61,6 @@ const tiers = [
       'Mobile-optimized design',
       '1 round of revisions',
     ],
-    cta: 'Start with Starter',
   },
   {
     name: 'Growth Store',
@@ -62,7 +76,6 @@ const tiers = [
       'Shipping/courier tracking link integration',
       'Monthly plan covers hosting, updates & support',
     ],
-    cta: 'Start with Growth',
   },
   {
     name: 'Pro Store + SEO',
@@ -77,7 +90,6 @@ const tiers = [
       'Abandoned cart recovery messages',
       'Priority WhatsApp support',
     ],
-    cta: 'Start with Pro',
   },
 ];
 
@@ -114,13 +126,27 @@ export default function InstagramStoreIndiaPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      <PageShell
-        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Instagram Store India' }]}
-        eyebrow="For Indian Instagram & WhatsApp Sellers"
-        title={<>Stop selling<br />from your <em>DMs.</em></>}
-        lede="A real website for your shop — catalog, UPI payments, and order tracking in one place. Built for Instagram sellers in India who are ready to look professional and stop losing sales to messy DMs."
-        visual={<StoreHeroArt />}
-      >
+
+      <Navbar />
+
+      <div className={s.page}>
+        <div className={s.hero}>
+          <div>
+            <nav className={s.breadcrumb} aria-label="Breadcrumb">
+              <a href="/">Home</a> <span> / </span> <span>Instagram Store India</span>
+            </nav>
+            <p className={s.eyebrow}>For Indian Instagram &amp; WhatsApp Sellers</p>
+            <h1 className={s.h1}>Stop selling<br />from your <em>DMs.</em></h1>
+            <p className={s.lede}>
+              A real website for your shop — catalog, UPI payments, and order tracking in one place.
+              Built for Instagram sellers in India who are ready to look professional and stop losing sales to messy DMs.
+            </p>
+          </div>
+          <div className={s.heroVisual}>
+            <StoreHeroArt />
+          </div>
+        </div>
+
         <div className={s.heroCtaRow}>
           <StartProjectButton label="Get My Free Store Review" />
           <a href="#pricing" className={s.btnGhost}>See Pricing</a>
@@ -135,19 +161,33 @@ export default function InstagramStoreIndiaPage() {
         </div>
 
         <div className={s.section}>
-          <p className={s.sectionLabel}>The Problem</p>
-          <h2 className={s.h2}>Sound familiar?</h2>
-          <ul className={s.list} style={{ maxWidth: 640 }}>
-            {painPoints.map((p) => <li key={p}>{p}</li>)}
-          </ul>
+          <div className={s.split}>
+            <div>
+              <p className={s.sectionLabel}>The Problem</p>
+              <h2 className={s.h2}>Sound familiar?</h2>
+              <ul className={s.list}>
+                {painPoints.map((p) => <li key={p}>{p}</li>)}
+              </ul>
+            </div>
+            <div className={s.splitVisual}>
+              <MessyInboxArt />
+            </div>
+          </div>
         </div>
 
         <div className={s.section}>
-          <p className={s.sectionLabel}>What You Get</p>
-          <h2 className={s.h2}>Everything your DMs can&apos;t do.</h2>
-          <ul className={s.list} style={{ maxWidth: 640 }}>
-            {included.map((i) => <li key={i}>{i}</li>)}
-          </ul>
+          <div className={s.split}>
+            <div>
+              <p className={s.sectionLabel}>What You Get</p>
+              <h2 className={s.h2}>Everything your DMs can&apos;t do.</h2>
+              <ul className={s.list}>
+                {included.map((i) => <li key={i}>{i}</li>)}
+              </ul>
+            </div>
+            <div className={s.splitVisual}>
+              <StorefrontArt />
+            </div>
+          </div>
         </div>
 
         <div className={s.section} id="pricing">
@@ -158,7 +198,9 @@ export default function InstagramStoreIndiaPage() {
               <div
                 key={t.name}
                 className={s.card}
-                style={t.highlight ? { borderColor: 'rgba(82,201,122,.5)', background: 'rgba(82,201,122,.05)', position: 'relative' } : { position: 'relative' }}
+                style={t.highlight
+                  ? { borderColor: '#1B4D2F', boxShadow: '0 4px 20px rgba(27,77,47,.08)', position: 'relative' }
+                  : { position: 'relative' }}
               >
                 {t.highlight && <span className={s.popularBadge}>Most Popular</span>}
                 <h3 className={s.cardTitle}>{t.name}</h3>
@@ -171,8 +213,8 @@ export default function InstagramStoreIndiaPage() {
               </div>
             ))}
           </div>
-          <p className={s.cardBody} style={{ marginTop: 24 }}>
-            Prices in INR, one-time build fee plus an optional monthly plan for hosting, updates & support. Custom catalogs of 200+ products or multi-language sites are quoted separately.
+          <p className={s.priceNote}>
+            Prices in INR, one-time build fee plus an optional monthly plan for hosting, updates &amp; support. Custom catalogs of 200+ products or multi-language sites are quoted separately.
           </p>
         </div>
 
@@ -205,12 +247,14 @@ export default function InstagramStoreIndiaPage() {
 
         <div className={s.ctaBand}>
           <h2 className={s.h2}>Ready to get off DMs?</h2>
-          <p className={s.lede} style={{ maxWidth: 480 }}>Send your Instagram handle and we&apos;ll tell you exactly what your store needs — no charge for the first look.</p>
-          <div className={s.btnRow} style={{ justifyContent: 'center' }}>
+          <p className={s.lede}>Send your Instagram handle and we&apos;ll tell you exactly what your store needs — no charge for the first look.</p>
+          <div className={s.btnRow}>
             <StartProjectButton label="Get My Free Store Review" />
           </div>
         </div>
-      </PageShell>
+      </div>
+
+      <Footer />
     </>
   );
 }
